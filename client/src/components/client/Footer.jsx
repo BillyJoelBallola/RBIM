@@ -31,7 +31,7 @@ const Footer = () => {
         <img src={POPCOMGoldLogo} className="w-[150px] aspect-auto" alt="popcom-logo" />
       </div>
       <div className='side-margin text-center mt-6'>
-        <small className='text-gray-400'>Copyright © 2023 • Registry Of Inhabinants and Migrants</small>
+        <small className='text-gray-400'>Copyright © 2023 • Registry of Inhabitants and Migrants</small>
       </div>
     </footer> 
   )
