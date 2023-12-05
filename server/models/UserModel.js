@@ -1,36 +1,82 @@
 import db from '../dbConnect.js'
-import bcrypt from 'bcrypt'
+import { encrypt } from '../helper/passwordEncryptor.js';
 
-const brcyptSalt = bcrypt.genSaltSync(10);
-
-export const userGetAllUsers = (callback) => {
-  db.query('SELECT * FROM users', (error, results) => {
-    if (error) {
-      return callback(error, null);
-    }
-    return callback(null, results);
-  });
+export const userGetAllUsers = async () => {
+  try {
+    const result = await new Promise((resolve, reject) => {
+      db.query('SELECT * FROM users', (error, results) => {
+        if (error) {
+          reject(error);
+        }else{
+          resolve(results);
+        }
+      });
+    })
+    const users = result && result.length > 0 ? result : null
+    return users;
+  } catch (error) {
+    throw error
+  }
 }
 
-export const userGetUserById = (userId, callback) => {
-  db.query(`SELECT * FROM users WHERE id = ${userId}`, (error, results) => {
-    if (error) {
-      return callback(error, null);
-    }
-    return callback(null, results[0]);
-  });
+export const userGetUserById = async (userId) => {
+  try {
+    const result = await new Promise((resolve, reject) => {
+      db.query(`SELECT * FROM users WHERE id = ?`, [userId], (error, results) => {
+        if (error) {
+          reject(error)
+        }else{
+          resolve(results)
+        }
+      });
+    })
+    const user = result && result.length > 0 ? result[0] : null
+    return user
+  } catch (error) {
+    throw error
+  }
 }
 
-export const userAddUser = (user, callback) => {
-  const encryptedPassword = bcrypt.hashSync(user.password, brcyptSalt)
-  db.query(`INSERT INTO users (name, username, password, type) values ('${user.name}', '${user.username}', '${encryptedPassword}' ,'${user.type}')`, (error, results) => {
-    if (error) {
-      return callback(error, null);
-    }
-    return callback(null, results.insertId);
-  });
+export const userAddUser = async (user) => {
+  try {
+    const encryptedPassword = encrypt(user.password)
+    const result = await new Promise((resolve, reject) => {
+      db.query(`INSERT INTO users (name, username, password, type) VALUES (?, ?, ?, ?)`, [user.name, user.username, encryptedPassword, user.type], (error, results) => {
+        if (error) {
+          reject(error)
+        }else{
+          resolve(results);
+        }
+      });
+    })
+
+    const userId = await result.insertId;
+    return userId
+  } catch (error) {
+    throw error
+  }
 }
 
-export const userUpdateUser = (user, callback) => {
-  
+export const userUpdateUser = async (userData) => {
+  try {
+    const encryptedPassword = encrypt(userData.password)
+    const result = await new Promise((resolve, reject) => {
+      db.query( 'UPDATE users SET name=?, username=?, password=?, type=? WHERE id=?', [userData.name, userData.username, encryptedPassword, userData.type, userData.id], (error, results) => {
+        if (error) {
+          reject(error)
+        }else{
+          resolve(results);
+        }
+      });
+    })
+
+    if(result.affectedRows > 0 ){
+      const updatedUser = await userGetUserById(userData.id);
+      return updatedUser;
+    }else{
+      return null
+    }
+  } catch (error) {
+    throw error
+  }
 }
