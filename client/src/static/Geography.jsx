@@ -15,7 +15,7 @@ export const barangay = [
   "Ilayang Atingay",
   "Ilayang Butnong",
   "Ilog",
-  "Malinao",
+  "Malinao",  
   "Maravilla",
   "Poblacion",
   "Sabang",

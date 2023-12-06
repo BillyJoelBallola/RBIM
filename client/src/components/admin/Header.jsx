@@ -1,10 +1,24 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { RiMenu2Fill } from "react-icons/ri"
 import { NavigationContext } from '../../context/NavigationContext'
+import { UserContext } from '../../context/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 const Header = ({ pageName }) => {
+  const { loggedUser } = useContext(UserContext)
+  const navigate = useNavigate()
   const { toggleNav, isNavigateOpen } = useContext(NavigationContext)
   const username = "Capstone, Project"
+
+  useEffect(() => {
+    window.cookieStore.get('rbim_token')
+      .then(({ value }) => {
+        if(!value) navigate("/login");
+      })
+      .catch((err) => {
+        navigate("/login");
+      })
+  }, []) 
 
   return (
     <header>

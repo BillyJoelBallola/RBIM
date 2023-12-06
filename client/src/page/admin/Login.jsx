@@ -32,23 +32,21 @@ const Login = () => {
     }else{
       try {
         const { data } = await axios.post('/api/login', loginForm)
-        if(data) {
-          navigate("/rbim/")
+        if(data === 'success') {
+          navigate("/rbim/");
+        }else{
+          return toast.current.show({
+            severity: 'error',
+            summary: 'Failed',
+            detail: data,
+          });
         }
       } catch (error) {
-        if (error.response) {
-          return toast.current.show({
-            severity: 'error',
-            summary: 'Failed',
-            detail: error.response.data.error,
-          });
-        } else {
-          return toast.current.show({
-            severity: 'error',
-            summary: 'Failed',
-            detail: 'An unexpected error occurred. Please try again later.',
-          });
-        }   
+        return toast.current.show({
+          severity: 'error',
+          summary: 'Failed',
+          detail: 'An unexpected error occurred. Please try again later.',
+        });
       }
     }
   }

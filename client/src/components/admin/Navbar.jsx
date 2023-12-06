@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import RBIMWhiteLogo from '../../assets/RBIM-logo-white.png'
 import POPCOMWhiteLogo from '../../assets/popcom-logo-white.png'
 import { operationLinks, moreLinks } from '../../static/NavLinks'
 import { NavigationContext } from '../../context/NavigationContext'
 import CustomDialog from './CustomDialog'
+import axios from 'axios'
 
 const Navbar = () => {
+  const navigate = useNavigate()
   const { isNavigateOpen } = useContext(NavigationContext);
   const [visible, setVisible] = useState(false);
   const [dialogData, setDialogData] = useState({
@@ -29,6 +31,11 @@ const Navbar = () => {
       } 
   }
 
+  const logout = () => {
+    axios.post('/api/logout');
+    navigate("/login")
+  }
+
   return (
     <>
       <CustomDialog visible={visible} setVisible={setVisible} header={dialogData.header} content={dialogData.content}/>
@@ -48,7 +55,7 @@ const Navbar = () => {
                     {link.label}
                   </NavLink>
                   :
-                  <button className="w-full text-sm flex gap-2 items-center text-white hover:bg-[#004303] duration-150 py-2 px-6">
+                  <button onClick={logout} className="w-full text-sm flex gap-2 items-center text-white hover:bg-[#004303] duration-150 py-2 px-6">
                     {link.icon}
                     {link.label}
                   </button>

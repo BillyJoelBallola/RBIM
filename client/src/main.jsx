@@ -9,16 +9,19 @@ import { NavigationContextProvider } from './context/NavigationContext.jsx'
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
 import "primereact/resources/primereact.min.css";    
 import './index.css'
+import { UserContextProvider } from './context/UserContext.jsx'
 
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <NavigationContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </NavigationContextProvider>
+    <UserContextProvider>
+      <NavigationContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </NavigationContextProvider>
+    </UserContextProvider>
   </React.StrictMode>,
 )
