@@ -7,7 +7,7 @@ const ClientLayout = () => {
   return (
     <>
       <Navbar />
-      <div className='bg-[#f1f1f1] overflow-hidden pt-[100px] pb-[20px] h-screen'>
+      <div className='bg-[#f1f1f1] overflow-hidden pt-[100px] pb-[10px] h-screen'>
         <Outlet />
       </div>
       <Footer />

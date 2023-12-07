@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import RBIMBigLogo from "../../assets/RBIM-big-logo.png"
 import POPCOMLogoWhite from "../../assets/popcom-logo-white.png"
@@ -6,10 +6,12 @@ import RBIMBlackLogo from "../../assets/RBIM-logo-black.png"
 import BgImage from "../../assets/bg-image.png"
 import { Toast } from 'primereact/toast';
 import axios from "axios"
+import { UserContext } from '../../context/UserContext';
 
 const Login = () => {
   const navigate = useNavigate()
   const toast = useRef(null)
+  const { setUpdate } = useContext(UserContext)
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
@@ -34,6 +36,7 @@ const Login = () => {
         const { data } = await axios.post('/api/login', loginForm)
         if(data === 'success') {
           navigate("/rbim/");
+          setUpdate("logged-in")
         }else{
           return toast.current.show({
             severity: 'error',

@@ -18,7 +18,7 @@ export const login = async (req, res) => {
       return res.json('Incorrect Password');
     }
 
-    const tokenPayload = { id: user.id, username: user.username, address_id: user.address_id, type: user.type };
+    const tokenPayload = { id: user.id, username: user.username, address_id: user.address_id, role: user.role };
     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {});
 
     res.cookie('rbim_token', token);

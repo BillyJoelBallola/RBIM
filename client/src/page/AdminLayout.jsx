@@ -12,7 +12,6 @@ const AdminLayout = () => {
       <Navbar />
       <MobileNavbar />
       <div className={`ml-0 ${!isNavigateOpen && 'md:ml-[16rem]'} duration-150`}>
-        {/* { isNavigateOpen && <div className='bg-black/20 absolute inset-0 z-10' onClick={toggleNav}/> } */}
         <Outlet />
       </div>
     </>

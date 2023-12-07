@@ -7,18 +7,22 @@ export const UserContextProvider = ({ children }) => {
   const [loggedUser, setLoggedUser] = useState(null)
   const [update, setUpdate] = useState(null)
 
-  const settingUserLogged = async () => {
-    if(loggedUser === null || update !== null){
-      const { data } = await axios.get("/api/user_logged")
-      if(!data) return; 
-      setUpdate(null);
-      setLoggedUser(data);
-    }
-  }
-
   useEffect(() => {
-    settingUserLogged()
-  }, [update]);
+    const getLoggedUser = async () => {
+      try {
+        const { data } = await axios.get("/api/user_logged");
+        setLoggedUser(data);
+      } catch (error) {
+        console.error("Error fetching logged user:", error);
+      } finally {
+        setUpdate(null);
+      }
+    }
+
+    if(loggedUser === null || update !== null){
+      getLoggedUser()
+    }
+  }, [update, loggedUser]);
 
   return(
     <UserContext.Provider value={{ loggedUser, setLoggedUser, setUpdate }}>
