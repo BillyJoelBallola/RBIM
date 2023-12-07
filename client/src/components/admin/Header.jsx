@@ -2,13 +2,12 @@ import React, { useContext, useEffect } from 'react'
 import { RiMenu2Fill } from "react-icons/ri"
 import { NavigationContext } from '../../context/NavigationContext'
 import { UserContext } from '../../context/UserContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const Header = ({ pageName }) => {
-  const { loggedUser } = useContext(UserContext)
   const navigate = useNavigate()
+  const { loggedUser } = useContext(UserContext)
   const { toggleNav, isNavigateOpen } = useContext(NavigationContext)
-  const username = "Capstone, Project"
 
   useEffect(() => {
     window.cookieStore.get('rbim_token')
@@ -31,10 +30,10 @@ const Header = ({ pageName }) => {
             {pageName}
           </span>
         </div>
-        <div className='flex items-center gap-2'>
-          <span className='hidden md:block text-sm'>{username}</span>
-          <div className='w-8 grid place-items-center aspect-square rounded-full bg-gray-500 text-white'>CP</div>
-        </div>
+        <Link to={"/rbim/settings"} className='flex items-center gap-2 bg-transparent hover:bg-gray-100 px-2 py-1 rounded-lg'>
+          <span className='hidden md:block text-sm'>{loggedUser?.name}</span>
+          <div className='w-7 grid place-items-center aspect-square rounded-full bg-gray-500 text-white'>{loggedUser?.name?.split('')[0].toUpperCase()}</div>
+        </Link>
       </div>
     </header>
   )

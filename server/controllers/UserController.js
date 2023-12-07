@@ -1,6 +1,7 @@
 import { userAddUser, userGetAllUsers, userGetUserById, userUpdateUser } from '../models/UserModel.js'
 import { getUserByUsername } from '../models/AuthModel.js'
 import { HTTP_STATUS } from '../helper/httpStatus.js'
+import jwt from 'jsonwebtoken'
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -51,13 +52,13 @@ export const updateUser = async (req, res) => {
 }
 
 export const getLoggedUser = async (req, res) => {
-  const { token } = await req.cookies;
-  if(token){
-      jwt.verify(token, process.env.JWT_SECRET, {}, async (err, user) => {
+  const { rbim_token } = await req.cookies;
+  if(rbim_token){
+      jwt.verify(rbim_token, process.env.JWT_SECRET, {}, async (err, user) => {
         if(err) throw err;
         const userLogged = await userGetUserById(user.id);
-        const { name, username, address_id, type } = userLogged;
-        res.status(HTTP_STATUS.OK).json({ name, username, address_id, type });
+        const { name, username, address_id, role } = userLogged;
+        res.status(HTTP_STATUS.OK).json({ name, username, address_id, role });
       })
   }else{   
       res.json(null);
