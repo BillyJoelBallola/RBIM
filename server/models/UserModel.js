@@ -1,7 +1,7 @@
 import db from '../dbConnect.js'
 import { encrypt } from '../helper/passwordEncryptor.js';
 
-export const userGetAllUsers = async () => {
+const getAllUsers = async () => {
   try {
     const result = await new Promise((resolve, reject) => {
       db.query('SELECT * FROM users INNER JOIN address ON users.address_id = address.id', (error, results) => {
@@ -19,7 +19,7 @@ export const userGetAllUsers = async () => {
   }
 }
 
-export const userGetUserById = async (userId) => {
+const getUserById = async (userId) => {
   try {
     const result = await new Promise((resolve, reject) => {
       db.query(`SELECT * FROM users INNER JOIN address ON users.address_id = address.id WHERE users.id=?`, [userId], (error, results) => {
@@ -37,7 +37,7 @@ export const userGetUserById = async (userId) => {
   }
 }
 
-export const userAddUser = async (user) => {
+const addUser = async (user) => {
   try {
     const encryptedPassword = encrypt(user.password)
     const result = await new Promise((resolve, reject) => {
@@ -57,7 +57,7 @@ export const userAddUser = async (user) => {
   }
 }
 
-export const userUpdateUser = async (userData) => {
+const updateUser = async (userData) => {
   try {
     const encryptedPassword = encrypt(userData.password)
     const result = await new Promise((resolve, reject) => {
@@ -71,7 +71,7 @@ export const userUpdateUser = async (userData) => {
     })
 
     if(result.affectedRows > 0 ){
-      const updatedUser = await userGetUserById(userData.id);
+      const updatedUser = await getUserById(userData.id);
       return updatedUser;
     }else{
       return null
@@ -79,4 +79,11 @@ export const userUpdateUser = async (userData) => {
   } catch (error) {
     throw error
   }
+}
+
+export const userModel = {
+  getAllUsers,
+  getUserById,
+  addUser,
+  updateUser
 }

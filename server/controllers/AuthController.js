@@ -1,12 +1,12 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { getUserByUsername } from "../models/AuthModel.js";
+import { authModel } from "../models/AuthModel.js";
 import { HTTP_STATUS } from '../helper/httpStatus.js';
 
 export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await getUserByUsername(username);
+    const user = await authModel.getUserByUsername(username);
 
     if (!user) {
       return res.json('User not found' );

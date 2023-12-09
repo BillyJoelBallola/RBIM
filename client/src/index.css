@@ -30,6 +30,11 @@ label{
   @apply grid gap-2;
 }
 
+.form-group input,
+.form-group select {
+  @apply w-full
+}
+
 .navbar{
   background: linear-gradient(175deg, #015804 42.96%, #007905 100.65%);
 }
@@ -60,4 +65,8 @@ label{
 
 .gray-stripe > div:nth-child(odd) {
   background: #f1f1f1;
+}
+
+.p-dialog-footer > button {
+  @apply px-4 py-1
 }

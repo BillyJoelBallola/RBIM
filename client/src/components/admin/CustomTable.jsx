@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CustomTable = ({ headers, data }) => {
+const CustomTable = ({ headers, data, actions }) => {
   return (
     <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
       <div className="inline-block min-w-full">
@@ -17,6 +17,7 @@ const CustomTable = ({ headers, data }) => {
                     {head.label}
                   </th>
                 ))}
+                {actions && <th scope="col" className="px-6 py-4 text-left"></th>}
               </tr>
             </thead>
             <tbody className="bg-white text-sm">
@@ -28,11 +29,24 @@ const CustomTable = ({ headers, data }) => {
                         {rowData[header.key]}
                       </td>
                     ))}
+                    {actions && (
+                      <td className="px-6 py-4 whitespace-nowrap flex gap-2 justify-center">
+                        {actions.map((action, actionIdx) => (
+                          <button
+                            key={actionIdx}
+                            className="underline"
+                            onClick={() => action.onClick(idx)}
+                          >
+                            {action.label}
+                          </button>
+                        ))}
+                      </td>
+                    )}
                   </tr>
                 ))
               ) : (
                 <tr className="p-4">
-                  <td className="px-6 py-4" colSpan={headers.length + 1}>
+                  <td className="px-6 py-4" colSpan={headers.length + (actions ? 1 : 0)}>
                     No data found.
                   </td>
                 </tr>

@@ -1,6 +1,6 @@
 import db from '../dbConnect.js'
 
-export const getUserByUsername = async (username, callback) => {
+const getUserByUsername = async (username, callback) => {
   try {
     const result = await new Promise((resolve, reject) => {
       db.query('SELECT * FROM users WHERE username = ?', [username], ((error, result) => {
@@ -16,4 +16,8 @@ export const getUserByUsername = async (username, callback) => {
   } catch (error) {
     throw error;
   }
+}
+
+export const authModel = {
+  getUserByUsername
 }
