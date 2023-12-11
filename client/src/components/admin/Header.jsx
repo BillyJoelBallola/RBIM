@@ -31,8 +31,11 @@ const Header = ({ pageName }) => {
           </span>
         </div>
         <Link to={"/rbim/settings"} className='flex items-center gap-2 bg-transparent hover:bg-gray-100 px-2 py-1 rounded-lg'>
-          <span className='hidden md:block text-sm'>{loggedUser?.name}</span>
-          <div className='w-7 grid place-items-center aspect-square rounded-full bg-gray-500 text-white'>{loggedUser?.name?.split('')[0].toUpperCase()}</div>
+          <div>
+            <span className='hidden md:block text-sm font-semibold'>{loggedUser?.name}</span>
+            <span className='hidden md:block text-xs text-right -mt-1'>{loggedUser?.role}</span>
+          </div>
+          <div className='w-8 grid place-items-center aspect-square rounded-full bg-gray-500 text-white text-lg font-semibold'>{loggedUser?.name?.split('')[0].toUpperCase()}</div>
         </Link>
       </div>
     </header>

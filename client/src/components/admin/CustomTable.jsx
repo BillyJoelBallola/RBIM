@@ -35,7 +35,7 @@ const CustomTable = ({ headers, data, actions }) => {
                           <button
                             key={actionIdx}
                             className="underline"
-                            onClick={() => action.onClick(idx)}
+                            onClick={() => action.onClick({rowData, idx})}
                           >
                             {action.label}
                           </button>

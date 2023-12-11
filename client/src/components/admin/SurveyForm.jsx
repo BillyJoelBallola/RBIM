@@ -28,7 +28,7 @@ const SurveyForm = ({ title, description }) => {
 
   const headers = [{ key: "response_code", label: "Code" }, { key: "response_text", label: "Responses" }]
   
-  const actions = [{ label: <MdOutlineEdit />, onClick: (idx) => editResponse(idx) }, { label: <LuTrash2 />, onClick: (idx) => deleteDialog(idx) }]
+  const actions = [{ label: <MdOutlineEdit />, onClick: ({idx}) => editResponse(idx) }, { label: <LuTrash2 />, onClick: ({rowData}) => deleteDialog(rowData) }]
 
   const showToast = (severity, summary, detail) => {
     return toast.current.show({ severity: severity, summary: summary, detail: detail})
@@ -41,6 +41,14 @@ const SurveyForm = ({ title, description }) => {
       setQuestionData([]);
     })
   }, [])
+
+  const resetResponseForm = () => {
+    setResponseForm({
+      question_id: '',
+      response_code: '',
+      response_text: ''
+    })
+  }
  
   const handleInputFormChange = (e) => {
     setResponseForm(current => ({
@@ -96,11 +104,7 @@ const SurveyForm = ({ title, description }) => {
           response_text: responseForm.response_text
         }
       ]))
-      setResponseForm({
-        question_id: '',
-        response_code: '',
-        response_text: ''
-      })
+      resetResponseForm()
     }else{
       return showToast('error', 'Failed', 'Fill up all fields')
     }
@@ -116,11 +120,7 @@ const SurveyForm = ({ title, description }) => {
       response_text: responseForm.response_text
     }
     setResponsesOfSelectedQuestions(updatedReponses)
-    setResponseForm({
-      question_id: '',
-      response_code: '',
-      response_text: ''
-    })
+    resetResponseForm()
   }
 
   const editResponse = (idx) => {
@@ -135,7 +135,6 @@ const SurveyForm = ({ title, description }) => {
   const saveChanges = async () => {
     try {
       const { data } = axios.post("/api/response", { responseData: responsesOfSelectedQuestions, questionId: selectedQuestion.id })
-      console.log(data);
       if(data !== null){
         setSelectedQuestion({
           id: '',
@@ -178,11 +177,7 @@ const SurveyForm = ({ title, description }) => {
   };
 
   const cancelEditResponse = () => {
-    setResponseForm({
-      question_id: '',
-      response_code: '',
-      response_text: ''
-    })
+    resetResponseForm()
   }
 
   return (
