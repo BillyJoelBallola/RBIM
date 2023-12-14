@@ -4,8 +4,8 @@ import { addressModel } from '../models/AddressModel.js'
 export const getAllAddress = async (req, res) => {
   try {
     const address = await addressModel.getAllAddress()
-    return res.status(HTTP_STATUS.OK).json(address);
+    return res.json({ success: true, data: address});
   } catch (error) {
-    return res.json('Internal Server Error');
+    return res.json({ success: false, message: 'Internal Server Error'});
   }
 }

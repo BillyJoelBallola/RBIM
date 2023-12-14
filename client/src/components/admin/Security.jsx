@@ -61,7 +61,7 @@ const Security = ({ title, description }) => {
       }
 
       const { data } = await axios.put("/api/user/security", securityForm)
-      if(data.user){
+      if(data.success){
         setUpdate("update")  
         resetForm()
         showToast("success", "Success", data.message + ". You are require to re-loggin to the system")
@@ -70,7 +70,7 @@ const Security = ({ title, description }) => {
           navigate("/login")
         }, [2000])
       }else{
-        return showToast("error", "Failed", data)
+        return showToast("error", "Failed", data.message)
       }
 
     } catch (error) {

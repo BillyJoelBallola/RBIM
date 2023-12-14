@@ -48,8 +48,12 @@ const UserManagement = ({ title, description }) => {
 
     const fetchAllUsers = async () => {
       const { data } = await axios.get(API)
-      const filterUsers = data.filter(user => user.username !== loggedUser.username)
-      setUsers(filterUsers || [])
+      if(data.success){
+        const filterUsers = data.data.filter(user => user.username !== loggedUser.username)
+        setUsers(filterUsers || [])
+      }else{
+        return showToast('error', 'Failed', data.message)
+      }
     }
 
     if(loggedUser?.role){
@@ -60,8 +64,10 @@ const UserManagement = ({ title, description }) => {
 
   useEffect(() => {
     const fetchAddresses = async () => {
-      const addressResponse = await axios.get("/api/address")
-      setAddress(addressResponse.data || [])
+      const { data } = await axios.get("/api/address")
+      if(data.success){
+        setAddress(data.data)
+      }
     }
     fetchAddresses()
   }, [])
@@ -97,12 +103,12 @@ const UserManagement = ({ title, description }) => {
       }
 
       const { data } = await axios.post("/api/user", { ...userForm, password: userForm.username })
-      if(data.userId){
+      if(data.success){
         resetUserForm()
         setUpdate("add")  
         return showToast("success", "Success", data.message)
       }else{
-        return showToast("error", "Failed", data)
+        return showToast("error", "Failed", data.message)
       }
       
     } catch (error) {
@@ -122,12 +128,12 @@ const UserManagement = ({ title, description }) => {
       }
 
       const { data } = await axios.put("/api/user", { ...userForm, password: userForm.username })
-      if(data.user){
+      if(data.success){
         resetUserForm()
         setUpdate("edit")  
         return showToast("success", "Success", data.message)
       }else{
-        return showToast("error", "Failed", data)
+        return showToast("error", "Failed", data.message)
       }
       
     } catch (error) {
@@ -145,14 +151,14 @@ const UserManagement = ({ title, description }) => {
   const deleteUser = async (rowData) => {
     try {
       const { data } = await axios.delete(`/api/user/${rowData?.id}`)
-      if(data){
+      if(data.success){
         showToast("success", "Success", "User deleted successfully")
       }else{
         showToast("error", "Failed", "Failed to delete user")
       }
-      setUpdate("delete user")
+      setUpdate("delete_user")
     } catch (error) {
-      return showToast("error", "Failed", "An unexpected error occurred. Please try again later.")
+      return showToast("error", "Failed", "An unexpected error occurred. Please try again later")
     }
   }
 

@@ -15,7 +15,7 @@ export const loginWeb = async (req, res) => {
     const isPasswordCorrect = bcrypt.compareSync(password.trim(), user.password);
 
     if (!isPasswordCorrect) {
-      return res.json('Incorrect Password');
+      return res.json({ success: false, message: 'Incorrect Password'});
     }
 
     const tokenPayload = { password: password, id: user.id, username: user.username, address_id: user.address_id, role: user.role };
@@ -23,9 +23,9 @@ export const loginWeb = async (req, res) => {
 
     res.cookie('rbim_token', token);
     
-    return res.status(HTTP_STATUS.OK).json('success');
+    return res.json({ success: true, message: 'Login successful'});
   } catch (error) {
-    return res.json('Internal Server Error');
+    return res.json({ success: false, message: 'Internal server error'});
   }
 };
 

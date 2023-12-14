@@ -1,5 +1,23 @@
 import db from '../dbConnect.js'
 
+const getAllResponse = async () => {
+  try {
+    const response = await new Promise((resolve, reject) => {
+      db.query('SELECT * FROM response INNER JOIN question ON response.question_id = question.id', ((error, results) => {
+        if (error) {
+          reject(error);
+        }else{
+          resolve(results);
+        }
+      }))
+    })
+
+    return response && response.length > 0 ? response : null 
+  } catch (error) {
+    throw error
+  }
+}
+
 const getResponseByQuestionId = async (questinId) => {
   try {
     const response = await new Promise((resolve, reject) => {
@@ -65,6 +83,7 @@ const removeResponse = async (responseId) => {
 }
 
 export const responseModel = {
+  getAllResponse,
   getResponseByQuestionId,
   addResponse,
   removeResponse

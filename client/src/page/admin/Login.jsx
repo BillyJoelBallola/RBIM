@@ -34,14 +34,14 @@ const Login = () => {
     }else{
       try {
         const { data } = await axios.post('/api/login', loginForm)
-        if(data === 'success') {
+        if(data.success) {
           navigate("/rbim/");
           setUpdate("logged-in")
         }else{
           return toast.current.show({
             severity: 'error',
             summary: 'Failed',
-            detail: data,
+            detail: data.message,
           });
         }
       } catch (error) {

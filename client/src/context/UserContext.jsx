@@ -11,7 +11,11 @@ export const UserContextProvider = ({ children }) => {
     const getLoggedUser = async () => {
       try {
         const { data } = await axios.get("/api/user_logged");
-        setLoggedUser(data);
+        if(data.success){
+          setLoggedUser(data.data);
+        }else{
+          setLoggedUser(null);
+        }
       } catch (error) {
         console.error("Error fetching logged user:", error);
       } finally {

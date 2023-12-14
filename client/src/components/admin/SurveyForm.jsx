@@ -36,7 +36,7 @@ const SurveyForm = ({ title, description }) => {
 
   useEffect(() => {
     axios.get("/api/questions").then(({ data }) => {
-      setQuestionData(data);
+      setQuestionData(data.data);
     }).catch((err) => {
       setQuestionData([]);
     })
@@ -79,7 +79,7 @@ const SurveyForm = ({ title, description }) => {
 
       axios.get(`/api/response/${selectedQuestion.id}`)
         .then(({ data }) => {
-          const transformedData = data ? data.map(({ id, ...rest }) => rest) : [];
+          const transformedData = data.data ? data.data.map(({ id, ...rest }) => rest) : [];
           setResponsesOfSelectedQuestions(transformedData)
         })
     }else{
@@ -135,7 +135,7 @@ const SurveyForm = ({ title, description }) => {
   const saveChanges = async () => {
     try {
       const { data } = axios.post("/api/response", { responseData: responsesOfSelectedQuestions, questionId: selectedQuestion.id })
-      if(data !== null){
+      if(data.success){
         setSelectedQuestion({
           id: '',
           code: '',
@@ -147,7 +147,7 @@ const SurveyForm = ({ title, description }) => {
         return showToast("error", "Failed", "Failed to update response, please try again")
       }
     } catch (error) {
-      return showToast("error", "Failed", "An unexpected error occurred. Please try again later.")
+      return showToast("error", "Failed", "An unexpected error occurred. Please try again later")
     }
   }
 

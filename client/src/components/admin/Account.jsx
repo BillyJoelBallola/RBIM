@@ -28,8 +28,8 @@ const Account = ({ title, description }) => {
 
   useEffect(() => {
     const fetchAddresses = async () => {
-      const addressResponse = await axios.get("/api/address")
-      setAddress(addressResponse.data || [])
+      const { data } = await axios.get("/api/address")
+      setAddress(data.success ? data.data : [])
     }
     fetchAddresses()
   }, [])
@@ -53,11 +53,11 @@ const Account = ({ title, description }) => {
       }
   
       const { data } = await axios.put("/api/user/account", accountForm)
-      if(data.user){
+      if(data.success){
         setUpdate("update")  
         return showToast("success", "Success", data.message)
       }else{
-        return showToast("error", "Failed", data)
+        return showToast("error", "Failed", data.message)
       }
       
     } catch (error) {
