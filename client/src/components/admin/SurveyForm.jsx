@@ -28,7 +28,7 @@ const SurveyForm = ({ title, description }) => {
 
   const headers = [{ key: "response_code", label: "Code" }, { key: "response_text", label: "Responses" }]
   
-  const actions = [{ label: <MdOutlineEdit />, onClick: ({idx}) => editResponse(idx) }, { label: <LuTrash2 />, onClick: ({rowData}) => deleteDialog(rowData) }]
+  const actions = [{ label: <MdOutlineEdit />, onClick: ({idx}) => editResponse(idx) }, { label: <LuTrash2 />, onClick: ({idx}) => deleteDialog(idx) }]
 
   const showToast = (severity, summary, detail) => {
     return toast.current.show({ severity: severity, summary: summary, detail: detail})
@@ -94,6 +94,14 @@ const SurveyForm = ({ title, description }) => {
 
   const handleSubmitResponse = (e) => {
     e.preventDefault()
+
+    const existingCode = responsesOfSelectedQuestions.filter(value => value.response_code === responseForm.response_code)
+
+    if(existingCode?.length > 0){
+      resetResponseForm()
+      return showToast('error', 'Failed', 'Existing response code, try other codes')
+    }
+
     if(!selectedQuestion.id) return showToast('error', 'Failed', 'Question not found, select question first')
 
     if(responseForm.response_code !== '' && responseForm.response_text !== ''){
@@ -134,7 +142,7 @@ const SurveyForm = ({ title, description }) => {
 
   const saveChanges = async () => {
     try {
-      const { data } = axios.post("/api/response", { responseData: responsesOfSelectedQuestions, questionId: selectedQuestion.id })
+      const { data } = await axios.post("/api/response", { responseData: responsesOfSelectedQuestions, questionId: selectedQuestion.id })
       if(data.success){
         setSelectedQuestion({
           id: '',
