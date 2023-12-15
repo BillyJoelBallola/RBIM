@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { addUser, getAllUserByBarangay, getAllUserById, getAllUserByRole, getAllUsers, getLoggedUser, removeUser, updateAccount, updateSecurity, updateUser } from "../controllers/UserController.js"
+import { addUser, getAllUserByBarangay, getAllUserById, getAllUserByRole, getAllUsers, getLoggedUser, getLoggedUserMobile, removeUser, updateAccount, updateSecurity, updateUser } from "../controllers/UserController.js"
 
 const route = Router()
 
@@ -8,6 +8,7 @@ route.get("/user/:id", getAllUserById)
 route.get("/user/address/:address_id", getAllUserByBarangay)
 route.get("/user/role/:role", getAllUserByRole)
 route.get("/user_logged", getLoggedUser)
+route.post("/mobile/user_logged", getLoggedUserMobile)
 route.post("/user", addUser)
 route.put("/user", updateUser)
 route.put("/user/account", updateAccount)

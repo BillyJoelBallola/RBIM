@@ -38,7 +38,7 @@ const getResponseByQuestionId = async (questinId) => {
 
 const addResponse = async (responseData, questionId) => {
   try {
-    const deleteResult = await new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       db.query('DELETE FROM response WHERE question_id = ?', [questionId], (error, result) => {
         if (error) {
           reject(error);

@@ -102,6 +102,7 @@ export const updateSecurity = async (req, res) => {
   }
 }
 
+// web
 export const getLoggedUser = async (req, res) => {
   try {
     const { rbim_token } = await req.cookies;
@@ -113,7 +114,26 @@ export const getLoggedUser = async (req, res) => {
         return res.json({ success: true, data: { id, name, username, address_id, role }});
       })
     }else{   
-      return res.json({ success: false, message: 'Unathorize access' });
+      return res.json({ success: false, message: 'Unathorized access' });
+    }
+  } catch (error) {
+    return res.json({ success: false, message: 'Internal server error'});
+  }
+}
+
+// mobile
+export const getLoggedUserMobile = async (req, res) => {
+  try {
+    const { token } = await req.body;
+    if(token){
+      jwt.verify(token, process.env.JWT_SECRET, {}, async (err, user) => {
+        if(err) throw err;
+        const userLogged = await userModel.getUserById(user.id);
+        const { id, name, username } = userLogged;
+        return res.json({ success: true, data: { id, name, username }});
+      })
+    }else{
+      return res.json({ success: false, message: 'Unathorized access' });
     }
   } catch (error) {
     return res.json({ success: false, message: 'Internal server error'});

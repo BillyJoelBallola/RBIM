@@ -10,6 +10,7 @@ import authRoutes from './routes/AuthRoutes.js'
 import questionRoutes from './routes/QuestionRoutes.js'
 import responseRoutes from './routes/ResponseRoutes.js'
 import addressRoutes from './routes/AddressRoutes.js'
+import surveyFormRoutes from './routes/SurveyFormRoutes.js'
 
 const app = express()
 app.use(express.json())
@@ -24,6 +25,7 @@ app.use("/api", authRoutes)
 app.use("/api", questionRoutes)
 app.use("/api", responseRoutes)
 app.use("/api", addressRoutes)
+app.use("/api", surveyFormRoutes)
 
 const PORT = process.env.SERVER_PORT || 4000;
 

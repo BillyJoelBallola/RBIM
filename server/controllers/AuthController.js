@@ -9,7 +9,7 @@ export const loginWeb = async (req, res) => {
     const user = await authModel.getUserByUsername(username);
 
     if(!user || user?.role === 'health_worker') {
-      return res.json('User not found');
+      return res.json({ success: false, message: 'User not found'});
     }
 
     const isPasswordCorrect = bcrypt.compareSync(password.trim(), user.password);
@@ -23,11 +23,36 @@ export const loginWeb = async (req, res) => {
 
     res.cookie('rbim_token', token);
     
-    return res.json({ success: true, message: 'Login successful'});
+    return res.json({ success: true, message: 'Login successfull'});
   } catch (error) {
     return res.json({ success: false, message: 'Internal server error'});
   }
 };
+
+// login for mobile
+export const loginMobile = async (req, res) => {
+  try {
+    const { username, password } = await req.body;
+    const user = await authModel.getUserByUsername(username);
+  
+    if(!user || user?.role !== 'health_worker') {
+      return res.json({ success: false, message: 'User not found'});
+    }
+    
+    const isPasswordCorrect = bcrypt.compareSync(password.trim(), user.password);
+
+    if (!isPasswordCorrect) {
+      return res.json({ success: false, message: 'Incorrect Password'});
+    }
+
+    const payload = { username: user.username, name: user.name, id: user.id }
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {});
+
+    return res.json({ success: true, token: token, message: 'Login successfull'});
+  } catch (error) {
+    return res.json({ success: false, message: 'Internal server error'});
+  }
+}
 
 export const logout = (req, res) => {
 	res.cookie("rbim_token", "").json(true);
