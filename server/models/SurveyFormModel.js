@@ -5,13 +5,31 @@ const convertData = (originalData, householdId) => {
 
   originalData.forEach(array => {
     array.forEach((item) => {
-      const { question, response } = item;
-      result.push([ householdId, question, response ]);
+      const { memberNo, question, response } = item;
+      result.push([ householdId, memberNo, question, response ]);
     });
   });
 
   return result;
 };
+
+const getAllSurvey = async () => {
+  try {
+    const surveyFormsResults = await new Promise(( resolve, reject ) => {
+      db.query('SELECT * FROM `survey_form`', ((error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      }))
+    })
+
+    return surveyFormsResults && surveyFormsResults.length > 0 ? surveyFormsResults : null
+  } catch (error) {
+    throw error
+  }
+}
 
 const addSurveyForm = async ({ household, surveyForm, questionsAndResponses }) => {
   try {
@@ -41,7 +59,7 @@ const addSurveyForm = async ({ household, surveyForm, questionsAndResponses }) =
 
     const questionsAnsResponsesResult = await new Promise(( resolve, reject ) => {
       const newQuestionsAndResponses = convertData(questionsAndResponses, householdResult)
-      db.query('INSERT INTO `question_response`(`household_id`, `question`, `response`) VALUES ?', 
+      db.query('INSERT INTO `question_response`(`household_id`, `member_no`, `question`, `response`) VALUES ?', 
       [newQuestionsAndResponses], 
       (( error, result ) => {
         if (error) {
@@ -58,7 +76,28 @@ const addSurveyForm = async ({ household, surveyForm, questionsAndResponses }) =
   }
 }
 
-export const surveyFormModel = {
-  addSurveyForm
+const getSurveyFormById = async ({ surveyFormId }) => {
+  try {
+    const surveyFormResult = await new Promise(( resolve, reject ) => {
+      db.query('SELECT * FROM survey_form JOIN household ON survey_form.id = household.survey_form_id JOIN question_response ON household.id = question_response.household_id WHERE survey_form.id = ?', 
+      [surveyFormId],
+      ((error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      }))
+    })
+    
+    return surveyFormResult && surveyFormResult.length > 0 ? surveyFormResult : null
+  } catch (error) {
+    throw error
+  }
 }
 
+export const surveyFormModel = {
+  getAllSurvey,
+  addSurveyForm,
+  getSurveyFormById
+} 

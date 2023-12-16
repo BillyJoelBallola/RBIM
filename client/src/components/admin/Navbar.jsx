@@ -48,18 +48,10 @@ const Navbar = () => {
           {
             operationLinks?.map((link, idx) => (
               <li key={idx}>
-                {
-                  link.path ?  
-                  <NavLink to={link.path} className="text-sm flex gap-2 items-center text-white duration-150 bg-transparent py-2 px-6 hover:bg-[#004303]">
-                    {link.icon}
-                    {link.label}
-                  </NavLink>
-                  :
-                  <button onClick={logout} className="w-full text-sm flex gap-2 items-center text-white hover:bg-[#004303] duration-150 py-2 px-6">
-                    {link.icon}
-                    {link.label}
-                  </button>
-                }
+                <NavLink to={link.path} className="text-sm flex gap-2 items-center text-white duration-150 bg-transparent py-2 px-6 hover:bg-[#004303]">
+                  {link.icon}
+                  {link.label}
+                </NavLink>
               </li>
             ))
           }
@@ -69,7 +61,7 @@ const Navbar = () => {
               moreLinks?.map((link, idx) => (
                 <li key={idx}>
                   <button 
-                    onClick={() => {
+                    onClick={link.label === 'Logout' ? () => logout() : () => {
                       setVisible(current => !current)
                       setDialogContent(idx);
                     }} 
