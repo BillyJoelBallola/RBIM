@@ -10,6 +10,7 @@ import { UserContextProvider } from './context/UserContext.jsx'
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
 import "primereact/resources/primereact.min.css";    
 import './index.css'
+import { SurveyFormContextProvider } from './context/SurveyFormContext.jsx'
 
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -18,9 +19,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <UserContextProvider>
       <NavigationContextProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <SurveyFormContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </SurveyFormContextProvider>
       </NavigationContextProvider>
     </UserContextProvider>
   </React.StrictMode>,

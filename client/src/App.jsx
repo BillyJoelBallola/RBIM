@@ -13,6 +13,7 @@ import CitizenInformation from "./page/admin/CitizenInformation"
 import Reports from "./page/admin/Reports"
 import AdminActivities from "./page/admin/Activities"
 import Settings from "./page/admin/Settings"
+import SurveyForm from "./page/admin/SurveyForm"
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route path="/rbim/" element={<AdminLayout />}>
         <Route path="/rbim/" element={<Dashboard />} />
         <Route path="/rbim/citizen-information" element={<CitizenInformation />} />
+        <Route path="/rbim/survey_form/:form/:id?" element={<SurveyForm />} />
         <Route path="/rbim/reports" element={<Reports />} />
         <Route path="/rbim/activities" element={<AdminActivities />} />
         <Route path="/rbim/settings/:path?" element={<Settings />} />

@@ -1,6 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import moment from 'moment'
+import axios from 'axios';
 
 const CustomTable = ({ headers, data, actions }) => {
+  const [address, setAddress] = useState([])
+
+  useEffect(() => {
+    const fetchAddress = async () => {
+      const { data } = await axios.get('/api/address')
+      if(data.success){
+        setAddress(data.data)
+      }
+    }
+
+    fetchAddress()
+  }, [])
+
+  const addressFormat = (rowData) => {
+    const addressInfo = address?.find(item => item.id === rowData)
+    return addressInfo ? `${addressInfo.barangay}, ${addressInfo.municipal}, ${addressInfo.province}` : '---'
+  }
+
+  const dateFormat = (rowData) => {
+    return rowData !== '0000-00-00' ? moment(rowData).format('l') : 'mm/dd/yyyy';
+  }
+
   return (
     <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
       <div className="inline-block min-w-full">
@@ -26,9 +50,15 @@ const CustomTable = ({ headers, data, actions }) => {
                   <tr className="border-b" key={idx}>
                     {headers?.map((header, index) => (
                       <td className="px-6 py-4 whitespace-nowrap" key={index}>
-                        {rowData[header.key]}
+                        {
+                          header.key.includes('address') ?
+                          addressFormat(rowData[header.key]) :
+                          header.key.includes('date') ?
+                          dateFormat(rowData[header.key]) :
+                          rowData[header.key]
+                        }
                       </td>
-                    ))}
+                    ))} 
                     {actions && (
                       <td className="px-6 py-4 whitespace-nowrap flex gap-2 justify-center">
                         {actions.map((action, actionIdx) => (

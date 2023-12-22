@@ -1,14 +1,15 @@
 import React from 'react'
 import { Dialog } from 'primereact/dialog';
 
-const CustomDialog = ({ header, visible, setVisible, content }) => {
+const CustomDialog = ({ classStyle, header, visible, setVisible, content, footer }) => {
   return (
     <Dialog 
       header={header}
       visible={visible} 
-      style={{ width: '50vw' }} 
+      className={`${classStyle ? classStyle : 'w-[50vw]'}`} 
       onHide={() => setVisible(false)}
       draggable={false}
+      footer={footer}
     >
       {content}
     </Dialog>

@@ -11,7 +11,9 @@ body,
 input[type="text"],
 input[type="month"],
 input[type="password"],
+input[type="number"],
 input[type="date"],
+input[type="time"],
 input[type="search"],
 select{
   @apply border border-gray-500 rounded-md px-3 py-1 outline-0;

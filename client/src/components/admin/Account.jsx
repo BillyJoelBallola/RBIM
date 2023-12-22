@@ -83,14 +83,14 @@ const Account = ({ title, description }) => {
           </div>
           <div className='mt-2'>
             <span className='text-md font-semibold text-gray-600'>Address</span>
-            <div className="form-group">
-              <label htmlFor="barangay">Barangay</label>
+            <div className="form-group mt-2">
+              <label htmlFor="barangay">Barangay, Municipal, Province</label>
               <select name="address_id" id="barangay" value={accountForm.address_id} onChange={handleInput}>
                 <option value="">-- select barangay --</option>
                 {
                   address &&
                   address?.map((address) => (
-                    <option value={address.id} key={address.id}>{address.barangay}</option>
+                    <option value={address.id} key={address.id}>{address.barangay}, {address.municipal}, {address.province}</option>
                   ))
                 }
               </select>

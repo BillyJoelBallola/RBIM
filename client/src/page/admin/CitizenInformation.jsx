@@ -1,71 +1,59 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/admin/Header'
-import { barangay } from '../../static/Geography'
+import { useNavigate } from 'react-router-dom'
 import CustomTable from '../../components/admin/CustomTable'
+import { barangay } from '../../static/Geography'
+import axios from 'axios'
 
-const data = [
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  }
-]
+import { MdOutlineEdit } from "react-icons/md";
+import { MdOpenInNew } from "react-icons/md";
+import { LuTrash2 } from "react-icons/lu";
 
 const headers = [
   {
-    key: 'name',
-    label: "Name",
+    key: 'respondent_name',
+    label: "Respondent Name",
   },
   {
     key: 'address',
     label: "Address",
-  }
+  },
+  {
+    key: 'first_visit_date',
+    label: "First Visit",
+  },
+  {
+    key: 'second_visit_date',
+    label: "Second Visit",
+  },
 ]
 
+// TODO: functions for this table
 const CitizenInformation = () => {
+  const navigate = useNavigate()
+  const [surveyForms, setSurveyForm] = useState([])
+  const actions = [
+    { 
+      label: <MdOutlineEdit />, 
+      onClick: ({rowData}) => navigate(`/rbim/survey_form/form1/${rowData.survey_form_id}`)
+    }, 
+    { 
+      label: <LuTrash2 />, 
+      onClick: ({rowData}) => console.log(rowData)
+    }
+  ]
+  
+  useEffect(() => {
+    const fetchSurveyForms = async () => {
+      const { data } = await axios.get('/api/survey_forms')
+      if(data.success){
+        setSurveyForm(data.data)
+      }
+    }
+
+    fetchSurveyForms()
+  }, [])
+
   return (
     <>
       <Header pageName={"Citizen Information"} />
@@ -73,10 +61,10 @@ const CitizenInformation = () => {
         <div className='flex items-center justify-between flex-wrap gap-4'>
           <div className='flex gap-4 items-center flex-wrap'>
             <div className="form-group">
-              <label htmlFor="search">Search Citizen</label>
+              <label htmlFor="search">Search Name</label>
               <input type="text" id='search' placeholder='Type to search'/>
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label htmlFor="month">Year</label>
               <input type="month" id="month" />
             </div>
@@ -90,13 +78,12 @@ const CitizenInformation = () => {
                   ))
                 }
               </select>
-            </div>
+            </div> */}
           </div>
-          <button className='self-end rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>ADD NEW</button>
         </div>
         <div className='my-6'>
-          <p className='text-gray-400 mb-4'>Filter, view, add, edit, delete citizen information</p>
-          <CustomTable headers={headers} data={data} />
+          <p className='text-gray-400 mb-4'>Manage citizen information</p>
+          <CustomTable headers={headers} data={surveyForms} actions={actions}/>
         </div>
       </div>
     </>
