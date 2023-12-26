@@ -4,10 +4,9 @@ const convertData = (originalData, householdId) => {
   const result = [];
 
   originalData.forEach(array => {
-    array.forEach((item) => {
-      const { memberNo, question, response } = item;
-      result.push([ householdId, memberNo, question, response ]);
-    });
+    if(array.length > 0){
+      result.push([ householdId, ...array ]);
+    }
   });
 
   return result;
@@ -57,11 +56,11 @@ const addSurveyForm = async ({ household, surveyForm, questionsAndResponses }) =
         }
       }))
     })
-
+    
     const questionsAnsResponsesResult = await new Promise(( resolve, reject ) => {
-      const newQuestionsAndResponses = convertData(questionsAndResponses, householdResult)
-      db.query('INSERT INTO `question_response`(`household_id`, `member_no`, `question`, `response`) VALUES ?', 
-      [newQuestionsAndResponses], 
+      const arrayWithHouseholdId = convertData(questionsAndResponses, householdResult)
+      db.query('INSERT INTO `questions_and_response`(`household_id`, `member_no`, `Q1`, `Q2`, `Q3`, `Q4`, `Q5`, `Q6`, `Q7`, `Q8`, `Q9`, `Q10`, `Q11`, `Q12`, `Q13`, `Q14`, `Q15`, `Q16`, `Q17`, `Q18`, `Q19`, `Q20`, `Q21`, `Q22`, `Q23`, `Q24`, `Q25`, `Q26`, `Q27`, `Q28`, `Q29`, `Q30`, `Q31`, `Q32`, `Q33`, `Q34`, `Q35`, `Q36`, `Q37`, `Q38A`, `Q38B`, `Q38C`, `Q39`, `Q40A`, `Q40B`, `Q40C`, `Q41`, `Q42A`, `Q42B`, `Q43`, `Q44`, `Q45`, `Q46`, `Q47`, `Q48`, `Q49`, `Q50A`, `Q50B`, `Q51`, `Q52`, `Q53`, `Q54`, `Q55`, `Q56`, `Q57`, `Q58`) VALUES ?', 
+      [arrayWithHouseholdId], 
       (( error, result ) => {
         if (error) {
           reject(error);
@@ -79,8 +78,20 @@ const addSurveyForm = async ({ household, surveyForm, questionsAndResponses }) =
 
 const getSurveyFormById = async (surveyFormId) => {
   try {
+    // const surveyFormResult = await new Promise(( resolve, reject ) => {
+    //   db.query('SELECT DISTINCT `survey_form`.*, `household`.*, `address`.*, `question_response`.* FROM `survey_form` INNER JOIN `household` ON `survey_form`.`id` = `household`.`survey_form_id` INNER JOIN `question_response` ON `household`.`id` = `question_response`.`household_id` INNER JOIN `address` ON `address`.`id` = `household`.`address` WHERE `survey_form`.`id` = ?', 
+    //   [surveyFormId],
+    //   ((error, result) => {
+    //     if (error) {
+    //       reject(error);
+    //     } else {
+    //       resolve(result);
+    //     }
+    //   }))
+    // })
+    
     const surveyFormResult = await new Promise(( resolve, reject ) => {
-      db.query('SELECT DISTINCT `survey_form`.*, `household`.*, `address`.*, `question_response`.* FROM `survey_form` INNER JOIN `household` ON `survey_form`.`id` = `household`.`survey_form_id` INNER JOIN `question_response` ON `household`.`id` = `question_response`.`household_id` INNER JOIN `address` ON `address`.`id` = `household`.`address` WHERE `survey_form`.`id` = ?', 
+      db.query('SELECT DISTINCT `survey_form`.*, `household`.*, `address`.*, `question_and_response`.* FROM `survey_form` INNER JOIN `household` ON `survey_form`.`id` = `household`.`survey_form_id` INNER JOIN `question_and_response` ON `household`.`id` = `question_and_response`.`household_id` INNER JOIN `address` ON `address`.`id` = `household`.`address` WHERE `survey_form`.`id` = ?', 
       [surveyFormId],
       ((error, result) => {
         if (error) {
