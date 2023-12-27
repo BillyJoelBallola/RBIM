@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { authModel } from "../models/AuthModel.js";
-import { HTTP_STATUS } from '../helper/httpStatus.js';
 
 export const loginWeb = async (req, res) => {
   try {

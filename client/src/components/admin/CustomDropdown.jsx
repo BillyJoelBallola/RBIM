@@ -80,12 +80,6 @@ const CustomDropdown = ({ options, selected, onSelect, width }) => {
     }
   
     return position;
-
-    // if (spaceBelow < 400 && spaceAbove > spaceBelow) {
-    //   return { top: 'auto', bottom: '100%', maxHeight: spaceAbove - 10, overflowY: 'auto' };
-    // } else {
-    //   return { top: '100%', bottom: 'auto', maxHeight: spaceBelow - 10, overflowY: 'auto' };
-    // }
   };
 
   return (

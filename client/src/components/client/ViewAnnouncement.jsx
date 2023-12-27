@@ -4,6 +4,7 @@ import moment from 'moment'
 const ViewAnnouncement = () => {
   return (
     <div>
+      <div className='w-full h-[250px] bg-gray-400 rounded-lg mb-5' />
       <h2 className='font-semibold text-lg'>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</h2>
       <div className='flex items-center text-gray-400 gap-2 text-sm my-2'>
         <span>Ibabang Butnong • {moment(new Date()).format("ll")}</span>

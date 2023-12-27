@@ -24,6 +24,14 @@ const SurveyForm = () => {
   const [visible, setVisible] = useState(false)
   const [update, setUpdate] = useState(null)
 
+  const alertMessage = (severity, summary, detail) => {
+    return toast.current.show({
+      severity: severity,
+      summary: summary,
+      detail: detail,
+    });
+  }
+
   const navigateRoutes = (form) => {
     navigate(`${pathname}/${form}/${formId}`)
   }
@@ -88,6 +96,26 @@ const SurveyForm = () => {
 
   const saveChanges = async () => {
     try {
+      const filledArrayResponses = questionsAndResponsesArray.filter(array => array.length > 0)
+
+      if (Object.values(household)?.some(answer => answer === '')) {
+        return alertMessage('error', 'Failed', "Household Information: Submission failed, don't leave empty fields.")
+      }else if (Object.keys(surveyForm).filter((response, idx) => idx >= 0 && idx <= 6).some(response => response === '')) {
+        return alertMessage('error', 'Failed', "Surveform Information: Submission failed, don't leave empty fields.")
+      }else if (filledArrayResponses.length > 0){
+        if(filledArrayResponses[0].some(response => response === '' || filledArrayResponses[0].length < 50)){
+          return alertMessage('error', 'Failed', "Household Questions: Submission failed, don't leave empty fields.")
+        }
+  
+        for(let i = 1; i <= 10; i++){
+          if(filledArrayResponses[i]?.length > 0){
+            if(filledArrayResponses[i].some(response => response === '')){
+              return alertMessage('error', 'Failed', "Household Members: Submission failed, don't leave empty fields.")
+            }
+          }
+        }
+      }
+
       const { data } = await axios.put('/api/survey_form', { questionsAndResponses: questionsAndResponsesArray, household, surveyForm }) 
       if(data.success){
         setUpdate('updated')
@@ -146,6 +174,8 @@ const SurveyForm = () => {
         <div className='content'>
           <div className='pt-4 pb-3 flex gap-2'>
             <button className='bg-gray-600 text-white py-2 px-4 rounded-md' onClick={() => navigate('/rbim/citizen-information')}>Cancel</button>
+            <button className='bg-gray-500 text-white py-2 px-4 rounded-md' onClick={() => ''}>Print</button>
+            <button className='bg-gray-500 text-white py-2 px-4 rounded-md' onClick={() => ''}>Download</button>
             <button className='bg-[#008605] text-white py-2 px-4 rounded-md' onClick={() => setVisible(true)}>Save Changes</button>
           </div>
           {

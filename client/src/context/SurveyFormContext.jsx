@@ -99,8 +99,9 @@ export const SurveyFormContextProvider = ({ children }) => {
     if(response.length > 0){
       response.forEach(item => {
         if(item.member_no === memberNo){
-          const { id, household_id, member_no, question, response } = item
-          result.push({ id, household_id, member_no, question, response })
+          const responseKeys = Object.keys(item).filter(itemKey => itemKey.includes('Q'))
+          const valuesOfFilteredKeys = responseKeys.map(filteredKey => item[filteredKey]);
+          result.push(...valuesOfFilteredKeys, item.id)
         }
       })
     }

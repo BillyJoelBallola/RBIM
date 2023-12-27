@@ -65,10 +65,9 @@ const questionHeader = [
 ]
 
 const Form3 = ({ navigate, questions}) => {
-  const { membersData, questionsAndResponses, household, handleInputChange } = useContext(SurveyFormContext)
+  const { membersData, questionsAndResponses, handleInputChange } = useContext(SurveyFormContext)
   const newQuestions = questions?.filter(question => (question.id >= 15 && question.id <= 25))
   const filteredQuestions = [[{ question_text: 'Copy from previous response' }, { question_text: '' }, { question_text: '' }], newQuestions].flat()
-  const { household_id } = household
 
   return (
     <div className='py-4 grid gap-6'>
@@ -136,7 +135,7 @@ const Form3 = ({ navigate, questions}) => {
                             <td className="p-2 whitespace-nowrap text-center border">{idx + 1}</td>
                             <td className='p-2'>
                               <input type="text" 
-                                value={member?.questionsAndAnswer[0]?.response ?? ''} 
+                                value={member?.questionsAndAnswer[0] || ''} 
                                 disabled
                               />
                             </td>
@@ -144,7 +143,7 @@ const Form3 = ({ navigate, questions}) => {
                               <select 
                                 disabled
                                 className='w-28'
-                                value={member?.questionsAndAnswer[2]?.response ?? ''} 
+                                value={member?.questionsAndAnswer[2] || ''} 
                               >
                                 <option value="">select</option>
                                 {
@@ -158,24 +157,18 @@ const Form3 = ({ navigate, questions}) => {
                               <input type="number" 
                                 disabled
                                 className='w-14'
-                                value={member?.questionsAndAnswer[3]?.response ?? ''}
+                                value={member?.questionsAndAnswer[3] || ''}
                               />
                             </td>
                             <td className='p-2'>
                               <input 
                                 type="text" 
                                 className='w-full'
-                                value={member?.questionsAndAnswer[14]?.response ?? ''} 
+                                value={member?.questionsAndAnswer[14] || ''} 
                                 onChange={(e) => 
                                   handleInputChange(
                                     14, 
-                                    { 
-                                      id: member?.questionsAndAnswer[14]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q15', 
-                                      response: e.target.value
-                                    }, 
+                                    e.target.value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)}
                               />
@@ -184,17 +177,11 @@ const Form3 = ({ navigate, questions}) => {
                               <CustomDropdown
                                 width={'w-36'}
                                 options={questionsAndResponses['Q16']?.responses}
-                                selected={member?.questionsAndAnswer[15]?.response || null}
+                                selected={member?.questionsAndAnswer[15] || null}
                                 onSelect={(value) => 
                                   handleInputChange(
                                     15, 
-                                    { 
-                                      id: member?.questionsAndAnswer[15]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q16', 
-                                      response: value
-                                    }, 
+                                    value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)
                                 }
@@ -204,17 +191,11 @@ const Form3 = ({ navigate, questions}) => {
                               <CustomDropdown
                                 width={'w-40'}
                                 options={questionsAndResponses['Q17']?.responses}
-                                selected={member?.questionsAndAnswer[16]?.response || null}
+                                selected={member?.questionsAndAnswer[16] || null}
                                 onSelect={(value) => 
                                   handleInputChange(
                                     16, 
-                                    { 
-                                      id: member?.questionsAndAnswer[16]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q17', 
-                                      response: value
-                                    }, 
+                                    value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)
                                 }
@@ -224,17 +205,11 @@ const Form3 = ({ navigate, questions}) => {
                               <input 
                                 type="text" 
                                 className='w-full'
-                                value={member?.questionsAndAnswer[17]?.response ?? ''} 
+                                value={member?.questionsAndAnswer[17] || ''} 
                                 onChange={(e) => 
                                   handleInputChange(
                                     17, 
-                                    { 
-                                      id: member?.questionsAndAnswer[17]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q18', 
-                                      response: e.target.value
-                                    }, 
+                                    e.target.value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)}  
                               />
@@ -243,17 +218,11 @@ const Form3 = ({ navigate, questions}) => {
                               <CustomDropdown
                                 width={'w-40'}
                                 options={questionsAndResponses['Q19']?.responses}
-                                selected={member?.questionsAndAnswer[18]?.response || null}
+                                selected={member?.questionsAndAnswer[18] || null}
                                 onSelect={(value) => 
                                   handleInputChange(
                                     18, 
-                                    { 
-                                      id: member?.questionsAndAnswer[18]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q19', 
-                                      response: value
-                                    }, 
+                                    value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)
                                 }
@@ -263,17 +232,11 @@ const Form3 = ({ navigate, questions}) => {
                               <CustomDropdown
                                 width={'w-40'}
                                 options={questionsAndResponses['Q20']?.responses}
-                                selected={member?.questionsAndAnswer[19]?.response || null}
+                                selected={member?.questionsAndAnswer[19] || null}
                                 onSelect={(value) => 
                                   handleInputChange(
                                     19, 
-                                    { 
-                                      id: member?.questionsAndAnswer[19]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q20', 
-                                      response: value
-                                    }, 
+                                    value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)
                                 }
@@ -282,17 +245,11 @@ const Form3 = ({ navigate, questions}) => {
                             <td className='p-2'>
                               <input 
                                 type="text" 
-                                value={member?.questionsAndAnswer[20]?.response ?? ''} 
+                                value={member?.questionsAndAnswer[20] || ''} 
                                 onChange={(e) => 
                                   handleInputChange(
                                     20, 
-                                    { 
-                                      id: member?.questionsAndAnswer[20]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q21', 
-                                      response: e.target.value
-                                    }, 
+                                    e.target.value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)}  
                               />
@@ -300,17 +257,11 @@ const Form3 = ({ navigate, questions}) => {
                             <td className='p-2'>
                               <input 
                                 type="text" 
-                                value={member?.questionsAndAnswer[21]?.response ?? ''} 
+                                value={member?.questionsAndAnswer[21] || ''} 
                                 onChange={(e) => 
                                   handleInputChange(
                                     21, 
-                                    { 
-                                      id: member?.questionsAndAnswer[21]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q22', 
-                                      response: e.target.value
-                                    }, 
+                                    e.target.value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)}  
                               />
@@ -319,17 +270,11 @@ const Form3 = ({ navigate, questions}) => {
                               <CustomDropdown
                                 width={'w-40'}
                                 options={questionsAndResponses['Q23']?.responses}
-                                selected={member?.questionsAndAnswer[22]?.response || null}
+                                selected={member?.questionsAndAnswer[22] || null}
                                 onSelect={(value) => 
                                   handleInputChange(
                                     22, 
-                                    { 
-                                      id: member?.questionsAndAnswer[22]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q23', 
-                                      response: value
-                                    }, 
+                                    value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)
                                 }
@@ -339,17 +284,11 @@ const Form3 = ({ navigate, questions}) => {
                               <CustomDropdown
                                 width={'w-40'}
                                 options={questionsAndResponses['Q24']?.responses}
-                                selected={member?.questionsAndAnswer[23]?.response || null}
+                                selected={member?.questionsAndAnswer[23] || null}
                                 onSelect={(value) => 
                                   handleInputChange(
                                     23, 
-                                    { 
-                                      id: member?.questionsAndAnswer[23]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q24', 
-                                      response: value
-                                    }, 
+                                    value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)
                                 }
@@ -359,17 +298,11 @@ const Form3 = ({ navigate, questions}) => {
                               <input 
                                 className='w-40'
                                 type="text" 
-                                value={member?.questionsAndAnswer[24]?.response ?? ''} 
+                                value={member?.questionsAndAnswer[24] || ''} 
                                 onChange={(e) => 
                                   handleInputChange(
                                     24, 
-                                    { 
-                                      id: member?.questionsAndAnswer[24]?.id,
-                                      household_id: household_id,
-                                      member_no: idx + 1,
-                                      question: 'Q25', 
-                                      response: e.target.value
-                                    }, 
+                                    e.target.value, 
                                     member?.questionsAndAnswer, 
                                     member.setQuestionAndAnswer)} 
                               />

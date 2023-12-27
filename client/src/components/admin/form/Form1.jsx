@@ -84,7 +84,7 @@ const Form1 = ({ navigate }) => {
                 type="text" 
                 id='respondent_name' 
                 name='respondent_name' 
-                value={household.respondent_name ?? ''} 
+                value={household.respondent_name || ''} 
                 onChange={handleInputChangeForHousehold}
               />
             </div>
@@ -94,7 +94,7 @@ const Form1 = ({ navigate }) => {
                 type="text" 
                 id='household_head' 
                 name='household_head' 
-                value={household.household_head ?? ''} 
+                value={household.household_head || ''} 
                 onChange={handleInputChangeForHousehold}
               />
             </div>
@@ -104,7 +104,7 @@ const Form1 = ({ navigate }) => {
                 type="number" 
                 id='household_member_no' 
                 name='household_member_no' 
-                value={household.household_member_no ?? ''} 
+                value={household.household_member_no || ''} 
                 onChange={handleInputChangeForHousehold}
               />
             </div>
@@ -116,7 +116,7 @@ const Form1 = ({ navigate }) => {
                 type="text" 
                 id='street' 
                 name='street' 
-                value={household.street ?? ''} 
+                value={household.street || ''} 
                 onChange={handleInputChangeForHousehold}
               />
             </div>
@@ -126,7 +126,7 @@ const Form1 = ({ navigate }) => {
                 type="number" 
                 id='unit_no' 
                 name='unit_no' 
-                value={household.unit_no ?? ''} 
+                value={household.unit_no || ''} 
                 onChange={handleInputChangeForHousehold}
               />
             </div>
@@ -136,7 +136,7 @@ const Form1 = ({ navigate }) => {
                 type="number" 
                 id='house_no' 
                 name='house_no' 
-                value={household.house_no ?? ''} 
+                value={household.house_no || ''} 
                 onChange={handleInputChangeForHousehold}
               />
             </div>
@@ -146,7 +146,7 @@ const Form1 = ({ navigate }) => {
             <select 
               name="address" 
               id="address"
-              value={household.address ?? ''} 
+              value={household.address || ''} 
               onChange={handleInputChangeForHousehold}
             >
               <option value="">-- select --</option>
@@ -192,24 +192,26 @@ const Form1 = ({ navigate }) => {
                     </td>
                     <td className="px-2 py-2 whitespace-nowrap">
                       <input 
+                        className='w-full'
                         type="time" 
                         name='first_visit_time_start'
-                        value={surveyForm.first_visit_time_start ?? ''}
+                        value={surveyForm?.first_visit_time_start || ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
                     <td className="px-2 py-2 whitespace-nowrap">
                       <input 
+                        className='w-full'
                         type="time" 
                         name='first_visit_time_end'
-                        value={surveyForm.first_visit_time_end ?? ''}
+                        value={surveyForm.first_visit_time_end || ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
                     <td className="px-2 py-2 whitespace-nowrap">
                       <select 
                         name="first_visit_result"
-                        value={surveyForm.first_visit_result ?? ''}
+                        value={surveyForm.first_visit_result || ''}
                         onChange={handleInputChangeForSurveyForm}
                       >
                         <option value="">select</option>
@@ -230,7 +232,7 @@ const Form1 = ({ navigate }) => {
                       <input 
                         type="text" 
                         name='first_visit_interviewer'
-                        value={surveyForm.first_visit_interviewer ?? ''}
+                        value={surveyForm.first_visit_interviewer || ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -238,7 +240,7 @@ const Form1 = ({ navigate }) => {
                       <input 
                         type="text" 
                         name='first_visit_supervisor'
-                        value={surveyForm.first_visit_supervisor ?? ''}
+                        value={surveyForm.first_visit_supervisor || ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -259,7 +261,7 @@ const Form1 = ({ navigate }) => {
                         className='w-full'
                         type="time" 
                         name='second_visit_time_start'
-                        value={surveyForm.second_visit_time_start ?? ''}
+                        value={surveyForm.second_visit_time_start || ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -268,14 +270,14 @@ const Form1 = ({ navigate }) => {
                         type="time" 
                         className='w-full'
                         name='second_visit_time_end'
-                        value={surveyForm.second_visit_time_end ?? ''}
+                        value={surveyForm.second_visit_time_end || ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
                     <td className="px-2 py-2 whitespace-nowrap">
                       <select 
                         name="second_visit_result"
-                        value={surveyForm.second_visit_result ?? ''}
+                        value={surveyForm.second_visit_result || ''}
                         onChange={handleInputChangeForSurveyForm}
                       >
                         <option value="">select</option>
@@ -296,7 +298,7 @@ const Form1 = ({ navigate }) => {
                       <input 
                         type="text" 
                         name='second_visit_interviewer'
-                        value={surveyForm.second_visit_interviewer ?? ''}
+                        value={surveyForm.second_visit_interviewer || ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -304,7 +306,7 @@ const Form1 = ({ navigate }) => {
                       <input 
                         type="text" 
                         name='second_visit_supervisor'
-                        value={surveyForm.second_visit_supervisor ?? ''}
+                        value={surveyForm.second_visit_supervisor || ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -334,7 +336,7 @@ const Form1 = ({ navigate }) => {
             <input 
               type="text"
               id='encoder_name' 
-              value={surveyForm.encoder_name ?? ''}
+              value={surveyForm.encoder_name || ''}
               onChange={handleInputChangeForSurveyForm}
             />
           </div>
@@ -343,7 +345,7 @@ const Form1 = ({ navigate }) => {
             <input 
               type="text" 
               id='supervisor_name' 
-              value={surveyForm.supervisor_name ?? ''}
+              value={surveyForm.supervisor_name || ''}
               onChange={handleInputChangeForSurveyForm}
             />
           </div>

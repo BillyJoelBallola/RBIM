@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../components/admin/Header'
 import { useNavigate } from 'react-router-dom'
 import CustomTable from '../../components/admin/CustomTable'
+import { UserContext } from '../../context/UserContext'
 import { barangay } from '../../static/Geography'
 import axios from 'axios'
 
@@ -32,6 +33,7 @@ const headers = [
 const CitizenInformation = () => {
   const navigate = useNavigate()
   const [surveyForms, setSurveyForm] = useState([])
+  const { loggedUser } = useContext(UserContext)
   const actions = [
     { 
       label: <MdOutlineEdit />, 
@@ -47,12 +49,14 @@ const CitizenInformation = () => {
     const fetchSurveyForms = async () => {
       const { data } = await axios.get('/api/survey_forms')
       if(data.success){
-        setSurveyForm(data.data)
+        const response = data.data
+        const filteredSurveyForms = loggedUser?.role !== 'administrator' ? response.filter(data => data.address === loggedUser?.address_id) : response
+        setSurveyForm(filteredSurveyForms)
       }
     }
 
     fetchSurveyForms()
-  }, [])
+  }, [loggedUser])
 
   return (
     <>
