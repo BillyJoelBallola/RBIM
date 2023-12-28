@@ -96,7 +96,7 @@ const CustomDropdown = ({ options, selected, onSelect, width }) => {
           style={{ ...calculateDropdownPosition() }}
         >
           {options.map((option, index) => (
-            <li key={index} onClick={() => handleSelectOption(option.responseCode)}>
+            <li key={index} onClick={() => handleSelectOption(option.responseCode)} className='cursor-pointer'>
               {option.responseCode} - {option.responseText}
             </li>
           ))}

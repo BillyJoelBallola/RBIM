@@ -144,6 +144,7 @@ const Form1 = ({ navigate }) => {
           <div className="form-group">
             <label htmlFor="address">Barangay, Municipal/City, Province</label>
             <select 
+              disabled
               name="address" 
               id="address"
               value={household.address || ''} 

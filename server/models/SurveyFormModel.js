@@ -2,15 +2,17 @@ import db from '../dbConnect.js'
 
 const convertData = (originalData, householdId) => {
   const result = [];
-  const filler = Array(15).fill(null)
-
-  originalData.forEach(array => {
-    if(array.length === 65){
-      result.push([ householdId, ...array ]);
-    }
-
-    if(array.length === 50){
-      result.push([ householdId, ...array, ...filler ])
+  
+  originalData.forEach((array) => {
+    if(array.length > 0){
+      if(array.length === 65){
+        result.push([ householdId, ...array ])
+      }
+  
+      if(array.length < 65){
+        const fillerArr = Array(65 - array.length).fill(null)
+        result.push([ householdId, ...array, ...fillerArr ])
+      }
     }
   });
 
@@ -199,7 +201,7 @@ export const updateSurveyForm = async ({ household, surveyForm, questionsAndResp
               `UPDATE questions_and_response 
               SET Q1 = ?, Q2 = ?, Q3 = ?, Q4 = ?, Q5 = ?, Q6 = ?, Q7 = ?, Q8 = ?, Q9 = ?, Q10 = ?, Q11 = ?, Q12 = ?, Q13 = ?, Q14 = ?, Q15 = ?, Q16 = ?, Q17 = ?, Q18 = ?, Q19 = ?, Q20 = ?, Q21 = ?, Q22 = ?, Q23 = ?, Q24 = ?, Q25 = ?, Q26 = ?, Q27 = ?, Q28 = ?, Q29 = ?, Q30 = ?, Q31 = ?, Q32 = ?, Q33 = ?, Q34 = ?, Q35 = ?, Q36 = ?, Q37 = ?, Q38A = ?, Q38B = ?, Q38C = ?, Q39 = ?, Q40A = ?, Q40B = ?, Q40C = ?, Q41 = ?, Q42A = ?, Q42B = ?, Q43 = ?, Q44 = ?, Q45 = ?, Q46 = ?, Q47 = ?, Q48 = ?, Q49 = ?, Q50A = ?, Q50B = ?, Q51 = ?, Q52 = ?, Q53 = ?, Q54 = ?, Q55 = ?, Q56 = ?, Q57 = ?, Q58 = ?
               WHERE id = ?`,
-              [data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15], data[16], data[17], data[18], data[19], data[20], data[21], data[22], data[23], data[24], data[25], data[26], data[27], data[28], data[29], data[30], data[31], data[32], data[33], data[34], data[35], data[36], data[37], data[38], data[39], data[40], data[41], data[42], data[43], data[44], data[45], data[46], data[47], data[48], data[49] ? data[49] : null, data[50] ? data[50] : null, data[51], data[52], data[53], data[54], data[55], data[56], data[57], data[58], data[59], data[60], data[61], data[62], data[63], data[64], data[65]]
+              [data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15], data[16], data[17], data[18], data[19], data[20], data[21], data[22], data[23], data[24], data[25], data[26], data[27], data[28], data[29], data[30], data[31], data[32], data[33], data[34], data[35], data[36], data[37], data[38], data[39], data[40], data[41], data[42], data[43], data[44], data[45], data[46], data[47], data[48], data[49], data[50], data[51], data[52], data[53], data[54], data[55], data[56], data[57], data[58], data[59], data[60], data[61], data[62], data[63], data[64], data[65]]
             );
     
             return row;
