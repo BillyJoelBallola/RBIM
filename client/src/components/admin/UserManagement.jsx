@@ -18,6 +18,7 @@ const UserManagement = ({ title, description }) => {
   const [address, setAddress] = useState([])
   const [visible, setVisible] = useState(false)
   const [update, setUpdate] = useState(null)
+  const [query, setQuery] = useState('')
   const [userForm, setUserForm] = useState({
     name: "",
     username: "",
@@ -183,6 +184,10 @@ const UserManagement = ({ title, description }) => {
     setVisible(true)
   }
 
+  const filteredUsers = users.filter(item => {
+    return item.name.toLowerCase().includes(query.toLowerCase())
+  })
+
   return (
     <>
       <Toast ref={toast} />
@@ -248,11 +253,11 @@ const UserManagement = ({ title, description }) => {
         <div className='flex flex-col md:flex-row justify-between mb-4'>
           <div className="form-group">
             <label htmlFor="search">Search User</label>
-            <input type="search" id='search' placeholder='Type of search'/>
+            <input type="search" id='search' placeholder='Search using name' value={query} onChange={(e) => setQuery(e.target.value)}/>
           </div>
           <button onClick={() => setVisible(current => !current)} className='mt-6 w-min whitespace-nowrap rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>ADD USER</button>
         </div>
-        <CustomTable headers={userHeaders} data={users} actions={actions}/>
+        <CustomTable headers={userHeaders} data={filteredUsers} actions={actions}/>
       </div>
     </>
   )

@@ -29,7 +29,6 @@ const Form1 = ({ navigate }) => {
     fetchAddress()
   }, [])  
 
-
   return (
     <div className='py-4 grid gap-6'>
       {/* 1st row */}
@@ -187,7 +186,7 @@ const Form1 = ({ navigate }) => {
                       <input 
                         type="date" 
                         name='first_visit_date'
-                        value={surveyForm.first_visit_date?.toString()?.slice(0, 10) !== '0000-00-00' ? surveyForm.first_visit_date?.toString()?.slice(0, 10) : ''}
+                        value={surveyForm.first_visit_date?.toString()?.slice(0, 10) !== '0000-00-00' ? surveyForm.second_visit_date?.toString()?.slice(0, 10) : ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -196,7 +195,7 @@ const Form1 = ({ navigate }) => {
                         className='w-full'
                         type="time" 
                         name='first_visit_time_start'
-                        value={surveyForm?.first_visit_time_start || ''}
+                        value={surveyForm?.first_visit_time_start ? surveyForm?.first_visit_time_start?.toString().slice(11, 22) : ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -205,7 +204,7 @@ const Form1 = ({ navigate }) => {
                         className='w-full'
                         type="time" 
                         name='first_visit_time_end'
-                        value={surveyForm.first_visit_time_end || ''}
+                        value={surveyForm.first_visit_time_end ? surveyForm.first_visit_time_end.toString().slice(11, 22) : ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -262,7 +261,7 @@ const Form1 = ({ navigate }) => {
                         className='w-full'
                         type="time" 
                         name='second_visit_time_start'
-                        value={surveyForm.second_visit_time_start || ''}
+                        value={surveyForm.second_visit_time_start ? surveyForm.second_visit_time_start.toString().slice(11, 22) : ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -271,7 +270,7 @@ const Form1 = ({ navigate }) => {
                         type="time" 
                         className='w-full'
                         name='second_visit_time_end'
-                        value={surveyForm.second_visit_time_end || ''}
+                        value={surveyForm.second_visit_time_end ? surveyForm.second_visit_time_end.toString().slice(11, 22) : ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>

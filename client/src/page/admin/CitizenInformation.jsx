@@ -20,19 +20,17 @@ const headers = [
     label: "Address",
   },
   {
-    key: 'first_visit_date',
-    label: "First Visit",
-  },
-  {
-    key: 'second_visit_date',
-    label: "Second Visit",
-  },
+    key: 'date_encoded',
+    label: "Date Encoded",
+  }
 ]
 
-// TODO: functions for this table
 const CitizenInformation = () => {
   const navigate = useNavigate()
   const [surveyForms, setSurveyForm] = useState([])
+  const [query, setQuery] = useState('')
+  const [monthYear, setMonthYear] = useState('')
+  const [barangayFilter, setBarangayFilter] = useState('');
   const { loggedUser } = useContext(UserContext)
   const actions = [
     { 
@@ -58,6 +56,14 @@ const CitizenInformation = () => {
     fetchSurveyForms()
   }, [loggedUser])
 
+  const filteredData = surveyForms.filter(item => {
+    const matchesName = item.respondent_name.toLowerCase().includes(query.toLowerCase());
+    const matchesMonthYear = item.date_encoded.toString().substring(0, 7) === monthYear.toString();
+    // const matchesBarangay = item.address === barangayFilter;
+
+    return matchesName && matchesMonthYear;
+  })
+
   return (
     <>
       <Header pageName={"Citizen Information"} />
@@ -65,29 +71,32 @@ const CitizenInformation = () => {
         <div className='flex items-center justify-between flex-wrap gap-4'>
           <div className='flex gap-4 items-center flex-wrap'>
             <div className="form-group">
-              <label htmlFor="search">Search Name</label>
-              <input type="text" id='search' placeholder='Type to search'/>
-            </div>
-            {/* <div className="form-group">
-              <label htmlFor="month">Year</label>
-              <input type="month" id="month" />
+              <label htmlFor="search">Search</label>
+              <input type="search" id='search' placeholder='Search respondent name' value={query} onChange={(e) => setQuery(e.target.value)}/>
             </div>
             <div className="form-group">
-              <label htmlFor="barangay">Baragay</label>
-              <select id="barangay">
-                <option value="">Municipal</option>
-                {
-                  barangay?.map((place, idx) => (
-                    <option key={idx} value={place}>{place}</option>
-                  ))
-                }
-              </select>
-            </div> */}
+              <label htmlFor="month">Month/Year</label>
+              <input type="month" id="month" value={monthYear} onChange={(e) => setMonthYear(e.target.value)}/>
+            </div>
+            {/* {
+              loggedUser?.role === 'administrator' &&
+              <div className="form-group">
+                <label htmlFor="barangay">Baragay</label>
+                <select id="barangay" value={barangayFilter} onChange={(e) => setBarangayFilter(e.target.value)}>
+                  <option value="">Municipal</option>
+                  {
+                    barangay?.map((place, idx) => (
+                      <option key={idx} value={place}>{place}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            }  */}
           </div>
         </div>
         <div className='my-6'>
           <p className='text-gray-400 mb-4'>Manage citizen information</p>
-          <CustomTable headers={headers} data={surveyForms} actions={actions}/>
+          <CustomTable headers={headers} data={filteredData} actions={actions}/>
         </div>
       </div>
     </>

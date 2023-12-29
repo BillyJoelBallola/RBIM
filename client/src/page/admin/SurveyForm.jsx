@@ -100,17 +100,20 @@ const SurveyForm = () => {
 
       if (Object.values(household)?.some(answer => answer === '')) {
         return alertMessage('error', 'Failed', "Household Information: Submission failed, don't leave empty fields.")
-      }
-      
-      if (
-        Object.values(surveyForm).filter((response, idx) => idx >= 0 && idx <= 6).some(response => response === '') &&
-        Object.values(surveyForm).filter((response, idx) => idx >= 7 && idx <= 13).some(response => response === '')
-      ) {
+      }else if (Object.keys(surveyForm).filter((response, idx) => idx >= 0 && idx <= 6).some(response => response === '')) {
         return alertMessage('error', 'Failed', "Surveform Information: Submission failed, don't leave empty fields.")
-      }
-      
-      if (filledArrayResponses.length < 0){
-        return alertMessage('error', 'Failed', "Household Members: Survey form must have atleast one[1] HH members.")
+      }else if (filledArrayResponses.length > 0){
+        if(filledArrayResponses[0].some(response => response === '' || filledArrayResponses[0].length < 50)){
+          return alertMessage('error', 'Failed', "Household Questions: Submission failed, don't leave empty fields.")
+        }
+  
+        for(let i = 1; i <= 10; i++){
+          if(filledArrayResponses[i]?.length > 0){
+            if(filledArrayResponses[i].some(response => response === '')){
+              return alertMessage('error', 'Failed', "Household Members: Submission failed, don't leave empty fields.")
+            }
+          }
+        }
       }
 
       const { data } = await axios.put('/api/survey_form', { questionsAndResponses: questionsAndResponsesArray, household, surveyForm }) 
