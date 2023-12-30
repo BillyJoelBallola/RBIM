@@ -30,7 +30,7 @@ const CitizenInformation = () => {
   const [surveyForms, setSurveyForm] = useState([])
   const [query, setQuery] = useState('')
   const [monthYear, setMonthYear] = useState('')
-  const [barangayFilter, setBarangayFilter] = useState('');
+  const [barangayFilter, setBarangayFilter] = useState('0');
   const { loggedUser } = useContext(UserContext)
   const actions = [
     { 
@@ -59,10 +59,11 @@ const CitizenInformation = () => {
   const filteredData = surveyForms.filter(item => {
     const matchesName = item.respondent_name.toLowerCase().includes(query.toLowerCase());
     const matchesMonthYear = item.date_encoded.toString().substring(0, 7) === monthYear.toString();
-    // const matchesBarangay = item.address === barangayFilter;
+    const matchesBarangay = barangayFilter.toString() === '0' || item.address.toString() === barangayFilter;
 
-    return matchesName && matchesMonthYear;
-  })
+    return matchesName && matchesMonthYear && matchesBarangay;
+  });
+  
 
   return (
     <>
@@ -78,24 +79,27 @@ const CitizenInformation = () => {
               <label htmlFor="month">Month/Year</label>
               <input type="month" id="month" value={monthYear} onChange={(e) => setMonthYear(e.target.value)}/>
             </div>
-            {/* {
+            {
               loggedUser?.role === 'administrator' &&
               <div className="form-group">
-                <label htmlFor="barangay">Baragay</label>
+                <label htmlFor="barangay">Location</label>
                 <select id="barangay" value={barangayFilter} onChange={(e) => setBarangayFilter(e.target.value)}>
-                  <option value="">Municipal</option>
+                  <option value={'0'}>Municipal</option>
                   {
                     barangay?.map((place, idx) => (
-                      <option key={idx} value={place}>{place}</option>
+                      <option key={idx} value={idx + 1}>{place}</option>
                     ))
                   }
                 </select>
               </div>
-            }  */}
+            } 
           </div>
         </div>
         <div className='my-6'>
-          <p className='text-gray-400 mb-4'>Manage citizen information</p>
+          <p className='text-gray-400 mb-4'>
+            Manage citizen information.
+            { filteredData.length > 0 ? <span className='text-gray-600'>{` [${filteredData.length}] Filtered Records` }</span> : <></> }  
+          </p>
           <CustomTable headers={headers} data={filteredData} actions={actions}/>
         </div>
       </div>

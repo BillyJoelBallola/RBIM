@@ -85,7 +85,7 @@ const Account = ({ title, description }) => {
             <span className='text-md font-semibold text-gray-600'>Address</span>
             <div className="form-group mt-2">
               <label htmlFor="barangay">Barangay, Municipal, Province</label>
-              <select name="address_id" id="barangay" value={accountForm.address_id} onChange={handleInput}>
+              <select name="address_id" id="barangay" value={accountForm.address_id} onChange={handleInput} disabled={loggedUser?.role !== 'administrator' && true}>
                 <option value="">-- select barangay --</option>
                 {
                   address &&

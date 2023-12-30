@@ -15,42 +15,6 @@ const data = [
   {
     name: "Lorem ipsum dolor sit",
     address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
   }
 ]
 
@@ -81,7 +45,7 @@ const Activities = () => {
               <input type="date" id="date" />
             </div>
             <div className="form-group">
-              <label htmlFor="barangay">Baragay</label>
+              <label htmlFor="barangay">Location</label>
               <select id="barangay">
                 <option value="">Municipal</option>
                 {
