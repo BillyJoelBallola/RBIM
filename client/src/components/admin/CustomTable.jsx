@@ -22,7 +22,7 @@ const CustomTable = ({ headers, data, actions }) => {
   }
 
   const dateFormat = (rowData) => {
-    return rowData !== '0000-00-00' ? moment(rowData).format('l') : 'mm/dd/yyyy';
+    return rowData !== '0000-00-00' ? moment(rowData).format('ll') : 'mm/dd/yyyy';
   }
 
   return (

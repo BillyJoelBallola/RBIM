@@ -139,7 +139,7 @@ export const updateSurveyForm = async ({ household, surveyForm, questionsAndResp
     } = household
 
     const surveyFormResult = await new Promise((resolve, reject) => {
-      db.query('UPDATE `survey_form` SET `first_visit_date`= ? , `first_visit_time_start`= ? , `first_visit_time_end`= ? , `first_visit_result`= ? , `first_visit_date_next_visit`= ? , `first_visit_interviewer`= ? , `first_visit_supervisor`= ? , `second_visit_date`= ? , `second_visit_time_start`= ? , `second_visit_time_end`= ? , `second_visit_result`= ? , `second_visit_date_next_visit`= ? , `second_visit_interviewer`= ? , `second_visit_supervisor`= ? , `date_encoded`= ? , `encoder_name`= ? , `supervisor_name`= ? WHERE `id` = ?',
+      db.query('UPDATE `survey_form` SET `first_visit_date`= ? , `first_visit_time_start`= ? , `first_visit_time_end`= ? , `first_visit_result`= ? , `first_visit_date_next_visit`= ? , `first_visit_interviewer`= ? , `first_visit_supervisor`= ? , `second_visit_date`= ? , `second_visit_time_start`= ? , `second_visit_time_end`= ? , `second_visit_result`= ? , `second_visit_date_next_visit`= ? , `second_visit_interviewer`= ? , `second_visit_supervisor`= ? WHERE `id` = ?',
       [ 
         first_visit_date,
         first_visit_time_start,
@@ -155,9 +155,6 @@ export const updateSurveyForm = async ({ household, surveyForm, questionsAndResp
         second_visit_date_next_visit,
         second_visit_interviewer,
         second_visit_supervisor,
-        date_encoded,
-        encoder_name,
-        supervisor_name,
         survey_form_id
       ],
       (error, result) => {

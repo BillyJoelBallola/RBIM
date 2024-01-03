@@ -60,10 +60,9 @@ const CitizenInformation = () => {
     const matchesName = item.respondent_name.toLowerCase().includes(query.toLowerCase());
     const matchesMonthYear = item.date_encoded.toString().substring(0, 7) === monthYear.toString();
     const matchesBarangay = barangayFilter.toString() === '0' || item.address.toString() === barangayFilter;
-
+    
     return matchesName && matchesMonthYear && matchesBarangay;
-  });
-  
+  })
 
   return (
     <>

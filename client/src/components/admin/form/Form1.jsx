@@ -330,8 +330,9 @@ const Form1 = ({ navigate }) => {
             <input 
               type="date" 
               id='date_encoded' 
-              value={surveyForm?.date_encoded?.toString()?.slice(0, 10) !== '0000-00-00' ? surveyForm?.date_encoded?.toString()?.slice(0, 10) : ''}
-              onChange={handleInputChangeForSurveyForm}
+              value={surveyForm?.date_encoded?.toString()?.slice(0, 10) !== '0000-00-00' ? surveyForm.date_encoded.toString().slice(0, 10) : ''}
+              // onChange={handleInputChangeForSurveyForm}
+              disabled
             />
           </div>
           <div className="form-group w-full">
@@ -340,7 +341,8 @@ const Form1 = ({ navigate }) => {
               type="text"
               id='encoder_name' 
               value={surveyForm.encoder_name || ''}
-              onChange={handleInputChangeForSurveyForm}
+              disabled
+              // onChange={handleInputChangeForSurveyForm}
             />
           </div>
           <div className="form-group w-full">
@@ -350,6 +352,7 @@ const Form1 = ({ navigate }) => {
               id='supervisor_name' 
               value={surveyForm.supervisor_name || ''}
               onChange={handleInputChangeForSurveyForm}
+              disabled
             />
           </div>
         </div>

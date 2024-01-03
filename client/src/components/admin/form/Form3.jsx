@@ -295,16 +295,17 @@ const Form3 = ({ navigate, questions}) => {
                               />
                             </td>
                             <td className='p-2'>
-                              <input 
-                                className='w-40'
-                                type="text" 
-                                value={member?.questionsAndAnswer[24] || ''} 
-                                onChange={(e) => 
+                              <CustomDropdown
+                                width={'w-40'}
+                                options={questionsAndResponses['Q25']?.responses}
+                                selected={member?.questionsAndAnswer[24] || null}
+                                onSelect={(value) => 
                                   handleInputChange(
                                     24, 
-                                    e.target.value, 
+                                    value, 
                                     member?.questionsAndAnswer, 
-                                    member.setQuestionAndAnswer)} 
+                                    member.setQuestionAndAnswer)
+                                }
                               />
                             </td>
                           </>
