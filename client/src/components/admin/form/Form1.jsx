@@ -47,7 +47,7 @@ const Form1 = ({ navigate }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="">Living Type</label>
+          <label htmlFor=""></label>
           <div className='flex items-center gap-8'>
             <div className='flex items-center gap-2'>
               <input 
@@ -125,7 +125,7 @@ const Form1 = ({ navigate }) => {
             <div className="form-group w-full">
               <label htmlFor="unit_no">Unit No.</label>
               <input 
-                type="number" 
+                type="text" 
                 id='unit_no' 
                 name='unit_no' 
                 value={household.unit_no || ''} 

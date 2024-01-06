@@ -13,10 +13,10 @@ const Reports = () => {
             <label htmlFor="search">Search Report</label>
             <input type="text" id='search' placeholder='Type to search'/>
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="month">Month/Year</label>
             <input type="month" id="month" />
-          </div>
+          </div> */}
           <div className="form-group">
             <label htmlFor="barangay">Location</label>
             <select id="barangay">

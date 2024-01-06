@@ -11,8 +11,12 @@ const CustomDialog = ({ classStyle, header, visible, setVisible, content, footer
       draggable={false}
       footer={footer}
     >
-      <div dangerouslySetInnerHTML={{ __html: content }}></div>
-      {/* {content} */}
+      {
+        typeof content === 'string' ? 
+        <div dangerouslySetInnerHTML={{ __html: content }} />
+        :
+        content
+      }
     </Dialog>
   )
 }
