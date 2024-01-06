@@ -25,6 +25,16 @@ const CustomTable = ({ headers, data, actions }) => {
     return rowData !== '0000-00-00' ? moment(rowData).format('ll') : 'mm/dd/yyyy';
   }
 
+  const status = (rowData) => {
+    switch(rowData){
+      case 1:
+        return <div className='py-1 px-2 text-xs text-green-700 bg-green-200 max-w-min rounded-lg'>active</div>
+      case 2:
+        return <div className='py-1 px-2 text-xs text-red-700 bg-red-200 max-w-min rounded-lg'>inactive</div>
+    }
+  }
+
+
   return (
     <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
       <div className="inline-block min-w-full">
@@ -55,6 +65,8 @@ const CustomTable = ({ headers, data, actions }) => {
                           addressFormat(rowData[header.key]) :
                           header.key.includes('date') ?
                           dateFormat(rowData[header.key]) :
+                          header.key.includes('status') ?
+                          status(rowData[header.key]) :
                           rowData[header.key]
                         }
                       </td>

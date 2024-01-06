@@ -7,7 +7,7 @@ import { barangay } from '../../static/Geography'
 import axios from 'axios'
 
 import { MdOutlineEdit } from "react-icons/md";
-import { MdOpenInNew } from "react-icons/md";
+import { LuArchive } from "react-icons/lu";
 import { LuTrash2 } from "react-icons/lu";
 
 const headers = [
@@ -38,7 +38,7 @@ const CitizenInformation = () => {
       onClick: ({rowData}) => navigate(`/rbim/survey_form/form1/${rowData.survey_form_id}`)
     }, 
     { 
-      label: <LuTrash2 />, 
+      label: <LuArchive />, 
       onClick: ({rowData}) => console.log(rowData)
     }
   ]

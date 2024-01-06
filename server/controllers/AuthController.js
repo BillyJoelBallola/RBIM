@@ -7,6 +7,10 @@ export const loginWeb = async (req, res) => {
     const { username, password } = req.body;
     const user = await authModel.getUserByUsername(username);
 
+    if (user?.status === 2){
+      return res.json({ success: false, message: 'Your account is deactivated, please contact the administrator.' })
+    }
+
     if(!user || user?.role === 'health_worker') {
       return res.json({ success: false, message: 'User not found'});
     }
@@ -15,7 +19,7 @@ export const loginWeb = async (req, res) => {
 
     if (!isPasswordCorrect) {
       return res.json({ success: false, message: 'Incorrect Password'});
-    }
+    }    
 
     const tokenPayload = { password: password, id: user.id, username: user.username, address_id: user.address_id, role: user.role };
     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {});
@@ -34,6 +38,10 @@ export const loginMobile = async (req, res) => {
     const { username, password } = await req.body;
     const user = await authModel.getUserByUsername(username);
   
+    if (user?.status === 2){
+      return res.json({ success: false, message: 'Your account is deactivated, please contact the administrator.' })
+    }
+
     if(!user || user?.role !== 'health_worker') {
       return res.json({ success: false, message: 'User not found'});
     }

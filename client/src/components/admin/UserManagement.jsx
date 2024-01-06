@@ -6,10 +6,9 @@ import { Toast } from 'primereact/toast';
 import CustomTable from './CustomTable'
 import axios from 'axios'
 
-import { MdOutlineEdit } from "react-icons/md";
-import { LuTrash2 } from "react-icons/lu";
 import { ConfirmDialog } from 'primereact/confirmdialog';
 import { confirmDialog } from 'primereact/confirmdialog'; 
+import { FaUserPen } from "react-icons/fa6";
 
 const UserManagement = ({ title, description }) => {
   const toast = useRef(null)
@@ -24,14 +23,20 @@ const UserManagement = ({ title, description }) => {
     username: "",
     address_id: "",
     role: "",
+    status: 1
   })
 
   const showToast = (severity, summary, detail) => {
     return toast.current.show({ severity: severity, summary: summary, detail: detail})
   }
 
-  const userHeaders = [{ key: 'name', label: 'Name' }, { key: 'barangay', label: 'Barangay' }, { key: 'role', label: 'Role' }]
-  const actions = [{ label: <MdOutlineEdit />, onClick: ({rowData}) => editResponse(rowData) }, { label: <LuTrash2 />, onClick: ({rowData}) => deleteDialog(rowData) }]
+  const userHeaders = [{ key: 'name', label: 'Name' }, { key: 'barangay', label: 'Barangay' }, { key: 'role', label: 'Role' }, { key: 'status', label: 'Status' }]
+  const actions = [
+    { 
+      label: <FaUserPen />, 
+      onClick: ({rowData}) => editResponse(rowData) 
+    }
+  ]
 
   useEffect(() => {
     let API;
@@ -88,6 +93,7 @@ const UserManagement = ({ title, description }) => {
       username: "",
       address_id: "",
       role: "",
+      status: 1,
     })
     setVisible(false)
   }
@@ -173,13 +179,14 @@ const UserManagement = ({ title, description }) => {
   };
 
   const editResponse = (rowData) => {
-    const { id, name, username, address_id, role } = rowData
+    const { id, name, username, address_id, role, status } = rowData
     setUserForm({
       id: id,
       name: name,
       username: username,
       address_id: address_id,
       role: role,
+      status: status
     })
     setVisible(true)
   }
@@ -199,6 +206,24 @@ const UserManagement = ({ title, description }) => {
         header={"User"} 
         content={
           <form onSubmit={userForm?.id ? handleEditUser : handleSubmitUser}>
+            {
+              userForm?.id &&
+              <div className='pb-4'>
+                <label htmlFor="">Status</label>
+                <div className='flex gap-2 text-sm mt-2'>
+                  <button
+                    type='button' 
+                    className={`${userForm.status === 1 ? 'bg-green-200 text-green-800' : 'bg-gray-200'} py-1 px-2 rounded-md`} 
+                    onClick={() => setUserForm(current => ({...current, status: 1}))}
+                  >Active</button>
+                  <button
+                    type='button' 
+                    className={`${userForm.status === 2 ? 'bg-red-200 text-red-800' : 'bg-gray-200'} py-1 px-2 rounded-md`} 
+                    onClick={() => setUserForm(current => ({...current, status: 2}))}
+                  >Inactive</button>
+                </div>
+              </div>
+            }
             <div className='grid gap-4'>
               <div className='flex gap-4'>
                 <div className="form-group w-full">

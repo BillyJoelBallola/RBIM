@@ -77,7 +77,8 @@ const addUser = async (user) => {
   try {
     const encryptedPassword = encrypt(user.password)
     const result = await new Promise((resolve, reject) => {
-      db.query(`INSERT INTO users (name, address_id, username, password, role) VALUES (?, ?, ?, ?, ?)`, [user.name, user.address_id, user.username, encryptedPassword, user.role], (error, results) => {
+      db.query(`INSERT INTO users (name, address_id, username, password, role, status) VALUES (?, ?, ?, ?, ?, ?)`, 
+      [user.name, user.address_id, user.username, encryptedPassword, user.role, user.status], (error, results) => {
         if (error) {
           reject(error)
         }else{
@@ -97,7 +98,9 @@ const updateUser = async (userData) => {
   try {
     const encryptedPassword = encrypt(userData.password)
     const result = await new Promise((resolve, reject) => {
-      db.query('UPDATE users SET name=?, address_id=?, username=?, password=?, role=? WHERE id=?', [userData.name, userData.address_id, userData.username, encryptedPassword, userData.role, userData.id], (error, results) => {
+      db.query('UPDATE users SET name=?, address_id=?, username=?, password=?, role=?, status=? WHERE id=?', 
+      [userData.name, userData.address_id, userData.username, encryptedPassword, userData.role, userData.status, userData.id], 
+      (error, results) => {
         if (error) {
           reject(error)
         }else{
