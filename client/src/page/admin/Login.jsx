@@ -71,8 +71,8 @@ const Login = () => {
                   <label htmlFor="password">Password</label>
                   <input type="password" name='password' id='password' placeholder='Password' onChange={handleInput}/>
                 </div>
-                <a href="" className='text-sm text-gray-400 text-right'>Forgot Password?</a>
-                <button type='submit' className='rounded-md bg-[#008605] text-white text-sm py-2 font-semibold'>LOGIN</button>
+                {/* <a href="" className='text-sm text-gray-400 text-right'>Forgot Password?</a> */}
+                <button type='submit' className='mt-4 rounded-md bg-[#008605] text-white text-sm py-2 font-semibold'>LOGIN</button>
               </form>
             </div>
           </div>

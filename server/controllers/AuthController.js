@@ -37,7 +37,7 @@ export const loginMobile = async (req, res) => {
   try {
     const { username, password } = await req.body;
     const user = await authModel.getUserByUsername(username);
-  
+    
     if (user?.status === 2){
       return res.json({ success: false, message: 'Your account is deactivated, please contact the administrator.' })
     }
@@ -52,7 +52,7 @@ export const loginMobile = async (req, res) => {
       return res.json({ success: false, message: 'Incorrect Password'});
     }
 
-    const payload = { username: user.username, name: user.name, id: user.id }
+    const payload = { username: user.username, name: user.name, id: user.id, address: user.address_id, role: user.role}
     const token = jwt.sign(payload, process.env.JWT_SECRET, {});
 
     return res.json({ success: true, token: token, message: 'Login successfull'});

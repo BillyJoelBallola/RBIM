@@ -58,7 +58,10 @@ const getAllUserNotEqualToRole = async (role) => {
 const getUserById = async (userId) => {
   try {
     const result = await new Promise((resolve, reject) => {
-      db.query(`SELECT users.*, address.barangay, address.municipal, address.province FROM users INNER JOIN address ON users.address_id = address.id WHERE users.id = ?`, [userId], (error, results) => {
+      db.query(
+        `SELECT users.*, address.barangay, address.municipal, address.province FROM users INNER JOIN address ON users.address_id = address.id WHERE users.id = ?`,
+        [userId], 
+        (error, results) => {
         if (error) {
           reject(error)
         }else{

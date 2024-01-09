@@ -129,8 +129,8 @@ export const getLoggedUserMobile = async (req, res) => {
       jwt.verify(token, process.env.JWT_SECRET, {}, async (err, user) => {
         if(err) throw err;
         const userLogged = await userModel.getUserById(user.id);
-        const { id, name, username } = userLogged;
-        return res.json({ success: true, data: { id, name, username }});
+        const { id, name, username, address_id, role } = userLogged;
+        return res.json({ success: true, data: { id, name, username, address_id, role }});
       })
     }else{
       return res.json({ success: false, message: 'Unathorized access' });

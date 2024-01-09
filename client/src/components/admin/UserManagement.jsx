@@ -9,6 +9,7 @@ import axios from 'axios'
 import { ConfirmDialog } from 'primereact/confirmdialog';
 import { confirmDialog } from 'primereact/confirmdialog'; 
 import { FaUserPen } from "react-icons/fa6";
+import Divider from '../Divider';
 
 const UserManagement = ({ title, description }) => {
   const toast = useRef(null)
@@ -155,28 +156,28 @@ const UserManagement = ({ title, description }) => {
     }))
   } 
 
-  const deleteUser = async (rowData) => {
-    try {
-      const { data } = await axios.delete(`/api/user/${rowData?.id}`)
-      if(data.success){
-        showToast("success", "Success", "User deleted successfully")
-      }else{
-        showToast("error", "Failed", "Failed to delete user")
-      }
-      setUpdate("delete_user")
-    } catch (error) {
-      return showToast("error", "Failed", "An unexpected error occurred. Please try again later")
-    }
-  }
+  // const deleteUser = async (rowData) => {
+  //   try {
+  //     const { data } = await axios.delete(`/api/user/${rowData?.id}`)
+  //     if(data.success){
+  //       showToast("success", "Success", "User deleted successfully")
+  //     }else{
+  //       showToast("error", "Failed", "Failed to delete user")
+  //     }
+  //     setUpdate("delete_user")
+  //   } catch (error) {
+  //     return showToast("error", "Failed", "An unexpected error occurred. Please try again later")
+  //   }
+  // }
 
-  const deleteDialog = (rowData) => {
-    confirmDialog({
-      draggable: false,
-      message: 'Are you sure you want to delete this user?',
-      header: 'Delete User',
-      accept: () => deleteUser(rowData)
-    });
-  };
+  // const deleteDialog = (rowData) => {
+  //   confirmDialog({
+  //     draggable: false,
+  //     message: 'Are you sure you want to delete this user?',
+  //     header: 'Delete User',
+  //     accept: () => deleteUser(rowData)
+  //   });
+  // };
 
   const editResponse = (rowData) => {
     const { id, name, username, address_id, role, status } = rowData
@@ -201,77 +202,90 @@ const UserManagement = ({ title, description }) => {
       <ConfirmDialog />
       <SettingsHeader title={title} description={description} />
       <CustomDialog 
+        resetForm={resetUserForm}
         visible={visible} 
         setVisible={setVisible} 
         header={"User"} 
         content={
-          <form onSubmit={userForm?.id ? handleEditUser : handleSubmitUser}>
+          <>
+            <form className='mb-4' onSubmit={userForm?.id ? handleEditUser : handleSubmitUser}>
+              {
+                userForm?.id &&
+                <div className='pb-4'>
+                  <label htmlFor="">Status</label>
+                  <div className='flex gap-2 text-sm mt-2'>
+                    <button
+                      type='button' 
+                      className={`${userForm.status === 1 ? 'bg-green-200 text-green-800' : 'bg-gray-200'} py-1 px-2 rounded-md`} 
+                      onClick={() => setUserForm(current => ({...current, status: 1}))}
+                    >Active</button>
+                    <button
+                      type='button' 
+                      className={`${userForm.status === 2 ? 'bg-red-200 text-red-800' : 'bg-gray-200'} py-1 px-2 rounded-md`} 
+                      onClick={() => setUserForm(current => ({...current, status: 2}))}
+                    >Inactive</button>
+                  </div>
+                </div>
+              }
+              <div className='grid gap-4'>
+                <div className='flex gap-4'>
+                  <div className="form-group w-full">
+                    <label htmlFor="name">Name</label>
+                    <input type="text" name='name' id='name' placeholder='Full Name' value={userForm.name} onChange={handleFormInput} />
+                  </div>
+                  <div className="form-group basis-3/4">
+                    <label htmlFor="username">Username</label>
+                    <input type="text" name='username' id='username' placeholder='Username' value={userForm.username} onChange={handleFormInput} />
+                  </div>
+                </div>
+                <div className='grid gap-4'>
+                  <div className="form-group">
+                    <label htmlFor="barangay">Barangay</label>
+                    <select name="address_id" id="barangay" disabled={loggedUser?.role === "administrator" ? false : true} value={userForm?.address_id} onChange={handleFormInput}>
+                      <option value="">-- select barangay --</option>
+                      {
+                        address &&
+                        address?.map((address) => (
+                          <option value={address.id} key={address.id}>{address.barangay}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="role">Role</label>
+                    <select name="role" id="role" value={userForm.role} onChange={handleFormInput}>
+                      <option value="">-- select role --</option>
+                      {
+                        loggedUser?.role === 'administrator' &&
+                        <>
+                          <option value="administrator">Administrator</option>
+                          <option value="secretary">Barangay Secretary</option>
+                        </>
+                      }
+                      {
+                        loggedUser?.role === 'secretary' &&
+                        <option value="health_worker">Health Worker</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className='flex justify-end mt-6'>
+                <button type='button' onClick={resetUserForm} className='w-min text-sm py-2 px-6 font-semibold'>CANCEL</button>
+                <button type='submit' className='w-min whitespace-nowrap rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>{userForm?.id ? 'EDIT' : 'ADD'}</button>
+              </div>
+            </form>
             {
               userForm?.id &&
-              <div className='pb-4'>
-                <label htmlFor="">Status</label>
-                <div className='flex gap-2 text-sm mt-2'>
-                  <button
-                    type='button' 
-                    className={`${userForm.status === 1 ? 'bg-green-200 text-green-800' : 'bg-gray-200'} py-1 px-2 rounded-md`} 
-                    onClick={() => setUserForm(current => ({...current, status: 1}))}
-                  >Active</button>
-                  <button
-                    type='button' 
-                    className={`${userForm.status === 2 ? 'bg-red-200 text-red-800' : 'bg-gray-200'} py-1 px-2 rounded-md`} 
-                    onClick={() => setUserForm(current => ({...current, status: 2}))}
-                  >Inactive</button>
+              <>
+                <Divider />
+                <div className='mt-4 grid gap-2'>
+                  <span className='text-sm font-semibold'>Recover password</span>
+                  <button className='px-2 py-4 rounded-md bg-gray-200 hover:bg-gray-300 duration-150'>Reveal password</button>
                 </div>
-              </div>
+              </>
             }
-            <div className='grid gap-4'>
-              <div className='flex gap-4'>
-                <div className="form-group w-full">
-                  <label htmlFor="name">Name</label>
-                  <input type="text" name='name' id='name' placeholder='Full Name' value={userForm.name} onChange={handleFormInput} />
-                </div>
-                <div className="form-group basis-3/4">
-                  <label htmlFor="username">Username</label>
-                  <input type="text" name='username' id='username' placeholder='Username' value={userForm.username} onChange={handleFormInput} />
-                </div>
-              </div>
-              <div className='grid gap-4'>
-                <div className="form-group">
-                  <label htmlFor="barangay">Barangay</label>
-                  <select name="address_id" id="barangay" disabled={loggedUser?.role === "administrator" ? false : true} value={userForm?.address_id} onChange={handleFormInput}>
-                    <option value="">-- select barangay --</option>
-                    {
-                      address &&
-                      address?.map((address) => (
-                        <option value={address.id} key={address.id}>{address.barangay}</option>
-                      ))
-                    }
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="role">Role</label>
-                  <select name="role" id="role" value={userForm.role} onChange={handleFormInput}>
-                    <option value="">-- select role --</option>
-                    {
-                      loggedUser?.role === 'administrator' &&
-                      <>
-                        <option value="administrator">Administrator</option>
-                        <option value="secretary">Barangay Secretary</option>
-                      </>
-                    }
-                    {
-                       loggedUser?.role === 'secretary' &&
-                       <option value="health_worker">Health Worker</option>
-                    }
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className='flex justify-end mt-6'>
-              <button type='button' onClick={resetUserForm} className='w-min text-sm py-2 px-6 font-semibold'>CANCEL</button>
-              <button type='submit' className='w-min whitespace-nowrap rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>{userForm?.id ? 'EDIT' : 'ADD'}</button>
-            </div>
-          </form>
+          </>
         }
       />
       <div>

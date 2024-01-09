@@ -105,6 +105,8 @@ const getSurveyFormById = async (surveyFormId) => {
 
 export const updateSurveyForm = async ({ household, surveyForm, questionsAndResponses }) => {
   try {
+    console.log(JSON.stringify({ household, surveyForm, questionsAndResponses }, null, 2))
+
     const { 
       survey_form_id,
       first_visit_date,
@@ -189,6 +191,7 @@ export const updateSurveyForm = async ({ household, surveyForm, questionsAndResp
         }
       })
     })
+    console.log(JSON.stringify({ household, surveyForm, questionsAndResponses }, null, 2));
 
     await Promise.all(
       questionsAndResponses.map(async (data) => {

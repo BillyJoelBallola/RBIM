@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from '../../components/admin/Header'
 import { barangay } from '../../static/Geography'
 import { reportTables } from '../../static/ReportTables.'
+import { UserContext } from '../../context/UserContext'
 
 const Reports = () => {
+  const { loggedUser } = useContext(UserContext)
+
   return (
     <>
       <Header pageName={"Reports"} />
       <div className="content">
-        <div className='flex gap-4 items-center flex-wrap'>
+      <div className='flex gap-4 items-center flex-wrap'>
           <div className="form-group">
             <label htmlFor="search">Search Report</label>
             <input type="text" id='search' placeholder='Type to search'/>
@@ -17,17 +20,20 @@ const Reports = () => {
             <label htmlFor="month">Month/Year</label>
             <input type="month" id="month" />
           </div> */}
-          <div className="form-group">
-            <label htmlFor="barangay">Location</label>
-            <select id="barangay">
-              <option value="">Municipal</option>
-              {
-                barangay?.map((place, idx) => (
-                  <option key={idx} value={place}>{place}</option>
-                ))
-              }
-            </select>
-          </div>
+          {
+            loggedUser?.role === 'administrator' && 
+            <div className="form-group">
+              <label htmlFor="barangay">Location</label>
+              <select id="barangay">
+                <option value="">Municipal</option>
+                {
+                  barangay?.map((place, idx) => (
+                    <option key={idx} value={place}>{place}</option>
+                  ))
+                }
+              </select>
+            </div>
+          }
           <div className="form-group">
             <label htmlFor="barangay">File Type</label>
             <select id="barangay">
