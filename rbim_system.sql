@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2023 at 04:33 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jan 12, 2024 at 03:04 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -95,8 +95,8 @@ CREATE TABLE `household` (
   `respondent_name` varchar(50) NOT NULL,
   `household_head` varchar(50) NOT NULL,
   `household_member_no` int(3) NOT NULL,
-  `address` int(2) NOT NULL,
-  `unit_no` int(10) NOT NULL,
+  `address` int(10) NOT NULL,
+  `unit_no` varchar(10) NOT NULL,
   `house_no` int(10) NOT NULL,
   `street` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -106,7 +106,16 @@ CREATE TABLE `household` (
 --
 
 INSERT INTO `household` (`id`, `survey_form_id`, `household_number`, `living_type`, `respondent_name`, `household_head`, `household_member_no`, `address`, `unit_no`, `house_no`, `street`) VALUES
-(24, 25, 43, 'household', 'Ballola, Billy Joel P', 'DelaX, Juan', 3, 6, 43, 42, 'Purok 4');
+(24, 25, 43, 'household', 'Ballola, Billy Joel P', 'DelaX, Juan', 3, 6, '43', 42, 'Purok 4'),
+(25, 26, 243, 'household', 'Adelan, Reyvine, A. ', 'Adelan, Rey, Alay', 4, 21, 'N/A', 234, 'Purok 3'),
+(26, 27, 43, 'household', 'Ballola, Billy Joel, P.', 'Ballola, Joel, A.', 3, 13, 'N/A', 43, 'Purok 4'),
+(27, 28, 69, 'household', 'Remolar, Klen Ghel, Corporal', 'Adelan, Reyvine, Alay', 1, 21, '569', 324, 'Purok 3'),
+(30, 31, 46, 'household', 'Buag, Juliusmir C.', 'Buag, Judylyn C.', 2, 13, 'N/A', 165, 'Purok 3'),
+(31, 32, 89, 'household', 'Tan, Jerone, T', 'Adelan, Reyvine A.', 1, 21, 'hello', 0, 'Purok 5'),
+(32, 33, 126, 'household', 'Deyro, Sebastian S.', 'Deyro, Raquel C.', 3, 21, '12', 0, 'Purok 3'),
+(33, 34, 212, 'household', 'Novelozo, Kerby D.', 'Novelozo, Maricar C.', 2, 21, '21', 0, 'Purok 5'),
+(34, 35, 90, 'household', 'Salgado, Virgie', 'Salgado, Virgie', 1, 13, 'N/A', 146, 'Purok 4'),
+(35, 36, 101, 'household', 'Acierto, Joseph, E.', 'Acierto, Joseph E.', 1, 21, '56', 56, 'Purok 6');
 
 -- --------------------------------------------------------
 
@@ -197,9 +206,9 @@ INSERT INTO `question` (`id`, `question_code`, `question_text`) VALUES
 --
 
 CREATE TABLE `questions_and_response` (
-  `id` int(255) NOT NULL,
-  `household_id` int(255) NOT NULL,
-  `member_no` int(255) NOT NULL,
+  `id` int(11) NOT NULL,
+  `household_id` int(11) NOT NULL,
+  `member_no` int(5) NOT NULL,
   `Q1` varchar(255) DEFAULT NULL,
   `Q2` varchar(255) DEFAULT NULL,
   `Q3` varchar(255) DEFAULT NULL,
@@ -272,7 +281,26 @@ CREATE TABLE `questions_and_response` (
 
 INSERT INTO `questions_and_response` (`id`, `household_id`, `member_no`, `Q1`, `Q2`, `Q3`, `Q4`, `Q5`, `Q6`, `Q7`, `Q8`, `Q9`, `Q10`, `Q11`, `Q12`, `Q13`, `Q14`, `Q15`, `Q16`, `Q17`, `Q18`, `Q19`, `Q20`, `Q21`, `Q22`, `Q23`, `Q24`, `Q25`, `Q26`, `Q27`, `Q28`, `Q29`, `Q30`, `Q31`, `Q32`, `Q33`, `Q34`, `Q35`, `Q36`, `Q37`, `Q38A`, `Q38B`, `Q38C`, `Q39`, `Q40A`, `Q40B`, `Q40C`, `Q41`, `Q42A`, `Q42B`, `Q43`, `Q44`, `Q45`, `Q46`, `Q47`, `Q48`, `Q49`, `Q50A`, `Q50B`, `Q51`, `Q52`, `Q53`, `Q54`, `Q55`, `Q56`, `Q57`, `Q58`) VALUES
 (5, 24, 1, 'Ballola, Billy Joel P', '1', '1', '21', '2023-12-27T08:46:41.726Z', 'Sample', '1', '3', 'Sample', 'Tatalog', '5', '99', '4', 'Sample', '290', '5', '5', 'Sample', '99', '4', 'Sample', 'Sample', '4', '5', '5', '5', '5', '4', '5', '1', '99', 'Sample', 'Sample', 'Sample', '5', '2', '2023-12-03T08:49:17.883Z', '4', '5', '6', '2', '4', '4', '2', 'Sample', '2', '2', 'Sample', '5', '3', '3', '4', '3', '4', '3', '2', '3', '4', '3', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'),
-(6, 24, 2, 'Navalta, Chardy Marie Angel ', '2', '2', '22', '2023-12-27T08:46:42.838Z', 'Sample', '1', '5', 'Sample', 'Tagalog', '5', '99', '3', 'Sample', '2999', '5', '5', 'Sample', '4', '4', 'Sample', 'Sample', '5', '5', '4', '4', '6', '5', '5', '2', '1', 'Sample', 'Sample', 'Aample', '7', '1', '2023-12-27T08:49:19.312Z', '4', '4', '5', '2', '5', '5', '4', 'Sample', '2', '2', 'Sample', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(6, 24, 2, 'Navalta, Chardy Marie Angel ', '2', '2', '22', '2023-12-27T08:46:42.838Z', 'Sample', '1', '5', 'Sample', 'Tagalog', '5', '99', '3', 'Sample', '2999', '5', '5', 'Sample', '4', '4', 'Sample', 'Sample', '5', '5', '4', '4', '6', '5', '5', '2', '1', 'Sample', 'Sample', 'Aample', '7', '1', '2023-12-27T08:49:19.312Z', '4', '4', '5', '2', '5', '5', '4', 'Sample', '2', '2', 'Sample', '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 25, 1, 'Adelan, Rey, Frondozo', '1', '1', '47', '1976-07-22T05:31:00.000Z', 'Daet, Bicol', '1', '2', 'Catholic', 'Tagalog', '4', '3', '99', 'N/A', '6,000', '1', '3', 'Pampangga', '1', '1', 'Pfizer', 'N/A', '99', '99', '99', '6', '1', '6', '99 ', '99', '99', 'Salasad', 'Salasad, Magdalena', 'Salasad, Magdalena', '25', '1', '2003-03-02T06:00:00.000Z', '9', '9', '9', '2', '4', '5', '5', 'Lifetime', '1', '1', 'N/A', '6', '4', '4', '2', '3', '4', '6', '1', '3', '1', '8', 'N/A', 'N/A', 'N/A', 'Funds', 'Salasad, Magdalena'),
+(8, 25, 2, 'Adelan, Princess, Alay', '2', '2', '41', '1982-12-27T05:32:00.000Z', 'Magdalena, Laguna', '1', '2', 'Catholic', 'Tagalog', '4', '3', '99', 'N/A', 'N/A', '99', '99', 'N/A', '4', '4', 'Pfizer', '2', '10', '2', '10', '6', '1', '6', '99 ', '99', '99', 'Salasad', 'Salasad, Magdalena', 'Salasad, Magdalena', '41', '1', '1986-12-02T06:00:00.000Z', '8', '9', '9', '2', NULL, '5', '5', 'Lifetime', '1', '1', 'N/A', '18', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 25, 3, 'Adelan, Reyvine, Alay', '3', '1', '22', '2001-12-12T05:33:00.000Z', 'Magdalena, Laguna', '1', '1', 'Catholic', 'Tagalog', '11', '1', '5', 'Bagong bayan Sta Cruz', 'N/A', '99', '99', 'N/A', '4', '4', 'Pfizer', 'N/A', '99', '99', '99', '1', '3', '6', '99 ', '99', '99', 'Salasad', 'Salasad, Magdalena', 'Salasad, Magdalena', '22', '1', '2001-12-12T06:01:00.000Z', '8', '8', '8', '2', NULL, '5', '5', 'Lifetime', '2', '2', 'N/A', '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 25, 4, 'Adelan, Kim Nicole, Alay', '4', '2', '16', '2007-05-06T05:33:00.000Z', 'Magdalena, Laguna', '1', '1', 'Catholic', 'Tagalog', '8', '2', '3', 'Sta Cruz ', 'N/A', '99', '99', 'N/A', '4', '4', 'Pfizer', 'N/A', '99', '99', '99', '1', '3', '6', '99 ', '99', '99', 'Salasad', 'Salasad, Magdalena', 'Salasad, Magdalena', '16', '1', '2007-05-06T06:01:00.000Z', '8', '8', '8', '2', NULL, '5', '5', 'Lifetime', '2', '2', 'N/A', '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 26, 1, 'Ballola, Joel, A.', '1', '1', '46', '1978-02-10T11:33:38.494Z', 'Samar, Leyte', '1', '2', 'Catholic', 'Bisaya, Tagalog', '13', '99', '99', 'N/A', '30000', '1', '99', 'OFW', '1', '1', 'Pfizer', 'N/A', '99', '99', '99', '6', 'N/A', 'N/A', '99 ', '99', '2', 'Ibabang butnong', 'Ibabang butnong, Magdalena', 'Ibabanng butnong, Magdalena', '25', '1', '2000-01-05T11:50:23.278Z', '8', '15', '15', '2', '1', '1', '1', 'Forever', '2', '99', 'N/A', '7', '4', '4', '4', '3', '10', '6', '1', '1', '4', '6', 'N/A', 'N/A', 'Old Age', 'Cleaning Programs', 'Ibabang butnong, Magdalena'),
+(12, 26, 2, 'Ballola, Gina, P.', '2', '2', '48', '1976-11-15T11:38:20.124Z', 'Quizon Province', '1', '2', 'Catholic', 'Tagalog', '3', '99', '99', 'N/A', 'N/A', '99', '99', 'N/A', '1', '1', 'Pfizer', '1, 1', '99', '99', '99', '6', 'N/A', 'N/A', '99 ', '99', '2', 'Ibabang butnong', 'Ibabang butnong, Magdalena', 'ibabang butnong, Magdalena', '25', '1', '2000-01-05T11:50:35.628Z', '8', '15', '15', '2', '1', '2', '3', 'Forever', '2', '99', 'N/A', '16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, 26, 3, 'Ballola, Billy Joel, P.', '3', '1', '21', '2002-06-01T11:38:54.894Z', 'Magdalena, Laguna', '1', '1', 'Charolic', 'Tagalog', '11', '1', '5', 'Bagumbayan, Stacruz', 'N/A', '99', '99', 'N/A', '4', '4', 'Pfizer', 'N/A', '99', '99', '99', 'N/A', 'N/A', 'N/A', '99 ', '99', '2', 'Ibabang butnong', 'Ibabang butnong, Magdalena', 'Ibabang butnong, Magdalena', '21', '1', '2000-01-05T11:50:42.678Z', 'N/A', '15', '15', '2', '1', '5', '2', 'Forever', '2', '99', 'N/A', '99', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(14, 27, 1, 'Remolar, Klen Ghel, C', '2', '2', '25', '2000-09-21T23:09:00.000Z', 'Magdalena,Laguna ', '1', '1', 'Catholic', 'Tagalog', '12', '99', '99', 'None', '25,000', '1', '3', 'Makati', '1', '2', 'pfizer', 'none', '7', '3', '7', '1', '2', '6', '99 ', '99', '2', 'Salasad', 'manila', 'manila', '6', '2', '2023-08-07T23:15:00.000Z', '1', '15', 'hshsjs', '2', '2', '5', '4', 'to death', '1', '1', 'IT', '16', '1', '2', '2', '2', '5', '4', '1', '3', '6', '4', 'i’m ', 'none', 'none', 'none', 'none'),
+(20, 30, 1, 'Buag, Judylyn C.', '1', '2', '', NULL, '', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(21, 30, 2, 'Buag, Juliusmir C.', '3', '1', '22', '2001-10-18T23:54:30.360Z', 'Magdalena, Laguna ', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(22, 31, 1, 'Tan, Jerone, T', '5', '1', '23', '2024-01-08T00:14:14.881Z', 'Magdalena, Laguna', '1', '1', 'Catholic', 'sample', '10', '2', '5', 'Manila', '30,000', '2', '1', 'Manila', '2', '1', 'Pfizer', 'none', '99', '99', '99', '6', '2', '3', '5', '99', '99', 'Salasad', 'sample', 'sample', 'sample', '99', '2024-01-08T00:17:45.282Z', '7', '4', '6', '1', '4', '2', '4', 'death', '1', '99', 'sample', '5', '3', '2', '3', '3', '5', '5', '2', '4', '4', '4', 'sample', 'none', 'none', 'none', 'none'),
+(23, 32, 1, 'Deyro, Raquel C.', '12', '2', '34', '1979-01-08T00:16:15.289Z', 'Laguna Provincial Hostpital', '1', '2', 'Catholic', 'Tagalog', '11', '1', '5', 'Magdalena', 'N/A', '99', '99', 'N/A', '1', '3', 'Pfizer', 'N/A', '99', '99', '99', '1', '1', '6', '99 ', '2', '99', 'Salasad', 'Magdalena ', 'Sample', '20years', '99', '2024-01-08T00:32:35.247Z', '15', '15', '15', '2', '1', '4', '1', NULL, '1', '1', NULL, NULL, '4', '4', '0', '4', '9', '6', '1', '1', '2', '4', 'Sample', 'Sample', 'Sample', 'Sample', 'Sample'),
+(24, 32, 2, 'Deyro, Sebastian S.', '3', '1', '23', '1999-04-04T00:17:21.169Z', 'Laguna Provincial Hostpital', '1', '7', 'Catholic', 'Tagalog', '7', '1', '2', 'Sta. Cruz', '8500', '1', '3', 'Magdalena', '1', '1', 'Pfizer', 'N/A', '99', '99', '99', '1', '2', '6', '99 ', '2', '99', 'Salasad', 'Magdalena', 'Sample', '20years', '99', '2024-01-08T00:32:49.417Z', '15', '15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(25, 32, 3, 'Deyro, Emmanuel A.', '11', '1', '36', '1969-06-23T00:17:40.675Z', 'Laguna Provincial Hostpital', '1', '2', 'Catholic', 'Tagalog', '12', '1', '5', 'Magdalena', 'N/A', '99', '99', 'N/A', '1', '1', 'Pfizer', 'N/A', '99', '99', '99', '6', '2', '6', '99 ', '99', '99', 'Salasad', 'Magdalena', 'Sample', '20years', '99', '2024-01-08T00:32:56.515Z', '15', '15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(26, 33, 1, 'Novelozo, Kerby D.', '12', '2', '38', '1972-01-08T00:41:45.282Z', 'Magdalena', '1', '2', 'Catholic', 'Tagalog', '5', '1', '2', 'Magdalena', '10000', '2', '1', 'Magdalena', '1', '2', 'Pfizer', '1', '99', '99', '99', '6', '1', '5', '99 ', '99', '2', 'Salasad', 'Magdalena', 'N/A', '30years', '1', '2024-01-08T00:48:56.705Z', NULL, NULL, NULL, '2', '4', '1', '4', 'N/A', '99', '99', NULL, NULL, '4', '4', '3', '3', '4', '6', '1', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(27, 33, 2, 'Novelozo, Maricar A.', '3', '1', '21', '2002-01-08T00:41:55.874Z', 'Magdalena', '1', '7', 'Catholic', 'Tagalog', '11', '1', '5', 'Sta. Cruz', 'N/A', '99', '99', 'N/A', '1', '3', 'Pfizer', NULL, NULL, '99', '99', '2', '1', '1', '99 ', NULL, '2', 'Salasad', 'Magdalena', 'N/A', '21years', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N/A', '99', '99', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(28, 33, 3, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Tagalog', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(29, 34, 1, 'Salgado, Virgie', '1', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(30, 35, 1, 'Acierto, Joseph E.', '1', '1', NULL, '2024-01-08T01:26:33.934Z', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -359,11 +387,6 @@ INSERT INTO `response` (`id`, `question_id`, `response_code`, `response_text`) V
 (190, 19, '3', 'Lying-in clinic'),
 (191, 19, '4', 'Home'),
 (192, 19, '99', 'N/A'),
-(193, 20, '1', 'dasdas'),
-(194, 20, '2', 'Nurse'),
-(195, 20, '3', 'Midwife'),
-(196, 20, '4', 'Hilot'),
-(197, 20, '99', 'N/A'),
 (198, 21, '99', 'N/A'),
 (199, 46, '1', 'Yes'),
 (200, 46, '2', 'No'),
@@ -571,12 +594,6 @@ INSERT INTO `response` (`id`, `question_id`, `response_code`, `response_text`) V
 (477, 9, '9', 'Shared, faucet community water system'),
 (478, 9, '10', 'Own use, faucet community water system'),
 (479, 9, '11', 'Bottled water'),
-(480, 55, '1', 'Feeding to animals'),
-(481, 55, '2', 'Burying'),
-(482, 55, '3', 'Composting'),
-(483, 55, '4', 'Burning'),
-(484, 55, '5', 'Dumping individual pit (not burned)'),
-(485, 55, '6', 'Picked-up by garbage truck'),
 (486, 56, '1', 'Yes'),
 (487, 56, '2', 'No'),
 (488, 57, '0', 'None'),
@@ -611,7 +628,18 @@ INSERT INTO `response` (`id`, `question_id`, `response_code`, `response_text`) V
 (528, 58, '3', 'Multi-unit residential (three units or more)'),
 (529, 58, '4', 'Commercial/Industrial/Agricultural'),
 (530, 58, '5', 'Institutional living quarter (hotel, hospital)'),
-(531, 58, '6', 'Other housing unit (boat, cave, other)');
+(531, 58, '6', 'Other housing unit (boat, cave, other)'),
+(532, 20, '1', 'Doctor'),
+(533, 20, '2', 'Nurse'),
+(534, 20, '3', 'Midwife'),
+(535, 20, '4', 'Hilot'),
+(536, 20, '99', 'N/A'),
+(544, 55, '1', 'Feeding to animals'),
+(545, 55, '2', 'Burying'),
+(546, 55, '3', 'Composting'),
+(547, 55, '4', 'Burning'),
+(548, 55, '5', 'Dumping individual pit (not burned)'),
+(549, 55, '6', 'Picked-up by garbage truck');
 
 -- --------------------------------------------------------
 
@@ -645,7 +673,16 @@ CREATE TABLE `survey_form` (
 --
 
 INSERT INTO `survey_form` (`id`, `first_visit_date`, `first_visit_time_start`, `first_visit_time_end`, `first_visit_result`, `first_visit_date_next_visit`, `first_visit_interviewer`, `first_visit_supervisor`, `second_visit_date`, `second_visit_time_start`, `second_visit_time_end`, `second_visit_result`, `second_visit_date_next_visit`, `second_visit_interviewer`, `second_visit_supervisor`, `date_encoded`, `encoder_name`, `supervisor_name`) VALUES
-(25, '2023-12-23', '08:50:36', '08:50:37', 'C', '2023-12-23', 'Sample', 'Sample', '0000-00-00', '00:00:00', '00:00:00', '', '0000-00-00', '', '', '2023-12-23', 'Chardy Marie', 'Secretary');
+(25, '2023-12-22', '08:50:36', '08:50:37', 'C', '2023-12-22', 'Billy Joel', 'Julio', '0000-00-00', '00:00:00', '00:00:00', '', '0000-00-00', '', '', '2023-12-22', 'Chardy Marie', 'Secretary'),
+(26, '2024-01-02', '06:00:00', '06:14:26', 'C', '2024-12-26', 'Sample', 'Sample', '0000-00-00', '00:00:00', '00:00:00', '', '0000-00-00', '', '', '2024-01-02', 'Chardy Marie', 'Secretary'),
+(27, '2024-01-05', '11:30:57', '11:57:05', 'C', '2025-01-05', 'Sample', 'Sample', '0000-00-00', '00:00:00', '00:00:00', '', '0000-00-00', '', '', '2024-01-05', 'Chardy Marie', 'Secretary'),
+(28, '2023-12-19', '23:10:00', '23:18:24', 'CB', '2024-11-18', 'Reyvine', 'Secretary', '2023-12-21', '00:09:35', '00:09:37', 'C', '2023-12-21', 'reyvine', 'Secretary', '2024-01-07', 'Rey', 'Secretary'),
+(31, '2024-01-06', '23:56:02', '00:56:03', 'CB', '2024-01-07', 'julio', 'reyvine', '0000-00-00', '00:00:00', '00:00:00', '', '0000-00-00', '', '', '2024-01-07', 'Julio Suinan', 'Secretary'),
+(32, '2024-01-07', '00:19:14', '00:19:16', 'CB', '2024-01-07', 'Reyvine', 'sample', '2024-01-08', '03:36:23', '16:36:25', 'C', '2025-01-08', 'Sample', 'Sample', '2024-01-08', 'Rey', 'Secretary'),
+(33, '2024-01-08', '00:36:25', '00:36:27', 'CB', '2024-01-08', 'Reyvine', 'Sample', '0000-00-00', '00:00:00', '00:00:00', '', '0000-00-00', '', '', '2024-01-08', 'Rey', 'Secretary'),
+(34, '2024-01-05', '00:51:20', '02:40:22', 'CB', '2024-01-10', 'Reyvine', 'Billy', '2024-01-08', '01:00:29', '01:00:32', 'C', '2024-01-08', 'Reyvie', 'sample', '2024-01-08', 'Rey', 'Secretary'),
+(35, '2023-11-16', '00:25:06', '00:30:12', 'CB', '2022-12-09', 'Aivie Cabunyag', 'Norman', '0000-00-00', '00:00:00', '00:00:00', '', '0000-00-00', '', '', '2024-01-08', 'Julio Suinan', 'Secretary'),
+(36, '2024-01-08', '01:26:53', '01:26:54', 'CB', '2024-01-19', 'Reyvine', 'Sample', '0000-00-00', '00:00:00', '00:00:00', '', '0000-00-00', '', '', '2024-01-08', 'Rey', 'Secretary');
 
 -- --------------------------------------------------------
 
@@ -659,18 +696,24 @@ CREATE TABLE `users` (
   `name` varchar(50) DEFAULT NULL,
   `username` varchar(15) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
-  `role` varchar(20) DEFAULT NULL
+  `role` varchar(20) DEFAULT NULL,
+  `status` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `address_id`, `name`, `username`, `password`, `role`) VALUES
-(26, 1, 'Billy Joel', 'admin', '$2b$10$b8JIQcm8RbB1KX4vAOANbeBMfCPb3EY.qy8erndY5DM5JCxMoyYgy', 'administrator'),
-(27, 11, 'Chardy Marie', 'healthworker', '$2b$10$5saBJ20MHI6.X6PblO8fse/QTnTMSOe2UQTRhnq93NgJoOH0/mqXu', 'health_worker'),
-(28, 3, 'Chardy Marie', 'hw_sample', '$2b$10$LZoJZ0dG0ZEr6X4LEc5sD.rvTX.gURLtxk52ghrnpuXLKExRjItsq', 'health_worker'),
-(29, 3, 'BillyJoel', 'secretary', '$2b$10$/Zj4gCuhG/PcNw.Mh7N7FuI7M6p9U460A2kxqDIo9ZZLJ.VZHT6R2', 'secretary');
+INSERT INTO `users` (`id`, `address_id`, `name`, `username`, `password`, `role`, `status`) VALUES
+(26, 1, 'Billy Joel Ballola', 'admin', '$2b$10$6TfER2s84JaanG00KgtyDuSTVb7AOhndn1UkSZzLtsHKZHGpibmXO', 'administrator', 1),
+(27, 11, 'Chardy Marie', 'healthworker', '$2b$10$5saBJ20MHI6.X6PblO8fse/QTnTMSOe2UQTRhnq93NgJoOH0/mqXu', 'health_worker', 1),
+(28, 3, 'Chardy Marie', 'hw_sample', '$2b$10$5jQT0d2906WY3uw9xpEyE.no.7TkjaMl9u9tpU.5K5cFLNv9rumxe', 'health_worker', 1),
+(29, 3, 'BillyJoel', 'secretary', '$2b$10$RcjFMVlCRlMar20n0euafOoI0nc2uR0xa.6oq7iZ9KZ3xqnjHt.ii', 'secretary', 2),
+(31, 21, 'Reyvine Adelan', 'reyvine', '$2b$10$edlwuhfTzVHVoXSl0nmrkOsZPW4VotNsMRtjQS5sTCFi.j45Yu.Ha', 'secretary', 1),
+(32, 13, 'Juliusmir Buag', 'juliusmir', '$2b$10$edlwuhfTzVHVoXSl0nmrkOvN2Ba.AK8JigN.iiCrStSH.HLENVpyy', 'secretary', 1),
+(33, 21, 'Rey', 'rey123', '$2b$10$edlwuhfTzVHVoXSl0nmrkOCS6NrUqs91pZ.YOmHt5RWvyoynXc.rC', 'health_worker', 1),
+(34, 13, 'Julio Suinan', 'julio123', '$2b$10$edlwuhfTzVHVoXSl0nmrkO9qiCt0V3lehEtfyj83iAMbvPpwLLHQG', 'health_worker', 1),
+(35, 3, 'sample', 'sample', '$2b$10$edlwuhfTzVHVoXSl0nmrkOX.9lz2MOD1/Oxly7fscJk7YNIwhQ9m6', 'health_worker', 1);
 
 --
 -- Indexes for dumped tables
@@ -749,7 +792,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `household`
 --
 ALTER TABLE `household`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `question`
@@ -761,25 +804,25 @@ ALTER TABLE `question`
 -- AUTO_INCREMENT for table `questions_and_response`
 --
 ALTER TABLE `questions_and_response`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `response`
 --
 ALTER TABLE `response`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=532;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=550;
 
 --
 -- AUTO_INCREMENT for table `survey_form`
 --
 ALTER TABLE `survey_form`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Constraints for dumped tables
