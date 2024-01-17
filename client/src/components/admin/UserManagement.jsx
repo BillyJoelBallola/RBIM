@@ -8,6 +8,7 @@ import axios from 'axios'
 
 import { ConfirmDialog } from 'primereact/confirmdialog';
 import { confirmDialog } from 'primereact/confirmdialog'; 
+import { MdOpenInNew } from "react-icons/md";
 import { FaUserPen } from "react-icons/fa6";
 import Divider from '../Divider';
 
@@ -15,10 +16,15 @@ const UserManagement = ({ title, description }) => {
   const toast = useRef(null)
   const { loggedUser } = useContext(UserContext)
   const [users, setUsers] = useState([])
+  const [allUsers, setAllUsers] = useState([])
   const [address, setAddress] = useState([])
+  const [healthWorkersData, setHealthWorkersData] = useState([])
   const [visible, setVisible] = useState(false)
   const [update, setUpdate] = useState(null)
   const [query, setQuery] = useState('')
+  const [password, setPassword] = useState('')
+  const [actionSelected, setActionSelected] = useState(null)
+  const [validationVisible, setValidationVisible] = useState(false)
   const [userForm, setUserForm] = useState({
     name: "",
     username: "",
@@ -32,10 +38,20 @@ const UserManagement = ({ title, description }) => {
   }
 
   const userHeaders = [{ key: 'name', label: 'Name' }, { key: 'barangay', label: 'Barangay' }, { key: 'role', label: 'Role' }, { key: 'status', label: 'Status' }]
-  const actions = [
+  const hwHeaders = [{ key: 'name', label: 'Name' }, { key: 'barangay', label: 'Barangay' }, { key: 'status', label: 'Status' }]
+  const actions = loggedUser?.role === 'administrator' ? [
+    { 
+      label: <MdOpenInNew />, 
+      onClick: ({rowData}) => viewHealthWorkers(rowData)
+    },
     { 
       label: <FaUserPen />, 
-      onClick: ({rowData}) => editResponse(rowData) 
+      onClick: ({rowData}) => editResponse(rowData)
+    }
+  ] : [
+    { 
+      label: <FaUserPen />, 
+      onClick: ({rowData}) => editResponse(rowData)
     }
   ]
 
@@ -76,6 +92,15 @@ const UserManagement = ({ title, description }) => {
         setAddress(data.data)
       }
     }
+
+    const fetchAllUsers = async () => {
+      const { data } = await axios.get("/api/users")
+      if(data.success){
+        setAllUsers(data.data)
+      }
+    }
+
+    fetchAllUsers()
     fetchAddresses()
   }, [])
 
@@ -156,28 +181,12 @@ const UserManagement = ({ title, description }) => {
     }))
   } 
 
-  // const deleteUser = async (rowData) => {
-  //   try {
-  //     const { data } = await axios.delete(`/api/user/${rowData?.id}`)
-  //     if(data.success){
-  //       showToast("success", "Success", "User deleted successfully")
-  //     }else{
-  //       showToast("error", "Failed", "Failed to delete user")
-  //     }
-  //     setUpdate("delete_user")
-  //   } catch (error) {
-  //     return showToast("error", "Failed", "An unexpected error occurred. Please try again later")
-  //   }
-  // }
-
-  // const deleteDialog = (rowData) => {
-  //   confirmDialog({
-  //     draggable: false,
-  //     message: 'Are you sure you want to delete this user?',
-  //     header: 'Delete User',
-  //     accept: () => deleteUser(rowData)
-  //   });
-  // };
+  const viewHealthWorkers = (rowData) => {
+    const healthWorkers = allUsers?.filter(data => data?.address_id === rowData?.address_id && data?.role === 'health_worker')
+    setHealthWorkersData(healthWorkers)
+    setActionSelected('view')
+    setVisible(true)
+  }
 
   const editResponse = (rowData) => {
     const { id, name, username, address_id, role, status } = rowData
@@ -190,11 +199,37 @@ const UserManagement = ({ title, description }) => {
       status: status
     })
     setVisible(true)
+    setActionSelected('edit')
   }
 
   const filteredUsers = users.filter(item => {
     return item.name.toLowerCase().includes(query.toLowerCase())
   })
+
+  const recoverPassword = async (e) => {
+    e.preventDefault()
+    const userId = userForm?.id
+    const rbim_token = await window.cookieStore.get('rbim_token')
+
+    if(password === ''){
+      return showToast("error", "Failed", 'Fillup the text field.')
+    }
+
+    try {
+      const { data } = await axios.post("/api/reset_password", { password, userId, rbim_token: rbim_token?.value })
+      if(data.success){
+        setVisible(false)
+        setValidationVisible(false)
+        return showToast("success", "Success", data.message)
+      }else{
+        return showToast("error", "Failed", data.message)
+      }
+    } catch (error) {
+      return showToast("error", "Failed", "Internal Server Error")
+    } finally {
+      setPassword("")
+    }
+  }
 
   return (
     <>
@@ -202,11 +237,27 @@ const UserManagement = ({ title, description }) => {
       <ConfirmDialog />
       <SettingsHeader title={title} description={description} />
       <CustomDialog 
+        visible={validationVisible} 
+        setVisible={setValidationVisible} 
+        header={'Authentication'}
+        classStyle={'w-[30vw]'}
+        content={
+          <form onSubmit={recoverPassword}>
+            <div className="form-group">
+              <label htmlFor="">Input your password for authentication.</label>
+              <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+              <button className='bg-[#008605] rounded-md text-white py-2'>Submit</button>
+            </div>
+          </form>
+        }
+      />
+      <CustomDialog 
         resetForm={resetUserForm}
         visible={visible} 
         setVisible={setVisible} 
-        header={"User"} 
+        header={"User/s"} 
         content={
+          actionSelected === 'edit' || actionSelected === 'add' ?
           <>
             <form className='mb-4' onSubmit={userForm?.id ? handleEditUser : handleSubmitUser}>
               {
@@ -281,11 +332,18 @@ const UserManagement = ({ title, description }) => {
                 <Divider />
                 <div className='mt-4 grid gap-2'>
                   <span className='text-sm font-semibold'>Recover password</span>
-                  <button className='px-2 py-4 rounded-md bg-gray-200 hover:bg-gray-300 duration-150'>Reveal password</button>
+                  <button 
+                    className='px-2 py-4 rounded-md bg-gray-200 hover:bg-gray-300 duration-150' 
+                    onClick={() => setValidationVisible(true)}>Reset password</button>
                 </div>
               </>
             }
           </>
+          : actionSelected === 'view' ?
+          <>
+            <CustomTable data={healthWorkersData} headers={hwHeaders} />
+          </>
+          : <></>
         }
       />
       <div>
@@ -294,9 +352,18 @@ const UserManagement = ({ title, description }) => {
             <label htmlFor="search">Search User</label>
             <input type="search" id='search' placeholder='Search using name' value={query} onChange={(e) => setQuery(e.target.value)}/>
           </div>
-          <button onClick={() => setVisible(current => !current)} className='mt-6 w-min whitespace-nowrap rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>ADD USER</button>
+          <button 
+            onClick={() => {
+              setActionSelected('add')
+              setVisible(current => !current)
+            }} 
+            className='mt-6 w-min whitespace-nowrap rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>ADD USER</button>
         </div>
-        <CustomTable headers={userHeaders} data={filteredUsers} actions={actions}/>
+        <CustomTable 
+          headers={userHeaders} 
+          data={filteredUsers} 
+          actions={actions}
+        />
       </div>
     </>
   )

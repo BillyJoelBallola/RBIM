@@ -6,7 +6,7 @@ const CustomDialog = ({ classStyle, header, visible, setVisible, content, footer
     <Dialog 
       header={header}
       visible={visible} 
-      className={`${classStyle ? classStyle : 'w-[50vw]'}`} 
+      className={`${classStyle ? classStyle : 'w-[90vw] md:w-[75vw] lg:w-[50vw]'}`} 
       onHide={() =>{
         resetForm ? resetForm() : null
         setVisible(false)
