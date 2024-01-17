@@ -53,8 +53,8 @@ const addSurveyForm = async ({ household, surveyForm, questionsAndResponses }) =
     })
 
     const householdResult = await new Promise(( resolve, reject ) => {
-      db.query('INSERT INTO `household`(`survey_form_id`, `household_number`, `living_type`, `respondent_name`, `household_head`, `household_member_no`, `address`, `unit_no`, `house_no`, `street`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-      [surveyFormResult, household.household_number, household.living_type, household.respondent_name, household.household_head, household.household_member_no, household.address, household.unit_no, household.house_no, household.street], 
+      db.query('INSERT INTO `household`(`survey_form_id`, `household_number`, `living_type`, `respondent_name`, `household_head`, `household_member_no`, `address`, `unit_no`, `house_no`, `street`, `phone_no`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+      [surveyFormResult, household.household_number, household.living_type, household.respondent_name, household.household_head, household.household_member_no, household.address, household.unit_no, household.house_no, household.street, phone_no], 
       (( error, result ) => {
         if (error) {
           reject(error);
@@ -105,8 +105,6 @@ const getSurveyFormById = async (surveyFormId) => {
 
 export const updateSurveyForm = async ({ household, surveyForm, questionsAndResponses }) => {
   try {
-    console.log(JSON.stringify({ household, surveyForm, questionsAndResponses }, null, 2))
-
     const { 
       survey_form_id,
       first_visit_date,
@@ -138,6 +136,7 @@ export const updateSurveyForm = async ({ household, surveyForm, questionsAndResp
       unit_no,
       house_no,
       street,
+      phone_no,
     } = household
 
     const surveyFormResult = await new Promise((resolve, reject) => {
@@ -169,7 +168,7 @@ export const updateSurveyForm = async ({ household, surveyForm, questionsAndResp
     })
 
     await new Promise((resolve, reject) => {
-      db.query('UPDATE `household` SET `survey_form_id`= ?, `household_number`= ?, `living_type`= ?, `respondent_name`= ?, `household_head`= ?, `household_member_no`= ?, `address`= ?, `unit_no`= ?, `house_no`= ?, `street`= ? WHERE `id` = ?' , 
+      db.query('UPDATE `household` SET `survey_form_id`= ?, `household_number`= ?, `living_type`= ?, `respondent_name`= ?, `household_head`= ?, `household_member_no`= ?, `address`= ?, `unit_no`= ?, `house_no`= ?, `street`= ?, `phone_no`= ? WHERE `id` = ?' , 
       [
         survey_form_id,
         household_number,
@@ -181,6 +180,7 @@ export const updateSurveyForm = async ({ household, surveyForm, questionsAndResp
         unit_no,
         house_no,
         street,
+        phone_no,
         household_id
       ],
       (error, result) => {
@@ -191,7 +191,6 @@ export const updateSurveyForm = async ({ household, surveyForm, questionsAndResp
         }
       })
     })
-    console.log(JSON.stringify({ household, surveyForm, questionsAndResponses }, null, 2));
 
     await Promise.all(
       questionsAndResponses.map(async (data) => {

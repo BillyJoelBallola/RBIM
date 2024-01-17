@@ -198,7 +198,7 @@ const Form1 = ({ navigate }) => {
                         className='w-full'
                         type="time" 
                         name='first_visit_time_start'
-                        value={surveyForm?.first_visit_time_start?.toString()?.slice(11, 22) !== '00:00:00' ? surveyForm.first_visit_time_start : ''}
+                        value={surveyForm?.first_visit_time_start?.toString()?.slice(11, 22) !== '00:00:00' ? surveyForm?.first_visit_time_start?.toString()?.slice(11, 22) : ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -207,7 +207,7 @@ const Form1 = ({ navigate }) => {
                         className='w-full'
                         type="time" 
                         name='first_visit_time_end'
-                        value={surveyForm.first_visit_time_end.toString().slice(11, 22) !== '00:00:00'  ? surveyForm.first_visit_time_end : ''}
+                        value={surveyForm.first_visit_time_end.toString().slice(11, 22) !== '00:00:00'  ? surveyForm.first_visit_time_end.toString().slice(11, 22) : ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -264,7 +264,7 @@ const Form1 = ({ navigate }) => {
                         className='w-full'
                         type="time" 
                         name='second_visit_time_start'
-                        value={surveyForm.second_visit_time_start.toString().slice(11, 22) !== '00:00:00'  ? surveyForm.second_visit_time_start : ''}
+                        value={surveyForm.second_visit_time_start.toString().slice(11, 22) !== '00:00:00'  ? surveyForm.second_visit_time_start.toString().slice(11, 22) : ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -273,7 +273,7 @@ const Form1 = ({ navigate }) => {
                         type="time" 
                         className='w-full'
                         name='second_visit_time_end'
-                        value={surveyForm.second_visit_time_end.toString().slice(11, 22) !== '00:00:00' ? surveyForm.second_visit_time_end : ''}
+                        value={surveyForm.second_visit_time_end.toString().slice(11, 22) !== '00:00:00' ? surveyForm.second_visit_time_end.toString().slice(11, 22) : ''}
                         onChange={handleInputChangeForSurveyForm}
                       />
                     </td>
@@ -323,6 +323,23 @@ const Form1 = ({ navigate }) => {
       <Divider />
       {/* 4th row */}
       <div>
+        <span className='font-semibold text-gray-700'>C. CONTACT INFORMATION</span>
+        <div className='flex flex-col md:flex-row gap-4 md:gap-8 mt-4'>
+          <div className="form-group w-full">
+            <label htmlFor="date_encoded">Phone Number</label>
+            <input 
+              type="number" 
+              id='date_encoded' 
+              placeholder='Phone Number'
+              value={household?.phone_no?.toString() !== '' ? household?.phone_no?.toString() : ''}
+              onChange={handleInputChangeForSurveyForm}
+            />
+          </div>
+        </div>
+      </div>
+      <Divider />
+      {/* 5th row */}
+      <div>
         <span className='font-semibold text-gray-700'>C. ENCODING INFORMATION</span>
         <div className='flex flex-col md:flex-row gap-4 md:gap-8 mt-4'>
           <div className="form-group w-full">
@@ -357,6 +374,7 @@ const Form1 = ({ navigate }) => {
           </div>
         </div>
       </div>
+
       <div className='flex justify-end mt-4'>
         <button className='self-end px-6 py-2 bg-gray-600 rounded-md text-white flex gap-4 items-center' onClick={() => navigate('form2')}>
           <span>Next</span>

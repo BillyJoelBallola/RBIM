@@ -46,6 +46,7 @@ export const SurveyFormContextProvider = ({ children }) => {
     unit_no: '',
     house_no: '',
     street: '',
+    phone_no: '',
   })
 
   const membersData = [

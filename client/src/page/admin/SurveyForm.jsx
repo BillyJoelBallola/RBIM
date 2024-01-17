@@ -12,6 +12,7 @@ import Form3 from '../../components/admin/form/Form3'
 import Form4 from '../../components/admin/form/Form4'
 import Form5 from '../../components/admin/form/Form5'
 import Form6 from '../../components/admin/form/form6'
+import PrintableForm from '../../components/admin/PrintableForm'
 
 const SurveyForm = () => {
   const toast = useRef(null)
@@ -23,6 +24,8 @@ const SurveyForm = () => {
   const [questions, setQuestions] = useState([])
   const [visible, setVisible] = useState(false)
   const [update, setUpdate] = useState(null)
+  const [address, setAddress] = useState(null)
+  const [preview, setPreview] = useState(false)
 
   const alertMessage = (severity, summary, detail) => {
     return toast.current.show({
@@ -42,6 +45,12 @@ const SurveyForm = () => {
       setQuestions(data.data)
     }
 
+    const fetchAddress = async () => {
+      const { data } = await axios.get("/api/address") 
+      setAddress(data.data)
+    }
+    
+    fetchAddress()
     fetchAllQuestions()
   }, [])
   
@@ -81,6 +90,7 @@ const SurveyForm = () => {
           unit_no: response[0].unit_no,
           house_no: response[0].house_no,
           street: response[0].street,
+          phone_no: response[0].phone_no || '',
         })
         for(let i = 0; i < membersData.length; i++){
           membersData[i]?.setQuestionAndAnswer(getQuestionsAndResponsesOfMember(response, i + 1))
@@ -119,24 +129,24 @@ const SurveyForm = () => {
       const { data } = await axios.put('/api/survey_form', { questionsAndResponses: questionsAndResponsesArray, household, surveyForm }) 
       if(data.success){
         setUpdate('updated')
-        return toast.current.show({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Survey form updated successfully',
-        });
+        return alertMessage(
+          'success',
+          'Success',
+          'Survey form updated successfully',
+        );
       }else{
-        return toast.current.show({
-          severity: 'error',
-          summary: 'Failed',
-          detail: 'Failed to update survey form, please try again later.',
-        });
+        return alertMessage(
+          'success',
+          'Success',
+          'Failed to update survey form, please try again later.',
+        );
       }
     } catch (error) {
-      return toast.current.show({
-        severity: 'error',
-        summary: 'Failed',
-        detail: 'An unexpected error occurred. Please try again later.',
-      });
+      return alertMessage(
+        'success',
+        'Success',
+        'An unexpected error occurred. Please try again later.',
+      );
     }finally {
       setVisible(false)
     }
@@ -169,12 +179,17 @@ const SurveyForm = () => {
           </p>
         )}
       />
+      <PrintableForm 
+        address={address}
+        preview={preview}
+        setPreview={setPreview}
+      />
       <div className='overflow-y-auto'>
         <Header pageName={"Survey Form"} />
         <div className='content'>
           <div className='pt-4 pb-3 flex gap-2'>
             <button className='bg-gray-600 text-white py-2 px-4 rounded-md' onClick={() => navigate('/rbim/citizen-information')}>Cancel</button>
-            <button className='bg-gray-500 text-white py-2 px-4 rounded-md' onClick={() => ''}>Download</button>
+            <button className='bg-gray-500 text-white py-2 px-4 rounded-md' onClick={() => setPreview(true)}>Download</button>
             <button className='bg-[#008605] text-white py-2 px-4 rounded-md' onClick={() => setVisible(true)}>Save Changes</button>
           </div>
           {
