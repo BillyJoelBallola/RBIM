@@ -330,9 +330,10 @@ const Form1 = ({ navigate }) => {
             <input 
               type="number" 
               id='date_encoded' 
+              name='phone_no'
               placeholder='Phone Number'
-              value={household?.phone_no?.toString() !== '' ? household?.phone_no?.toString() : ''}
-              onChange={handleInputChangeForSurveyForm}
+              value={household?.phone_no || ''}
+              onChange={handleInputChangeForHousehold}
             />
           </div>
         </div>

@@ -340,9 +340,10 @@ const UserManagement = ({ title, description }) => {
             }
           </>
           : actionSelected === 'view' ?
-          <>
+          <div className='grid gap-4'>
+            <span className='text-sm text-gray-400'>List of all user/s (health workers) in {healthWorkersData[0]?.barangay}</span>
             <CustomTable data={healthWorkersData} headers={hwHeaders} />
-          </>
+          </div>
           : <></>
         }
       />
