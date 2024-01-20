@@ -13,6 +13,7 @@ import Form4 from '../../components/admin/form/Form4'
 import Form5 from '../../components/admin/form/Form5'
 import Form6 from '../../components/admin/form/form6'
 import PrintableForm from '../../components/admin/PrintableForm'
+import { NavigationContext } from '../../context/NavigationContext'
 
 const SurveyForm = () => {
   const toast = useRef(null)
@@ -21,6 +22,7 @@ const SurveyForm = () => {
   const navigate = useNavigate()
   const pathname = useLocation().pathname.slice(0, 17)
   const { setSurveyForm, setHousehold, membersData, getQuestionsAndResponsesOfMember, questionsAndResponsesArray, household, surveyForm } = useContext(SurveyFormContext)
+  const { setIsNavigateOpen } = useContext(NavigationContext)
   const [questions, setQuestions] = useState([])
   const [visible, setVisible] = useState(false)
   const [update, setUpdate] = useState(null)
@@ -189,7 +191,12 @@ const SurveyForm = () => {
         <div className='content'>
           <div className='pt-4 pb-3 flex gap-2'>
             <button className='bg-gray-600 text-white py-2 px-4 rounded-md' onClick={() => navigate('/rbim/citizen-information')}>Cancel</button>
-            <button className='bg-gray-500 text-white py-2 px-4 rounded-md' onClick={() => setPreview(true)}>Download</button>
+            <button 
+              className='bg-gray-500 text-white py-2 px-4 rounded-md' 
+              onClick={() => {
+                setPreview(true)
+                setIsNavigateOpen(true)
+              }}>Download</button>
             <button className='bg-[#008605] text-white py-2 px-4 rounded-md' onClick={() => setVisible(true)}>Save Changes</button>
           </div>
           {

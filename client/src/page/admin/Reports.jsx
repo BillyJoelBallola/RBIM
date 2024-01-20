@@ -7,6 +7,8 @@ import { UserContext } from '../../context/UserContext'
 const Reports = () => {
   const { loggedUser } = useContext(UserContext)
 
+  
+
   return (
     <>
       <Header pageName={"Reports"} />
@@ -47,7 +49,7 @@ const Reports = () => {
           <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-4'>
             {
               reportTables?.map((report, idx) => (
-                <button className='bg-gray-100 rounded-md p-4 text-gray-500 text-left border drop-shadow-md' key={idx}>
+                <button className='bg-gray-100 rounded-md p-4 text-gray-500 text-left border drop-shadow-md hover:bg-green-100 duration-150' key={idx}>
                   <span className='font-semibold'>{report.label}</span>{" "}
                   <span>{report.detail}</span>
                 </button>

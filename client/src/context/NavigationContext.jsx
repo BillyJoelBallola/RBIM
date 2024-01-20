@@ -10,7 +10,7 @@ export const NavigationContextProvider = ({ children }) => {
   }
 
   return (
-    <NavigationContext.Provider value={{ isNavigateOpen, toggleNav }}>
+    <NavigationContext.Provider value={{ isNavigateOpen, setIsNavigateOpen, toggleNav }}>
       {children}
     </NavigationContext.Provider>
   )
