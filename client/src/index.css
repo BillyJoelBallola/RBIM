@@ -42,7 +42,7 @@ label{
 }
 
 .content {
-  @apply px-6 mt-20;
+  @apply px-6 pt-20;
 }
 
 .home-bg{
@@ -71,4 +71,16 @@ label{
 
 .p-dialog-footer > button {
   @apply px-4 py-1
+}
+
+.report_table{
+  @apply text-xs border-black border w-10/12
+}
+
+.report_table thead th{
+  @apply border-black border bg-[#008650] text-white self-start pb-3
+}
+
+.report_table tbody td{
+  @apply border-black border text-center self-start pb-3
 }
