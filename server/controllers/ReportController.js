@@ -10,9 +10,23 @@ export const getAllSurveyFormsData = async (req, res) => {
     }
 }
 
+const isDateInRange = (date, startDate, endDate) => {
+    const dateObj = new Date(date);
+    const startObj = new Date(startDate);
+    const endObj = new Date(endDate);
+  
+    return dateObj >= startObj && dateObj <= endObj;
+};
+
 export const getTableOneReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
+
         const data = [
             { age: '0-4' },
             { age: '5-9' },
@@ -125,7 +139,12 @@ export const getTableTwoReport = async (req, res) => {
 
 export const getTableThreeReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '0-4' },
             { age: '5-9' },
@@ -225,7 +244,12 @@ export const getTableThreeReport = async (req, res) => {
 
 export const getTableFourReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { status: 'single' },
             { status: 'married' },
@@ -280,7 +304,12 @@ export const getTableFourReport = async (req, res) => {
 
 export const getTableFiveReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         let data = getReligionsArray(result);
 
         const migrantCodes = {
@@ -309,7 +338,12 @@ export const getTableFiveReport = async (req, res) => {
 
 export const getTableSixReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         let data = getEthnicityArray(result);
 
         const migrantCodes = {
@@ -338,7 +372,12 @@ export const getTableSixReport = async (req, res) => {
 
 export const getTableSevenReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '6-9' },
             { age: '10-14' },
@@ -534,7 +573,12 @@ export const getTableSevenReport = async (req, res) => {
 
 export const getTableEightReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '3-4' },
             { age: '5-9' },
@@ -587,7 +631,12 @@ export const getTableEightReport = async (req, res) => {
 
 export const getTableNineReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '3-4' },
             { age: '5-9' },
@@ -664,7 +713,12 @@ export const getTableNineReport = async (req, res) => {
 
 export const getTableTenReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '15-19' },
             { age: '20-24' },
@@ -875,7 +929,12 @@ export const getTableTenReport = async (req, res) => {
 
 export const getTableElevenReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '15-19' },
             { age: '20-24' },
@@ -1031,7 +1090,12 @@ export const getTableElevenReport = async (req, res) => {
 
 export const getTableTwelveReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '15-19' },
             { age: '20-24' },
@@ -1068,45 +1132,116 @@ export const getTableTwelveReport = async (req, res) => {
             residentCodes.map((resident, idx) => {
                 data[0][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[0][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[0][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && 
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[1][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[1][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[1][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && 
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[2][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[2][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[2][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && 
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[3][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[3][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[3][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 30 && Number(item.Q4) <= 34 &&
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[4][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[4][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[4][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 35 && Number(item.Q4) <= 39 &&
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[5][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[5][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[5][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 40 && Number(item.Q4) <= 44 &&
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[6][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[6][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[6][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 45 && Number(item.Q4) <= 49 &&
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[7][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[7][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[7][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 50 && Number(item.Q4) <= 54 &&
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[8][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 55 && Number(item.Q4) <= 59 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[8][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 55 && Number(item.Q4) <= 59 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[8][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 55 && Number(item.Q4) <= 59 &&
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[9][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 60 && Number(item.Q4) <= 64 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[9][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 60 && Number(item.Q4) <= 64 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[9][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 60 && Number(item.Q4) <= 64 &&  
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[10][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 65 && Number(item.Q4) <= 69 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[10][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 65 && Number(item.Q4) <= 69 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[10][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 65 && Number(item.Q4) <= 69 && 
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[11][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 70 && Number(item.Q4) <= 74 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[11][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 70 && Number(item.Q4) <= 74 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[11][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 70 && Number(item.Q4) <= 74 && 
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[12][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 75 && Number(item.Q4) <= 79 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[12][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 75 && Number(item.Q4) <= 79 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[12][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 75 && Number(item.Q4) <= 79 &&
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
                 
                 data[13][`${resident}${work}Male`] = result.filter(item => Number(item.Q4) >= 80 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 1).length || 0;
                 data[13][`${resident}${work}Female`] = result.filter(item => Number(item.Q4) >= 80 && Number(item.Q17) === workCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[13][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 80 && 
+                    [1, 2, 3, 4, 5, 6].includes(Number(item.Q17)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3))).length || 0;
+                
             })
         }
 
@@ -1118,7 +1253,12 @@ export const getTableTwelveReport = async (req, res) => {
 
 export const getTableThirteenReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { delivery: 'Public hospital' },
             { delivery: 'Private hospital' },
@@ -1162,7 +1302,12 @@ export const getTableThirteenReport = async (req, res) => {
 
 export const getTableFourteenReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { attendant: 'Doctor' },
             { attendant: 'Nurse' },
@@ -1222,7 +1367,12 @@ export const getTableFourteenReport = async (req, res) => {
 
 export const getTableFifteenReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         let data = getImmuzationArray(result);
 
         data?.forEach((d) => {
@@ -1246,7 +1396,12 @@ export const getTableFifteenReport = async (req, res) => {
 
 export const getTableSixteenReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '10-14' },
             { age: '15-19' },
@@ -1281,26 +1436,133 @@ export const getTableSixteenReport = async (req, res) => {
         for (const [number, numberCode] of Object.entries(numbers)) {
             residentCodes.map((resident, idx) => {
                 data[0][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && Number(item?.Q22?.split(",")[0]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[0][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+                
                 data[1][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item?.Q22?.split(",")[0]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[1][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[2][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item?.Q22?.split(",")[0]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[2][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[3][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item?.Q22?.split(",")[0]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[3][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[4][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item?.Q22?.split(",")[0]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[4][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[5][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item?.Q22?.split(",")[0]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[5][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[6][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item?.Q22?.split(",")[0]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[6][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[7][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item?.Q22?.split(",")[0]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[7][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[8][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item?.Q22?.split(",")[0]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-            
+                data[8][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 if(numberCode === 10){
                     data[0][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[0][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[1][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[1][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[2][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[2][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[3][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[3][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[4][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[4][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[5][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[5][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[6][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[6][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[7][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[7][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[8][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[8][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
                 }
+
             })
         }
 
@@ -1312,7 +1574,12 @@ export const getTableSixteenReport = async (req, res) => {
 
 export const getTableSeventeenReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '10-14' },
             { age: '15-19' },
@@ -1347,26 +1614,133 @@ export const getTableSeventeenReport = async (req, res) => {
         for (const [number, numberCode] of Object.entries(numbers)) {
             residentCodes.map((resident, idx) => {
                 data[0][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[1][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[2][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[3][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[4][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[5][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[6][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[7][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[8][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[0][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
                 
+                data[1][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[1][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[2][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[2][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[3][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[3][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[4][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[4][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[5][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[5][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[6][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[6][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[7][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[7][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[8][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[8][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 if(numberCode === 10){
                     data[0][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[0][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[1][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[1][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[2][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[2][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[3][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[3][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[4][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[4][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[5][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                    data[6][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                    data[7][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                    data[8][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[5][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
+                    data[6][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[6][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
+                    data[7][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[7][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
+                    data[8][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item?.Q22?.split(",")[0]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[8][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[0])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
                 }
+
             })
         }
 
@@ -1378,7 +1752,12 @@ export const getTableSeventeenReport = async (req, res) => {
 
 export const getTableEighteenReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '10-14' },
             { age: '15-19' },
@@ -1413,14 +1792,67 @@ export const getTableEighteenReport = async (req, res) => {
         for (const [contraception, contraceptionCode] of Object.entries(contraceptions)) {
             residentCodes.map((resident, idx) => {
                 data[0][`${resident}${contraception}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && Number(item.Q24) === contraceptionCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[0][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+                
                 data[1][`${resident}${contraception}`] = result.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item.Q24) === contraceptionCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[1][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[2][`${resident}${contraception}`] = result.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item.Q24) === contraceptionCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[2][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[3][`${resident}${contraception}`] = result.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item.Q24) === contraceptionCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[3][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[4][`${resident}${contraception}`] = result.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item.Q24) === contraceptionCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[4][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[5][`${resident}${contraception}`] = result.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item.Q24) === contraceptionCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[5][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[6][`${resident}${contraception}`] = result.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item.Q24) === contraceptionCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[6][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[7][`${resident}${contraception}`] = result.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item.Q24) === contraceptionCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[7][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
                 data[8][`${resident}${contraception}`] = result.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[8][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
             })
         }
 
@@ -1432,7 +1864,12 @@ export const getTableEighteenReport = async (req, res) => {
 
 export const getTableNineteenReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { livingChildren: '1' },
             { livingChildren: '2' },
@@ -1482,27 +1919,165 @@ export const getTableNineteenReport = async (req, res) => {
             for (const [number, numberCode] of Object.entries(contraceptions)) {
                 residentCodes.map((resident, idx) => {
                     data[0][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[0][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+                    
                     data[1][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[1][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[2][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[2][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[3][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[3][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[4][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[4][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[5][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[5][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[6][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[6][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[7][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[7][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[8][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                    data[8][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     data[9][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) === numberCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                
+                    data[9][`total`] = result.filter(item => 
+                        Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item?.Q22?.split(",")[1])) && 
+                        [1, 2, 3].includes(Number(item.Q36)) && 
+                        Number(item.Q3) === 2).length || 0;
+
                     if(numberCode === 10){
                         data[0][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                        data[0][`total`] = result.filter(item => 
+                            Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                            Number(item?.Q22?.split(",")[1]) >= 10 && 
+                            [1, 2, 3].includes(Number(item.Q36)) && 
+                            Number(item.Q3) === 2).length || 0;
+
                         data[1][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                        data[1][`total`] = result.filter(item => 
+                            Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                            Number(item?.Q22?.split(",")[1]) >= 10 && 
+                            [1, 2, 3].includes(Number(item.Q36)) && 
+                            Number(item.Q3) === 2).length || 0;
+
                         data[2][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                        data[2][`total`] = result.filter(item => 
+                            Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                            Number(item?.Q22?.split(",")[1]) >= 10 && 
+                            [1, 2, 3].includes(Number(item.Q36)) && 
+                            Number(item.Q3) === 2).length || 0;
+
                         data[3][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                        data[3][`total`] = result.filter(item => 
+                            Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                            Number(item?.Q22?.split(",")[1]) >= 10 && 
+                            [1, 2, 3].includes(Number(item.Q36)) && 
+                            Number(item.Q3) === 2).length || 0;
+
                         data[4][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                        data[4][`total`] = result.filter(item => 
+                            Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                            Number(item?.Q22?.split(",")[1]) >= 10 && 
+                            [1, 2, 3].includes(Number(item.Q36)) && 
+                            Number(item.Q3) === 2).length || 0;
+
                         data[5][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                        data[5][`total`] = result.filter(item => 
+                            Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                            Number(item?.Q22?.split(",")[1]) >= 10 && 
+                            [1, 2, 3].includes(Number(item.Q36)) && 
+                            Number(item.Q3) === 2).length || 0;
+
                         data[6][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                        data[6][`total`] = result.filter(item => 
+                            Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                            Number(item?.Q22?.split(",")[1]) >= 10 && 
+                            [1, 2, 3].includes(Number(item.Q36)) && 
+                            Number(item.Q3) === 2).length || 0;
+
                         data[7][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                        data[7][`total`] = result.filter(item => 
+                            Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                            Number(item?.Q22?.split(",")[1]) >= 10 && 
+                            [1, 2, 3].includes(Number(item.Q36)) && 
+                            Number(item.Q3) === 2).length || 0;
+
                         data[8][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                        data[8][`total`] = result.filter(item => 
+                            Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                            Number(item?.Q22?.split(",")[1]) >= 10 && 
+                            [1, 2, 3].includes(Number(item.Q36)) && 
+                            Number(item.Q3) === 2).length || 0;
+
                         data[9][`${resident}${number}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === contraceptionCode && Number(item?.Q22?.split(",")[1]) >= 10 && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;    
+                        data[9][`total`] = result.filter(item => 
+                            Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && 
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(item.Q24)) && 
+                            Number(item?.Q22?.split(",")[1]) >= 10 && 
+                            [1, 2, 3].includes(Number(item.Q36)) && 
+                            Number(item.Q3) === 2).length || 0;
                     }
                 })
             }
@@ -1516,7 +2091,12 @@ export const getTableNineteenReport = async (req, res) => {
 
 export const getTableTwentyReport = async (req, res) => {
     try {
-        const result = await reportModel.getAllSurveyFormsData();
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
         const data = [
             { age: '10-14' },
             { age: '15-19' },
@@ -1545,15 +2125,69 @@ export const getTableTwentyReport = async (req, res) => {
 
         for (const [source, sourceCode] of Object.entries(fpSources)) {
             residentCodes.map((resident, idx) => {
-                data[0][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[1][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[2][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[3][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[4][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[5][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[6][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[7][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
-                data[8][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 54 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;            })
+                data[0][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[0][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && 
+                    [1, 2, 3, 4, 5].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+                
+                data[1][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[1][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && 
+                    [1, 2, 3, 4, 5].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[2][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[2][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && 
+                    [1, 2, 3, 4, 5].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[3][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[3][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && 
+                    [1, 2, 3, 4, 5].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[4][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[4][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && 
+                    [1, 2, 3, 4, 5].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[5][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[5][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && 
+                    [1, 2, 3, 4, 5].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[6][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[6][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && 
+                    [1, 2, 3, 4, 5].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[7][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;
+                data[7][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && 
+                    [1, 2, 3, 4, 5].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+
+                data[8][`${resident}${source}`] = result.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item.Q24) === sourceCode && Number(item.Q36) === idx + 1 && Number(item.Q3) === 2).length || 0;            
+                data[8][`total`] = result.filter(item => 
+                    Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && 
+                    [1, 2, 3, 4, 5].includes(Number(item.Q24)) && 
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    Number(item.Q3) === 2).length || 0;
+            })
         }
 
         return res.json({ success: true, data: data });

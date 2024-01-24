@@ -1,10 +1,11 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Header from '../../components/admin/Header'
 import { barangay } from '../../static/Geography'
 import { reportTables } from '../../static/ReportTables'
 import { UserContext } from '../../context/UserContext'
 import ReportTableContainer from '../../components/admin/ReportTableContainer'
 import { NavigationContext } from '../../context/NavigationContext'
+import { exportReportExcel } from '../../components/admin/ExportReportExcel'
 
 import { ConfirmDialog } from 'primereact/confirmdialog'
 import { confirmDialog } from 'primereact/confirmdialog'
@@ -12,6 +13,7 @@ import { Toast } from 'primereact/toast'
 import html2canvas from 'html2canvas'
 import moment from 'moment'
 import jsPDF from 'jspdf'
+import axios from 'axios'
 
 const Reports = () => {
   const toast = useRef(null)
@@ -19,33 +21,53 @@ const Reports = () => {
   const { setIsNavigateOpen } = useContext(NavigationContext)
   const { loggedUser } = useContext(UserContext)
   const [orientation, setOrientation] = useState('')
+  const [addresses, setAddresses] = useState(null)
+  const [selectedAddress, setSelectedAddress] = useState(0)
   const [selectedReport, setSelectedReport] = useState(null)
+  const [dateFrom, setDateFrom] = useState("")
+  const [dateTo, setDateTo] = useState("")
   const [fileType, setFileType] = useState(1)
   const [preview, setPreview] = useState(false)
+
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      const { data } = await axios.get("/api/address")
+      if(data.success){
+        setAddresses(data.data)
+      } 
+    }
+
+    fetchAddresses()
+  }, [])
 
   const showToast = (severity, summary, detail) => {
     return toast.current.show({ severity: severity, summary: summary, detail: detail})
   }
 
-  // const reportDialog = (id) => {
-  //   confirmDialog({
-  //       draggable: false,
-  //       message: 'Are you sure you want to download this report table?',
-  //       header: 'Confirmation',
-  //       accept: () => handleSelectReportTable(id)
-  //   });
-  // };
+  const reportDialog = (report) => {
+    confirmDialog({
+        draggable: false,
+        message: 'Are you sure you want to download this excel file type of this report?',
+        header: 'Confirmation',
+        accept: () => exportReportExcel(report.uri, report.uri)
+    });
+  };
 
   const handleSelectReportTable = (id) => {
     if(
       id === 1 || 
+      id === 2 ||
       id === 3 ||
       id === 4 ||
       id === 5 ||
       id === 6 ||
       id === 13 ||
       id === 14 ||
-      id === 15
+      id === 15 ||
+      id === 16 ||
+      id === 17 ||
+      id === 18 ||
+      id === 20
     ){
       setSelectedReport(id)
       setOrientation('portrait')
@@ -55,11 +77,13 @@ const Reports = () => {
       id === 9 ||
       id === 10 ||
       id === 11 ||
-      id === 12
+      id === 12 ||
+      id === 19
     ){
       setSelectedReport(id)
       setOrientation('landscape')
     }
+
   }
 
   const downloadPDFFile = async () => {
@@ -79,7 +103,7 @@ const Reports = () => {
         const imgHeight = doc.internal.pageSize.getWidth() / aspectRatio;
 
         doc.addImage(imgData, 'PNG', 0, 10, imgWidth, imgHeight);
-        const success = doc.save(`${selectedInfo.label}-${moment(new Date()).format('l')}.pdf`);
+        const success = doc.save(`${selectedInfo.uri}[${moment(new Date()).format('l')}].pdf`);
         
         if (success) {
           setOrientation('');
@@ -108,7 +132,7 @@ const Reports = () => {
           doc.addImage(imgData, 'PNG', 0, 10, imgWidth, imgHeight);
 
           if (i === pages.length - 1) {
-            const success = doc.save(`${selectedInfo.label}-${moment(new Date()).format('l')}.pdf`);
+            const success = doc.save(`${selectedInfo.uri}[${moment(new Date()).format('l')}].pdf`);
             
             if (success) {
               setOrientation('');
@@ -141,39 +165,49 @@ const Reports = () => {
         setReportId={setSelectedReport}
         preview={preview} 
         setPreview={setPreview}
+        addresses={addresses}
         downloadPDFFile={downloadPDFFile}
+        address={selectedAddress}
+        dateFrom={dateFrom}
+        dateTo={dateTo}
       />
       <Header pageName={"Reports"} />
       <div className="content bg-white">
-        <div className='flex gap-4 items-center flex-wrap'>
+        <div className='flex gap-4 items-center justify-between flex-wrap'>
           <div className="form-group">
             <label htmlFor="search">Search Report</label>
             <input type="text" id='search' placeholder='Type to search'/>
           </div>
-          {/* <div className="form-group">
-            <label htmlFor="month">Month/Year</label>
-            <input type="month" id="month" />
-          </div> */}
-          {
-            loggedUser?.role === 'administrator' && 
+          <div className='flex gap-4 flex-wrap'>
             <div className="form-group">
-              <label htmlFor="barangay">Location</label>
-              <select id="barangay">
-                <option value="">Municipal</option>
-                {
-                  barangay?.map((place, idx) => (
-                    <option key={idx} value={place}>{place}</option>
-                  ))
-                }
+              <label htmlFor="from">Date: From</label>
+              <input type="date" id="from" value={dateFrom} onChange={e => setDateFrom(e.target.value)}/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="to">To</label>
+              <input type="date" id="to" value={dateTo} onChange={e => setDateTo(e.target.value)}/>
+            </div>
+            {
+              loggedUser?.role === 'administrator' && 
+              <div className="form-group">
+                <label htmlFor="barangay">Location</label>
+                <select id="barangay" value={selectedAddress} onChange={e => setSelectedAddress(e.target.value)}>
+                  <option value="0">Municipal</option>
+                  {
+                    addresses?.map((address) => (
+                      <option key={address.id} value={address.id}>{address.barangay}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            }
+            <div className="form-group">
+              <label htmlFor="file">File Type</label>
+              <select id="file" onChange={(e) => setFileType(e.target.value)}>
+                <option value={1}>PDF</option>
+                <option value={2}>Excel</option>
               </select>
             </div>
-          }
-          <div className="form-group">
-            <label htmlFor="barangay">File Type</label>
-            <select id="barangay" onChange={(e) => setFileType(e.target.value)}>
-              <option value={1}>PDF</option>
-              <option value={2}>Excel</option>
-            </select>
           </div>
         </div>
         <div className='my-6'>
@@ -183,9 +217,17 @@ const Reports = () => {
               reportTables?.map((report, idx) => (
                 <button 
                   onClick={() => {
-                    setPreview(true)
-                    handleSelectReportTable(report.id)
-                    setIsNavigateOpen(true)
+                    if(dateFrom === '' || dateTo === ''){
+                      return showToast('error', 'Failed', 'Please select date [from, to]')
+                    }else{
+                      if(Number(fileType) === 1){
+                        setPreview(true)
+                        handleSelectReportTable(report.id)
+                        setIsNavigateOpen(true)
+                      }else if(Number(fileType) === 2){
+                        reportDialog(report)
+                      }
+                    }
                   }}
                   className='bg-gray-100 rounded-md p-4 text-gray-500 text-left border drop-shadow-md hover:bg-green-100 duration-150' 
                   key={idx}

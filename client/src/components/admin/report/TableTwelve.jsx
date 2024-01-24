@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 
-const TableTwelve = ({ location, orientation, logo, reportDetails }) => {
+const TableTwelve = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
 
   useEffect(() => {
     const fetchTableTwelveReport = async () => {
-      const { data } = await axios.get('/api/table_twelve')
+      const { data } = await axios.get(`/api/table_twelve/${address}/${dateFrom}/${dateTo}`)
       if(data.success){
         setReportData(data.data)
       }
@@ -22,15 +22,15 @@ const TableTwelve = ({ location, orientation, logo, reportDetails }) => {
         <div className='text-sm grid gap-2 place-items-center mb-4'>
             <img src={logo} className='w-20 aspect-square' alt="rbim_logo" />
             <div className='grid text-center'>
-                <span className='font-semibold'>Ibabang butnong [{moment(new Date()).format('l')}]</span>
-                <span className='font-semibold text-xs'>{reportDetails?.label} : {reportDetails?.detail}</span>
+              <span className='font-semibold'>{Number(address) !== 0 ? addresses?.find(item => item.id === Number(address))?.barangay : 'Municipal'} [{moment(dateFrom).format('LL')} - {moment(dateTo).format('LL')}]</span>
+              <span className='font-semibold text-xs'>{reportDetails?.label} : {reportDetails?.detail}</span>
             </div>
         </div>
         <div className='grid place-items-center'>
             <table className='report_table'>
               <thead>
                 <tr>
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     <th colSpan={18}>Male</th>
                   <th>Overall Total</th>
                 </tr>
@@ -91,37 +91,13 @@ const TableTwelve = ({ location, orientation, logo, reportDetails }) => {
                     </tr>
                   ))
                 }
-                <tr>
-                  <td>Total</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
               </tbody>
             </table>
         </div>
       </div>
       <div className={`bg-white py-4 ${orientation}`}>
         <div className='text-sm grid gap-2 place-items-center mb-4'>
-            <img src={logo} className='w-20 aspect-square' alt="rbim_logo" />
             <div className='grid text-center'>
-                <span className='font-semibold'>Ibabang butnong [{moment(new Date()).format('l')}]</span>
                 <span className='font-semibold text-xs'>{reportDetails?.label} : {reportDetails?.detail}</span>
             </div>
         </div>
@@ -129,7 +105,7 @@ const TableTwelve = ({ location, orientation, logo, reportDetails }) => {
             <table className='report_table'>
               <thead>
                 <tr>
-                  <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                  <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                   <th colSpan={18}>Female</th>
                 </tr>
                 <tr>
@@ -186,27 +162,6 @@ const TableTwelve = ({ location, orientation, logo, reportDetails }) => {
                     </tr>
                   ))
                 }
-                <tr>
-                  <td>Total</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
               </tbody>
             </table>
         </div>

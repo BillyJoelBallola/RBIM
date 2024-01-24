@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 
-const TableTen = ({ location, orientation, logo, reportDetails }) => {
+const TableTen = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
 
   useEffect(() => {
     const fetchTableTenReport = async () => {
-      const { data } = await axios.get('/api/table_ten')
+      const { data } = await axios.get(`/api/table_ten/${address}/${dateFrom}/${dateTo}`)
       if(data.success){
         setReportData(data.data)
       }
@@ -18,12 +18,12 @@ const TableTen = ({ location, orientation, logo, reportDetails }) => {
 
   return (
     <>
-      <div className={`bg-white py-2 ${orientation}`}>
+      <div className={`bg-white py-4 ${orientation}`}>
         <div className='text-sm grid gap-2 place-items-center mb-4'>
             <img src={logo} className='w-20 aspect-square' alt="rbim_logo" />
             <div className='grid text-center'>
-                <span className='font-semibold'>Ibabang butnong [{moment(new Date()).format('l')}]</span>
-                <span className='font-semibold text-xs'>{reportDetails?.label} : {reportDetails?.detail}</span>
+              <span className='font-semibold'>{Number(address) !== 0 ? addresses?.find(item => item.id === Number(address))?.barangay : 'Municipal'} [{moment(dateFrom).format('LL')} - {moment(dateTo).format('LL')}]</span>
+              <span className='font-semibold text-xs'>{reportDetails?.label} : {reportDetails?.detail}</span>
             </div>
         </div>
         <div className='grid place-items-center'>
@@ -91,37 +91,13 @@ const TableTen = ({ location, orientation, logo, reportDetails }) => {
                     </tr>
                   ))
                 }
-                <tr>
-                  <td>Total</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
               </tbody>
             </table>
         </div>
       </div>
-      <div className={`bg-white py-2 ${orientation}`}>
+      <div className={`bg-white py-4 ${orientation}`}>
         <div className='text-sm grid gap-2 place-items-center mb-4'>
-            <img src={logo} className='w-20 aspect-square' alt="rbim_logo" />
             <div className='grid text-center'>
-                <span className='font-semibold'>Ibabang butnong [{moment(new Date()).format('l')}]</span>
                 <span className='font-semibold text-xs'>{reportDetails?.label} : {reportDetails?.detail}</span>
             </div>
         </div>
@@ -186,27 +162,6 @@ const TableTen = ({ location, orientation, logo, reportDetails }) => {
                     </tr>
                   ))
                 }
-                <tr>
-                  <td>Total</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
               </tbody>
             </table>
         </div>

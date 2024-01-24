@@ -5,6 +5,7 @@ import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
 import { MdOutlineSimCardDownload } from 'react-icons/md';
 
 import TableOne from './report/TableOne'
+import TableTwo from './report/TableTwo'
 import TableThree from './report/TableThree';
 import TableFour from './report/TableFour';
 import TableFive from './report/TableFive';
@@ -18,8 +19,13 @@ import TableTwelve from './report/TableTwelve';
 import TableThirteen from './report/TableThirteen';
 import TableFourteen from './report/TableFourteen';
 import TableFifteen from './report/TableFifteen';
+import TableSixteen from './report/TableSixteen';
+import TableSeventeen from './report/TableSeventeen';
+import TableEighteen from './report/TableEighteen';
+import TableNineteen from './report/TableNineteen';
+import TableTweenty from './report/TableTwenty';
 
-const ReportTableContainer = ({ orientation, reportId, setReportId, location, forwardRef, preview, setPreview, downloadPDFFile }) => {
+const ReportTableContainer = ({ orientation, reportId, setReportId, addresses, address, dateFrom, dateTo, forwardRef, preview, setPreview, downloadPDFFile }) => {
     const [orientaionSize, setOrientationSize] = useState("");
     const [reportData, setReportData] = useState(null);
 
@@ -55,35 +61,45 @@ const ReportTableContainer = ({ orientation, reportId, setReportId, location, fo
             <div className='grid place-items-center gap-10 w-full' ref={forwardRef}>
                 {
                     reportId === 1 ? 
-                    <TableOne orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableOne orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo} /> :
                     reportId === 2 ? 
-                    <></> :
+                    <TableTwo orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 3 ? 
-                    <TableThree orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableThree orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 4 ? 
-                    <TableFour orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableFour orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 5 ? 
-                    <TableFive orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableFive orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 6 ? 
-                    <TableSix orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableSix orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 7 ? 
-                    <TableSeven orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableSeven orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 8 ? 
-                    <TableEight orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableEight orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 9 ? 
-                    <TableNine orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableNine orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 10 ? 
-                    <TableTen orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableTen orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 11 ? 
-                    <TableEleven orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableEleven orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 12 ? 
-                    <TableTwelve orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableTwelve orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 13 ? 
-                    <TableThirteen orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableThirteen orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 14 ? 
-                    <TableFourteen orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableFourteen orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 15 ? 
-                    <TableFifteen orientation={orientaionSize} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableFifteen orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 16 ? 
+                    <TableSixteen orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 17 ? 
+                    <TableSeventeen orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 18 ? 
+                    <TableEighteen orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 19 ? 
+                    <TableNineteen orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 20 ? 
+                    <TableTweenty orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     <></>
                 }
             </div>
