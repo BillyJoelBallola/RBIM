@@ -25,6 +25,10 @@ const CustomTable = ({ headers, data, actions }) => {
     return rowData !== '0000-00-00' ? moment(rowData).format('ll') : 'mm/dd/yyyy';
   }
 
+  const titleStyle = (rowData) => {
+    return <p className='truncate max-w-[350px]'>{rowData}</p>
+  }
+
   const status = (rowData) => {
     switch(rowData){
       case 1:
@@ -34,6 +38,16 @@ const CustomTable = ({ headers, data, actions }) => {
     }
   }
 
+  const activityType = (rowData) => {
+    switch(Number(rowData)){
+      case 1:
+        return <span>Event</span>
+      case 2:
+        return <span>Program</span>
+      case 3:
+        return <span>Announcement</span>
+    }
+  }
 
   return (
     <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
@@ -61,13 +75,17 @@ const CustomTable = ({ headers, data, actions }) => {
                     {headers?.map((header, index) => (
                       <td className="px-6 py-4 whitespace-nowrap" key={index}>
                         {
-                          header.key.includes('address') ?
+                          header.key === 'address' ?
                           addressFormat(rowData[header.key]) :
                           header.key.includes('date') ?
                           dateFormat(rowData[header.key]) :
+                          header.key.includes('title') ?
+                          titleStyle(rowData[header.key]) :
                           header.key.includes('status') ?
                           status(rowData[header.key]) :
-                          rowData[header.key]
+                          header.key.includes('type') ?
+                          activityType(rowData[header.key]) :
+                          (rowData[header.key])
                         }
                       </td>
                     ))} 

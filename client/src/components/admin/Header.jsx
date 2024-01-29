@@ -17,7 +17,7 @@ const Header = ({ pageName }) => {
       .catch((err) => {
         navigate("/login");
       })
-  }, []) 
+  }, [])
 
   return (
     <header>

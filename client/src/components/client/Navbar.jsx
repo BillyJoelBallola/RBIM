@@ -32,7 +32,7 @@ const Navbar = () => {
   const { toggleNav, isNavigateOpen } = useContext(NavigationContext)
 
   return (
-    <nav className='fixed z-20 left-0 top-0 right-0 py-4'>
+    <nav className='fixed z-50 left-0 top-0 right-0 py-4'>
       <div className='side-margin flex items-center justify-between'>
         <Link to={"/"}>
           <img src={RBIMWhiteLogo} className='w-[200px] aspect-auto' alt="rbim-logo" />

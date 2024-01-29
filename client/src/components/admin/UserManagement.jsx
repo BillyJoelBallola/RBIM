@@ -41,16 +41,16 @@ const UserManagement = ({ title, description }) => {
   const hwHeaders = [{ key: 'name', label: 'Name' }, { key: 'barangay', label: 'Barangay' }, { key: 'status', label: 'Status' }]
   const actions = loggedUser?.role === 'administrator' ? [
     { 
-      label: <MdOpenInNew />, 
+      label: <MdOpenInNew className='text-lg'/>, 
       onClick: ({rowData}) => viewHealthWorkers(rowData)
     },
     { 
-      label: <FaUserPen />, 
+      label: <FaUserPen className='text-lg'/>, 
       onClick: ({rowData}) => editResponse(rowData)
     }
   ] : [
     { 
-      label: <FaUserPen />, 
+      label: <FaUserPen className='text-lg'/>, 
       onClick: ({rowData}) => editResponse(rowData)
     }
   ]

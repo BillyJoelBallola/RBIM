@@ -23,7 +23,29 @@ import TableSixteen from './report/TableSixteen';
 import TableSeventeen from './report/TableSeventeen';
 import TableEighteen from './report/TableEighteen';
 import TableNineteen from './report/TableNineteen';
-import TableTweenty from './report/TableTwenty';
+import TableTwenty from './report/TableTwenty';
+import TableTwentyOne from './report/TableTwentyOne';
+import TableTwentyTwo from './report/TableTwentyTwo';
+import TableTwentyThree from './report/TableTwentyThree';
+import TableTwentyFour from './report/TableTwentyFour';
+import TableTwentyFive from './report/TableTwentyFive';
+import TableTwentySix from './report/TableTwentySix';
+import TableTwentySeven from './report/TableTwentySeven';
+import TableTwentyEight from './report/TableTwentyEight';
+import TableTwentyNine from './report/TableTwentyNine';
+import TableThirty from './report/TableThirty';
+import TableThirtyOne from './report/TableThirtyOne.jsx';
+import TableThirtyTwo from './report/TableThirtyTwo.jsx';
+import TableThirtyThree from './report/TableThirtyThree.jsx';
+import TableThirtyFour from './report/TableThirtyFour.jsx';
+import TableThirtyFive from './report/TableThirtyFive.jsx';
+import TableThirtySix from './report/TableThirtySix.jsx';
+import TableThirtySeven from './report/TableThirtySeven.jsx';
+import TableThirtyEight from './report/TableThirtyEight.jsx';
+import TableThirtyNine from './report/TableThirtyNine.jsx';
+import TableForty from './report/TableThirtyForty.jsx';
+import TableFourtyOne from './report/TableFortyOne.jsx';
+import TableFourtyTwo from './report/TableFortyTwo.jsx';
 
 const ReportTableContainer = ({ orientation, reportId, setReportId, addresses, address, dateFrom, dateTo, forwardRef, preview, setPreview, downloadPDFFile }) => {
     const [orientaionSize, setOrientationSize] = useState("");
@@ -44,7 +66,7 @@ const ReportTableContainer = ({ orientation, reportId, setReportId, addresses, a
     }, [orientation])
     
     return (
-        <div className={`absolute w-full ${preview ? 'z-[99999] block' : '-z-[99999] hidden'} overflow-x-hidden bg-black/90  p-10`}>
+        <div className={`w-full h-full ${preview ? 'block' : 'hidden'} bg-[#212121] p-10`}>
             <div className='mb-10 mx-auto'>
                 <span className='text-xl text-white self-center'>Report {reportData?.label} PDF Preview</span>
                 <div className='flex items-center justify-between mt-4'>
@@ -99,7 +121,51 @@ const ReportTableContainer = ({ orientation, reportId, setReportId, addresses, a
                     reportId === 19 ? 
                     <TableNineteen orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     reportId === 20 ? 
-                    <TableTweenty orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    <TableTwenty orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 21 ? 
+                    <TableTwentyOne orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 22 ? 
+                    <TableTwentyTwo orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 23 ? 
+                    <TableTwentyThree orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 24 ? 
+                    <TableTwentyFour orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 25 ? 
+                    <TableTwentyFive orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 26 ? 
+                    <TableTwentySix orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 27 ? 
+                    <TableTwentySeven orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 28 ? 
+                    <TableTwentyEight orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 29 ? 
+                    <TableTwentyNine orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 30 ? 
+                    <TableThirty orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 31 ? 
+                    <TableThirtyOne orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 32 ? 
+                    <TableThirtyTwo orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 33 ? 
+                    <TableThirtyThree orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 34 ? 
+                    <TableThirtyFour orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 35 ? 
+                    <TableThirtyFive orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 36 ? 
+                    <TableThirtySix orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 37 ? 
+                    <TableThirtySeven orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 38 ? 
+                    <TableThirtyEight orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 39 ? 
+                    <TableThirtyNine orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 40 ? 
+                    <TableForty orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 41 ? 
+                    <TableFourtyOne orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
+                    reportId === 42 ? 
+                    <TableFourtyTwo orientation={orientaionSize} addresses={addresses} address={address} dateFrom={dateFrom} dateTo={dateTo} reportDetails={reportData} logo={RBIMLogo}/> :
                     <></>
                 }
             </div>

@@ -12,10 +12,12 @@ import responseRoutes from './routes/ResponseRoutes.js'
 import addressRoutes from './routes/AddressRoutes.js'
 import surveyFormRoutes from './routes/SurveyFormRoutes.js'
 import ReportRoutes from './routes/ReportRoutes.js'
+import ActivityRoutes from './routes/ActivityRoutes.js'
 
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
+app.use(express.static('uploads'))
 app.use(cors({
     credentials: true,
     origin: ["http://localhost:5173", "http://192.168.1.35:8081"]
@@ -28,6 +30,7 @@ app.use("/api", responseRoutes)
 app.use("/api", addressRoutes)
 app.use("/api", surveyFormRoutes)
 app.use("/api", ReportRoutes)
+app.use("/api", ActivityRoutes)
 
 const PORT = process.env.SERVER_PORT || 4000;
 

@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { SurveyFormContext } from '../../context/SurveyFormContext'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import { NavigationContext } from '../../context/NavigationContext'
 import axios from 'axios'
 
 import { Toast } from 'primereact/toast'
+import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import Header from '../../components/admin/Header'
 import CustomDialog from '../../components/admin/CustomDialog'
 import Form1 from '../../components/admin/form/Form1'
@@ -13,7 +15,6 @@ import Form4 from '../../components/admin/form/Form4'
 import Form5 from '../../components/admin/form/Form5'
 import Form6 from '../../components/admin/form/form6'
 import PrintableForm from '../../components/admin/PrintableForm'
-import { NavigationContext } from '../../context/NavigationContext'
 
 const SurveyForm = () => {
   const toast = useRef(null)
@@ -189,15 +190,20 @@ const SurveyForm = () => {
       <div className='overflow-y-auto'>
         <Header pageName={"Survey Form"} />
         <div className='content'>
-          <div className='pt-4 pb-3 flex gap-2'>
-            <button className='bg-gray-600 text-white py-2 px-4 rounded-md' onClick={() => navigate('/rbim/citizen-information')}>Cancel</button>
+          <div className='pt-4 pb-3 flex justify-between items-center gap-2'>
             <button 
-              className='bg-gray-500 text-white py-2 px-4 rounded-md' 
-              onClick={() => {
-                setPreview(true)
-                setIsNavigateOpen(true)
-              }}>Download</button>
-            <button className='bg-[#008605] text-white py-2 px-4 rounded-md' onClick={() => setVisible(true)}>Save Changes</button>
+              className='text-3xl' 
+              onClick={() => navigate('/rbim/citizen-information')}
+            ><HiOutlineArrowNarrowLeft /></button>
+            <div className='flex items-center gap-2'>
+              <button 
+                className='bg-gray-600 hover:bg-gray-500 duration-150 text-white py-2 px-4 rounded-md' 
+                onClick={() => {
+                  setPreview(true)
+                  setIsNavigateOpen(true)
+                }}>Download</button>
+              <button className='bg-[#008605] hover:bg-[#008605]/60 duration-150 text-white py-2 px-4 rounded-md' onClick={() => setVisible(true)}>Save Changes</button>
+            </div>
           </div>
           {
             activeForm === 'form1' ?

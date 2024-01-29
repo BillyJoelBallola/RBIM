@@ -1,32 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import PageHeader from '../../components/client/PageHeader'
 import EventProgram from '../../components/client/EventProgram'
 import ViewEventsAndProgram from '../../components/client/ViewEventsAndProgram';
-
-const eventsAndProgramsData = [
-  {
-    title: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    date: new Date(),
-    place: "Ibabang Butnong",
-    link: "/events-and-programs/1"
-  },
-  {
-    title: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem.',
-    date: new Date(),
-    place: "Ilayang Butnong",
-    link: "/events-and-programs/2"
-  },
-  {
-    title: 'Lorem ipsum dolor sit amet consectetur.',
-    date: new Date(),
-    place: "Alipit",
-    link: "/events-and-programs/3"
-  },
-]
+import axios from 'axios';
 
 const EventsAndPrograms = () => {
   const { id } = useParams();
+  const [eventsAndProgramsData, setEventsAndProgramsData] = useState([])
+  const [upcomingEventsAndProgramsData, setUpcomingEventsAndProgramsData] = useState([])
+  const [displayCount, setDisplayCount] = useState(5)
+
+  useEffect(() => {
+    const fetchEventsAndPrograms = async () => {
+      const { data } = await axios.get('/api/activities/events_and_programs')
+      if(data.success){
+        const upcoming = data.data.filter(item => new Date(item.date) < new Date())
+        setEventsAndProgramsData(data.data)
+        setUpcomingEventsAndProgramsData(upcoming)
+      }
+    }
+
+    fetchEventsAndPrograms()
+  }, [])
 
   return (
     <>
@@ -41,8 +37,17 @@ const EventsAndPrograms = () => {
               <button className='border border-gray-500 rounded-md py-1 px-4 text-sm text-gray-600'>UPCOMING</button>
             </div>
             <div className='grid md:grid-cols-2 gap-4'>
-              <EventProgram eventsAndPrograms={eventsAndProgramsData}/>
+              {
+                eventsAndProgramsData &&
+                eventsAndProgramsData.length > 0 ?
+                <EventProgram eventsAndPrograms={eventsAndProgramsData} display={displayCount}/>
+                : <div className='pt-4'>No events and programs found.</div>
+              }
             </div>
+            {
+              eventsAndProgramsData.length > 5 &&
+              <button className='text-right underline text-gray-500 text-sm' onClick={() => setDisplayCount(current => current + 5)}>view more</button>
+            }
           </div>
         }
       </div>

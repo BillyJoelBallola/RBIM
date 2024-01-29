@@ -6,6 +6,8 @@ import RBIMWhiteLogo from '../../assets/RBIM-logo-black.png'
 import POPCOMGoldLogo from '../../assets/popcom-logo-gold.png'
 
 const Footer = () => {
+  const currentYear = new Date()
+
   return (
     <footer className='py-8 bg-white text-black shadow-[0px_40px_40px_rgba(0, 0, 0, 1.5)] border border-x-0 border-y-0'>
       <ul className='side-margin flex flex-col text-center md:text-left gap-6 md:flex-row justify-around text-sm text-gray-600'>
@@ -30,8 +32,8 @@ const Footer = () => {
         <img src={RBIMWhiteLogo} className="w-[180px] aspect-auto" alt="rbim-logo" />
         <img src={POPCOMGoldLogo} className="w-[150px] aspect-auto" alt="popcom-logo" />
       </div>
-      <div className='side-margin text-center mt-6'>
-        <small className='text-gray-400'>Copyright © 2023 • Registry of Inhabitants and Migrants</small>
+      <div className='side-margin text-center mt-10'>
+        <small className='text-gray-400'>Copyright © {currentYear?.toString()?.split(" ")[3]} • Registry of Inhabitants and Migrants</small>
       </div>
     </footer> 
   )

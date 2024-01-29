@@ -34,11 +34,11 @@ const CitizenInformation = () => {
   const { loggedUser } = useContext(UserContext)
   const actions = [
     { 
-      label: <MdOutlineEdit />, 
+      label: <MdOutlineEdit className='text-lg'/>, 
       onClick: ({rowData}) => navigate(`/rbim/survey_form/form1/${rowData.survey_form_id}`)
     }, 
     { 
-      label: <LuArchive />, 
+      label: <LuArchive className='text-lg'/>, 
       onClick: ({rowData}) => console.log(rowData)
     }
   ]

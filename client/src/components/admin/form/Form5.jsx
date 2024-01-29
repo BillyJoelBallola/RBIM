@@ -32,7 +32,7 @@ const questionHeader = [
   },
   {
     code: 'Q40A, Q40B, Q40C',
-    description: 'DISABILITY'
+    description: 'REASONS FOR TRANFERRING IN THIS BARANGAY'
   },
   {
     code: 'Q41',

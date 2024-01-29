@@ -1,19 +1,28 @@
 import React from 'react'
 import moment from 'moment/moment'
-import { Link } from 'react-router-dom'
 
-const Announcement = ({ announcements }) => {
+import { truncate } from '../../helper/truncate'
+
+const Announcement = ({ announcements, display, setSelectedAnnouncement, setVisible}) => {
   return (
     <>
       {
         announcements?.length > 0 ?
-        announcements.map((ann, idx) => (
-          <div key={idx} className='py-2 bg-white px-4 border'>
-            <Link to={ann.link}>
-              <h4 className='font-semibold'>{ann.title}</h4>
-              <p className='text-sm text-gray-500'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque praesentium fugiat minima cum ab debitis.</p>
-              <span className='text-xs text-gray-400'>{moment(ann.date).format("ll")}</span>
-            </Link>
+        announcements.slice(0, display).map((announcement, idx) => (
+          <div key={idx} className='py-2 bg-white px-4 border rounded-lg h-fit'>
+            <button 
+              className='text-left'
+              onClick={() => {
+                setSelectedAnnouncement(announcement)
+                setVisible(true)
+              }}
+            >
+              <h4 className='font-semibold'>{truncate(announcement.title, 50)}</h4>
+              <div className='text-sm text-gray-500 tiptap' dangerouslySetInnerHTML={{ __html: truncate(announcement.content, 100) }} />
+              <div className='flex items-center text-gray-400 gap-2 text-xs mt-1'>
+                <span>{announcement.address_barangay} • {moment(announcement.date_posted).startOf('hour').fromNow()}</span>
+              </div>
+            </button>
           </div>
         )) :
         <div className='px-4 py-2 bg-white'>No announcement found.</div>

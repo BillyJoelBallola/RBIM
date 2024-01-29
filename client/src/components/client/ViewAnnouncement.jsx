@@ -1,19 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import moment from 'moment'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 const ViewAnnouncement = () => {
+  const id = useParams().id
+  const [annoucement, setAnnouncement] = useState({})
+
+  useEffect(() => {
+    const fetchAnnouncement = async () => {
+      const { data } = await axios.get(`/api/activity/${id}`)
+      if(data.success){
+        setAnnouncement(data.data)
+      }
+    }
+
+    fetchAnnouncement()
+  }, [])
+
   return (
     <div>
-      <div className='w-full h-[250px] bg-gray-400 rounded-lg mb-5' />
-      <h2 className='font-semibold text-lg'>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</h2>
-      <div className='flex items-center text-gray-400 gap-2 text-sm my-2'>
-        <span>Ibabang Butnong • {moment(new Date()).format("ll")}</span>
+      <h2 className='font-semibold text-lg'>{annoucement.title}</h2>
+      <div className='flex flex-col text-gray-600 text-sm mb-6'>
+        <span>{annoucement.address_barangay} • {moment(annoucement.date).format("ll")}</span>
+        <span className='text-xs'>{moment(annoucement.date_posted).startOf('hour').fromNow()}</span>
       </div>
-      <div className='grid gap-4 text-sm text-gray-500'>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum impedit alias nesciunt sed possimus fugiat voluptatibus porro sit nobis architecto dolorem adipisci quod delectus eligendi veniam, rerum soluta optio dolor. Minus maiores possimus voluptatum nobis inventore labore quidem facilis, ad, molestias esse ipsum ut libero fugiat deserunt porro reiciendis in.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum impedit alias nesciunt sed possimus fugiat voluptatibus porro sit nobis architecto dolorem adipisci quod delectus eligendi veniam, rerum soluta optio dolor. Minus maiores possimus voluptatum nobis inventore labore quidem facilis, ad, molestias esse ipsum ut libero fugiat deserunt porro reiciendis in.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum impedit alias nesciunt sed possimus fugiat voluptatibus porro sit nobis architecto dolorem adipisci quod delectus eligendi veniam, rerum soluta optio dolor. Minus maiores possimus voluptatum nobis inventore labore quidem facilis, ad, molestias esse ipsum ut libero fugiat deserunt porro reiciendis in.</p>
-      </div>
+      <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: annoucement.content }} />
     </div>
   )
 }

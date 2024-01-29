@@ -28,6 +28,7 @@ const Reports = () => {
   const [dateTo, setDateTo] = useState("")
   const [fileType, setFileType] = useState(1)
   const [preview, setPreview] = useState(false)
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -67,18 +68,40 @@ const Reports = () => {
       id === 16 ||
       id === 17 ||
       id === 18 ||
-      id === 20
+      id === 20 ||
+      id === 22 ||
+      id === 27 ||
+      id === 28 ||
+      id === 29 ||
+      id === 30 ||
+      id === 31 ||
+      id === 36 ||
+      id === 41 ||
+      id === 42
     ){
       setSelectedReport(id)
       setOrientation('portrait')
     }else if (
-      id === 7 ||
+      id === 7 || 
       id === 8 ||
       id === 9 ||
       id === 10 ||
       id === 11 ||
       id === 12 ||
-      id === 19
+      id === 19 ||
+      id === 21 ||
+      id === 23 ||
+      id === 24 ||
+      id === 25 ||
+      id === 26 ||
+      id === 32 ||
+      id === 33 ||
+      id === 34 ||
+      id === 35 || 
+      id === 37 ||
+      id === 38 ||
+      id === 39 ||
+      id === 40
     ){
       setSelectedReport(id)
       setOrientation('landscape')
@@ -106,9 +129,9 @@ const Reports = () => {
         const success = doc.save(`${selectedInfo.uri}[${moment(new Date()).format('l')}].pdf`);
         
         if (success) {
-          setOrientation('');
-          setSelectedReport(null);
-          setPreview(false);
+          // setOrientation('');
+          // setSelectedReport(null);
+          // setPreview(false);
           return showToast('success', 'Success', 'Report file has been downloaded');
         } else {
           return showToast('error', 'Failed', 'Failed to download report file, please try again');
@@ -135,9 +158,9 @@ const Reports = () => {
             const success = doc.save(`${selectedInfo.uri}[${moment(new Date()).format('l')}].pdf`);
             
             if (success) {
-              setOrientation('');
-              setSelectedReport(null);
-              setPreview(false);
+              // setOrientation('');
+              // setSelectedReport(null);
+              // setPreview(false);
               return showToast('success', 'Success', 'Report file has been downloaded');
             } else {
               return showToast('error', 'Failed', 'Failed to download report file, please try again');
@@ -154,9 +177,11 @@ const Reports = () => {
     }
   }
 
-  return (
+  const filteredReportTables = reportTables.filter(item => item.label.toLowerCase().includes(query.toLowerCase()))
+
+  return ( 
+    preview ?
     <>
-      <ConfirmDialog />
       <Toast ref={toast} />
       <ReportTableContainer 
         forwardRef={printReportRef} 
@@ -171,12 +196,17 @@ const Reports = () => {
         dateFrom={dateFrom}
         dateTo={dateTo}
       />
+    </>
+    :
+    <>
+      <ConfirmDialog />
+      <Toast ref={toast} />
       <Header pageName={"Reports"} />
       <div className="content bg-white">
         <div className='flex gap-4 items-center justify-between flex-wrap'>
           <div className="form-group">
             <label htmlFor="search">Search Report</label>
-            <input type="text" id='search' placeholder='Type to search'/>
+            <input type="text" id='search' placeholder='Search table number' value={query} onChange={e => setQuery(e.target.value)}/>
           </div>
           <div className='flex gap-4 flex-wrap'>
             <div className="form-group">
@@ -214,11 +244,12 @@ const Reports = () => {
           <p className='text-gray-400 mb-4'>Select from the tables below that you want to export/download</p>
           <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-4'>
             {
-              reportTables?.map((report, idx) => (
+              filteredReportTables?.length > 0 ?
+              filteredReportTables?.map((report, idx) => (
                 <button 
                   onClick={() => {
                     if(dateFrom === '' || dateTo === ''){
-                      return showToast('error', 'Failed', 'Please select date [from, to]')
+                      return showToast('error', 'Failed', 'Please select date [from - to]')
                     }else{
                       if(Number(fileType) === 1){
                         setPreview(true)
@@ -229,13 +260,14 @@ const Reports = () => {
                       }
                     }
                   }}
-                  className='bg-gray-100 rounded-md p-4 text-gray-500 text-left border drop-shadow-md hover:bg-green-100 duration-150' 
+                  className='bg-gray-100 rounded-md p-4 text-gray-500 text-left border drop-shadow-md hover:bg-green-200 duration-150' 
                   key={idx}
                 >
                   <span className='font-semibold'>{report.label}</span>{" "}
                   <span>{report.detail}</span>
                 </button>
-              ))
+              )) :
+              <span className='text-xl text-gray-400 italic'>No report table found.</span>
             }
           </div>
         </div>

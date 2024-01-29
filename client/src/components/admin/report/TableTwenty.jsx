@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 
-const TableTweenty = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
+const TableTwenty = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
 
   useEffect(() => {
-    const fetchTableTweentyReport = async () => {
+    const fetchTableTwentyReport = async () => {
       const { data } = await axios.get(`/api/table_twenty/${address}/${dateFrom}/${dateTo}`)
       if(data.success){
         setReportData(data.data)
       }
     }
 
-    fetchTableTweentyReport()
+    fetchTableTwentyReport()
   }, [])
 
   return (
@@ -150,4 +150,4 @@ const TableTweenty = ({ addresses, address, dateFrom, dateTo, orientation, logo,
   )
 }
 
-export default TableTweenty
+export default TableTwenty

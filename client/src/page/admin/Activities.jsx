@@ -1,37 +1,115 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Header from '../../components/admin/Header'
 import CustomTable from '../../components/admin/CustomTable'
 import { barangay } from '../../static/Geography'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-const data = [
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  },
-  {
-    name: "Lorem ipsum dolor sit",
-    address: "Lorem ipsum dolor sit amet consectetur adipisicing"
-  }
-]
+import { LiaTrashAlt } from "react-icons/lia";
+import { MdOutlineEdit } from "react-icons/md";
+import { Toast } from 'primereact/toast'
+import CustomDialog from '../../components/admin/CustomDialog'
 
 const headers = [
   {
-    key: "name",
-    label: "Name",
+    key: "title",
+    label: "Title",
   },
   {
-    key: "address",
+    key: "address_barangay",
     label: "Address",
   },
+  {
+    key: "date",
+    label: "Date",
+  },
+  {
+    key: "type",
+    label: "Type",
+  }
 ]
 
 const Activities = () => {
+  const toast = useRef(null)
+  const navigate = useNavigate()
+  const [visible, setVisible] = useState(false)
+  const [activities, setActivities] = useState([])
+  const [selectedData, setSelectedData] = useState(null)
+  const [action, setAction] = useState('')
+
+  useEffect(() => {
+    const fetchAllActivities = async () => {
+      const { data } = await axios.get("/api/activities")
+      if(data.success){
+        setActivities(data.data)
+      }
+    }
+
+    fetchAllActivities()
+    setAction('')
+  }, [action])
+
+  const showToast = (severity, summary, detail) => {
+    return toast.current.show({ severity: severity, summary: summary, detail: detail})
+  }
+
+  const actions = [
+    { 
+      label: <MdOutlineEdit className='text-lg'/>, 
+      onClick: ({rowData}) => navigate(`/rbim/activity_form/${rowData.id}`)
+    }, 
+    { 
+      label: <LiaTrashAlt className='text-lg'/>, 
+      onClick: ({rowData}) => {
+        setVisible(true)
+        setSelectedData(rowData)
+      }
+    }
+  ]
+
+  const deleteActivity = async () => {
+    if(selectedData){
+      const { data } = await axios.delete(`/api/activity/${selectedData?.id}`)
+      if(data.success){
+        setVisible(false)
+        setSelectedData(null)
+        setAction('delete')
+        return showToast('success', 'Success', data.message)
+      }else{
+        setVisible(false)
+        setSelectedData(null)
+        return showToast('error', 'Failed', 'Failed to delete selected activity')
+      }
+    }else{
+      return showToast('error', 'Failed', 'Select activity to delete')
+    }
+  }
+
+  const footerContent = (
+    <div className='flex justify-end'>
+        <button className='px-6 py-2 rounded-md bg-transparent' onClick={() => setVisible(false)}>No</button>
+        <button 
+            className='px-6 py-2 rounded-md bg-[#008605] text-white' 
+            onClick={() => deleteActivity()}
+        >
+            Yes
+        </button>
+    </div>
+  );
+
   return (
     <>
+      <Toast ref={toast} />
+      <CustomDialog
+        header={'Delete'}
+        visible={visible}
+        setVisible={setVisible} 
+        footer={footerContent}
+        classStyle={'w-[90%] md:w-[60%] lg:w-[40%]'}
+        content={(
+            <p>Are you sure you want to delete this activity?</p>
+        )}
+      />
       <Header pageName={"Activities"} />
       <div className="content">
         <div className='flex items-center justify-between flex-wrap gap-4'>
@@ -64,11 +142,11 @@ const Activities = () => {
               </select>
             </div>
           </div>
-          <button className='self-end rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>ADD NEW</button>
+          <Link to={'/rbim/activity_form'} className='self-end rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>ADD NEW</Link>
         </div>
         <div className='my-6'>
           <p className='text-gray-400 mb-4'>Filter, view, add, edit, delete events and programs</p>
-          <CustomTable headers={headers} data={data} />
+          <CustomTable headers={headers} data={activities} actions={actions}/>
         </div>
       </div>
     </>
