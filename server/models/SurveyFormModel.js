@@ -38,6 +38,46 @@ const getAllSurvey = async () => {
   }
 }
 
+const getAllIndividual = async () => {
+  try {
+    const individualResult = await new Promise(( resolve, reject ) => {
+      db.query('SELECT questions_and_response.*, household.survey_form_id, household.household_number, household.living_type, household.respondent_name, household.household_head, household.household_member_no, household.address, household.unit_no, household.house_no, household.street, household.phone_no FROM questions_and_response INNER JOIN household ON questions_and_response.household_id = household.id', 
+      ((error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      }))
+    })
+
+    return individualResult && individualResult.length > 0 ? individualResult : null
+  } catch (error) {
+    throw error
+  }
+}
+
+const addIndividualImage = async (individualData) => {
+  try {
+    const { image, id } = await individualData
+    const individualResult = await new Promise(( resolve, reject ) => {
+      db.query('UPDATE questions_and_response SET image = ? WHERE id = ?',
+      [image, id],
+      ((error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      }))
+    })
+
+    return individualResult && individualResult.affectedRows > 0 ? individualResult.affectedRows : null
+  } catch (error) {
+    throw error
+  }
+}
+
 const addSurveyForm = async ({ household, surveyForm, questionsAndResponses }) => {
   try {
     const surveyFormResult = await new Promise(( resolve, reject ) => {
@@ -221,5 +261,7 @@ export const surveyFormModel = {
   getAllSurvey,
   addSurveyForm,
   getSurveyFormById,
-  updateSurveyForm
+  updateSurveyForm,
+  getAllIndividual,
+  addIndividualImage
 } 

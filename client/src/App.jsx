@@ -15,6 +15,7 @@ import AdminActivities from "./page/admin/Activities"
 import Settings from "./page/admin/Settings"
 import SurveyForm from "./page/admin/SurveyForm"
 import ActivityForm from "./components/admin/ActivityForm"
+import IndividualForm from "./components/admin/IndividualForm"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <Route path="/rbim/" element={<AdminLayout />}>
         <Route path="/rbim/" element={<Dashboard />} />
         <Route path="/rbim/citizen-information" element={<CitizenInformation />} />
+        <Route path="/rbim/individual_form/:id?" element={<IndividualForm />} />
         <Route path="/rbim/survey_form/:form/:id?" element={<SurveyForm />} />
         <Route path="/rbim/reports" element={<Reports />} />
         <Route path="/rbim/activities" element={<AdminActivities />} />

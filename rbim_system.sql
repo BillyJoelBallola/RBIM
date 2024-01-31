@@ -150,7 +150,7 @@ INSERT INTO `question` (`id`, `question_code`, `question_text`) VALUES
 (14, 'Q14', 'In waht barangau and city/municipality is __ currently attending school?'),
 (15, 'Q15', 'How much is __\'s monthly income?'),
 (16, 'Q16', 'What is the major source of __\'s income?'),
-(17, 'Q17', 'What is the status of __\'s word/business'),
+(17, 'Q17', 'What is the status of __\'s word/business'), 
 (18, 'Q18', 'in what barangay and city/municipality is __\'s work/business located?'),
 (19, 'Q19', 'Where was __ delivered?'),
 (20, 'Q20', 'Who attended in the delivery of __?'),

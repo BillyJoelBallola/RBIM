@@ -94,7 +94,6 @@ const CustomTable = ({ headers, data, actions }) => {
                         {actions.map((action, actionIdx) => (
                           <button
                             key={actionIdx}
-                            className="underline"
                             onClick={() => action.onClick({rowData, idx})}
                           >
                             {action.label}

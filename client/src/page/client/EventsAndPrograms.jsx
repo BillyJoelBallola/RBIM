@@ -45,6 +45,7 @@ const EventsAndPrograms = () => {
               }
             </div>
             {
+              eventsAndProgramsData &&
               eventsAndProgramsData.length > 5 &&
               <button className='text-right underline text-gray-500 text-sm' onClick={() => setDisplayCount(current => current + 5)}>view more</button>
             }

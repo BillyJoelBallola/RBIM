@@ -9,6 +9,15 @@ export const getAllSurveyForms = async (req, res) => {
   }
 }
 
+export const getAllIndividual = async (req, res) => {
+  try {
+    const individualRecords = await surveyFormModel.getAllIndividual() 
+    return res.json({ success: true, data: individualRecords })
+  } catch (error) {
+    return res.json({ success: false, message: `Internal server error` })
+  }
+}
+
 export const addSurveyForm = async (req, res) => {
   try {
     const { household, surveyForm, questionsAndResponses } = await req.body
@@ -34,6 +43,16 @@ export const getSurveyFormById = async (req, res) => {
     const surveyFormId = await req.params.id
     const surveyForm = await surveyFormModel.getSurveyFormById(surveyFormId) 
     return res.json({ success: true, data: surveyForm })
+  } catch (error) {
+    return res.json({ success: false, message: `Internal server error` })
+  }
+}
+
+export const addIndividualImage = async (req, res) => {
+  try {
+    const individualData = await req.body
+    await surveyFormModel.addIndividualImage(individualData)
+    return res.json({ success: true, message: 'Uploaded successfully' })
   } catch (error) {
     return res.json({ success: false, message: `Internal server error` })
   }

@@ -66,7 +66,7 @@ const ActivityForm = () => {
     }, [activityForm.image]) 
 
     const showToast = (severity, summary, detail) => {
-        return toast.current.show({ severity: severity, summary: summary, detail: detail})
+        return toast.current.show({ severity: severity, summary: summary, detail: detail })
     }
 
     const resetForm = () => {

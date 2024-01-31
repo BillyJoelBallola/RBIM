@@ -16,7 +16,6 @@ export const uploadImage = async (req, res) => {
     }
 }
 
-
 export const removeUploadedImage = async (req, res) => {
     try {
         const activityData = await req.body
