@@ -30,11 +30,18 @@ const headers = [
 ]
 
 const Activities = () => {
+  const year = new Date().getFullYear().toString()
+  const month = new Date().getMonth()
+  const formattedMonth = month.toString().length === 1 ? "0" + month.toString() : ''
   const toast = useRef(null)
   const navigate = useNavigate()
   const [visible, setVisible] = useState(false)
   const [activities, setActivities] = useState([])
   const [selectedData, setSelectedData] = useState(null)
+  const [query, setQuery] = useState('')
+  const [type, setType] = useState('1')
+  const [monthYear, setMonthYear] = useState(year + "-" + formattedMonth)
+  const [barangayFilter, setBarangayFilter] = useState('')
   const [action, setAction] = useState('')
 
   useEffect(() => {
@@ -85,6 +92,15 @@ const Activities = () => {
     }
   }
 
+  const filteredData = activities.filter(item => {
+    const matchesName = item.title.toLowerCase().includes(query.toLowerCase());
+    const matchesMonthYear = item.date.toString().substring(0, 7) === monthYear.toString();
+    const matchesBarangay = barangayFilter.toString() === '' || item.address_barangay.toString() === barangayFilter;
+    const matchesType = item.type === type;
+    
+    return matchesMonthYear && matchesName && matchesBarangay && matchesType;
+  })
+
   const footerContent = (
     <div className='flex justify-end'>
         <button className='px-6 py-2 rounded-md bg-transparent' onClick={() => setVisible(false)}>No</button>
@@ -116,15 +132,15 @@ const Activities = () => {
           <div className='flex gap-4 items-center flex-wrap'>
             <div className="form-group">
               <label htmlFor="search">Search</label>
-              <input type="text" id='search' placeholder='Type to search'/>
+              <input type="text" id='search' placeholder='Search by title' value={query} onChange={e => setQuery(e.target.value)}/>
             </div>
             <div className="form-group">
-              <label htmlFor="date">Date</label>
-              <input type="date" id="date" />
+              <label htmlFor="month">Month/Year</label>
+              <input type="month" id="month" value={monthYear} onChange={(e) => setMonthYear(e.target.value)}/>
             </div>
             <div className="form-group">
               <label htmlFor="barangay">Location</label>
-              <select id="barangay">
+              <select id="barangay" value={barangayFilter} onChange={(e) => setBarangayFilter(e.target.value)}>
                 <option value="">Municipal</option>
                 {
                   barangay?.map((place, idx) => (
@@ -135,10 +151,10 @@ const Activities = () => {
             </div>
             <div className="form-group">
               <label htmlFor="type">Type</label>
-              <select id="type">
-                <option value="">Events</option>
-                <option value="">Programs</option>
-                <option value="">Announcements</option>
+              <select id="type" value={type} onChange={e => setType(e.target.value)}>
+                <option value="1">Events</option>
+                <option value="2">Programs</option>
+                <option value="3">Announcements</option>
               </select>
             </div>
           </div>
@@ -146,7 +162,7 @@ const Activities = () => {
         </div>
         <div className='my-6'>
           <p className='text-gray-400 mb-4'>Filter, view, add, edit, delete events and programs</p>
-          <CustomTable headers={headers} data={activities} actions={actions}/>
+          <CustomTable headers={headers} data={filteredData} actions={actions}/>
         </div>
       </div>
     </>

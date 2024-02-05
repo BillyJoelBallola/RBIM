@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import DisplayTextEditor from './DisplayTextEditor'
 import TextEditor from './TextEditor'
 import Header from './Header'
 import axios from 'axios'
 
+import CustomDialog from './CustomDialog'
 import { Toast } from 'primereact/toast'
 import { LuImagePlus } from "react-icons/lu"
 import { IoClose } from "react-icons/io5"
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi"
 import { barangay } from '../../static/Geography'
-import CustomDialog from './CustomDialog'
+import { FiSend } from "react-icons/fi";
 
 const ActivityForm = () => {
     const id = useParams().id
@@ -18,6 +18,14 @@ const ActivityForm = () => {
     const navigate = useNavigate()
     const [editContent, setEditContent] = useState(false)
     const [visible, setVisible] = useState(false)
+    const [visibleSMS, setVisibleSMS] = useState(false)
+    const [individualDataThisYear, setIndividualDataThisYear] = useState([])
+    const [participant, setParticipant] = useState({
+        value: '',
+        contact: []
+    })
+    const [message, setMessage] = useState('')
+    const [addressData, setAddressData] = useState({})
     const [removeVisible, setRemoveVisible] = useState(false)
     const [activityForm, setActivityForm] = useState({
         title: '',
@@ -63,7 +71,36 @@ const ActivityForm = () => {
         if((activityForm.image !== '' || activityForm.image !== null)){
             uploadImage()
         }
-    }, [activityForm.image]) 
+    }, [activityForm.image])
+
+    useEffect(() => {
+        const fetchAddress = async () => {
+            const { data } = await axios.get('/api/address')
+            if(data.success){
+                const address = data?.data
+                const addressData = address.find(item => item?.barangay?.toLowerCase()?.includes(activityForm.address_barangay.toLowerCase()))
+                setAddressData(addressData)
+            }
+        }
+
+        if(activityForm.address_barangay !== '' || activityForm.address_barangay !== null){
+            fetchAddress()
+        }
+    }, [activityForm.address_barangay])
+
+    useEffect(() => {   
+        const fetchIndividualData = async () => {
+            const { data } = await axios.get('/api/individuals')
+            if(data.success){
+                const individualData = data?.data
+                const date = new Date()
+                const individualDataConductedThisYear = individualData.filter(item => Number(item?.date_encoded?.toString()?.split("-")[0]) === date.getFullYear() && Number(item?.address) === Number(addressData?.id))
+                setIndividualDataThisYear(individualDataConductedThisYear);
+            }
+        }
+
+        fetchIndividualData()
+    }, [addressData])
 
     const showToast = (severity, summary, detail) => {
         return toast.current.show({ severity: severity, summary: summary, detail: detail })
@@ -139,9 +176,9 @@ const ActivityForm = () => {
         }else if(activityForm.title.length <= 10){
             setVisible(false)
             return showToast('error', 'Failed', 'Title must be 10 or more characters')
-        }else if(activityForm.content.length <= 20){
+        }else if(activityForm.content.length <= 20 || activityForm.content.length > 2600){
             setVisible(false)
-            return showToast('error', 'Failed', 'Content must be 20 or more characters')
+            return showToast('error', 'Failed', 'Content must be 20 - 2,600 characters')
         }else{
 
             const { data } = await axios.put("/api/activity", {...activityForm, id: id});
@@ -155,6 +192,74 @@ const ActivityForm = () => {
                 setEditContent(false)
                 return showToast('error', 'Failed', 'Failed to add activity. Please try again later')
             }
+        }
+    }
+
+    const handleParticipantChanges = (e) => {
+        const value = e.target.value
+        let contacts = []
+        const code = '+63'
+
+        if(value === ''){
+            contacts = []
+        }else if(Number(value) === 1){
+            individualDataThisYear?.map(item => {
+                if(Number(item.Q4) >= 60){
+                    if(!contacts.includes(code + item.phone_no)){
+                        contacts.push(code + item.phone_no)
+                    } 
+                }
+            })
+        }else if(Number(value) === 2){
+            individualDataThisYear?.map(item => {
+                if(Number(item.Q12) === 1 || Number(item.Q12) === 2 && item.Q12 !== null){
+                    if(!contacts.includes(code + item.phone_no)){
+                        contacts.push(code + item.phone_no)
+                    } 
+                }
+            })
+        }else if(Number(value) === 3){
+            individualDataThisYear?.map(item => {
+                if(Number(item.Q29) !== 99 && item.Q29 !== null){
+                    if(!contacts.includes(code + item.phone_no)){
+                        contacts.push(code + item.phone_no)
+                    } 
+                }
+            })
+        }else if(Number(value) === 4){
+            individualDataThisYear?.map(item => {
+                if(Number(item.Q29) !== 2 && Number(item.Q29) !== 99 && item.Q29 !== null){
+                    if(!contacts.includes(code + item.phone_no)){
+                        contacts.push(code + item.phone_no)
+                    } 
+                }
+            })
+        }
+
+        setParticipant({value: value, contact: contacts})
+    }
+
+    const resetSMS = () => {
+        setParticipant({value: '', contact: []})
+        setMessage('')
+    }
+
+    const sendSMS = async () => {
+        const contacts = participant?.contact
+        const SMS = {message, contacts};
+        
+        if(message === '') return
+        if(message?.length > 320){
+            return showToast('error', 'Failed', "Please follow the character limit")
+        }
+
+        const { data } = await axios.post('/api/send_SMS', SMS)
+        if(data.success){
+            resetSMS()
+            setVisibleSMS(false)
+            return showToast('success', 'Success', 'Message sent successfully to the participants')
+        }else{
+            return showToast('error', 'Failed', 'Failed to send message to the participants')
         }
     }
 
@@ -182,6 +287,25 @@ const ActivityForm = () => {
         </div>
     );
 
+    const footerSMS = (
+        <div className='flex justify-end'>
+            <button 
+                className='px-6 py-2 rounded-md bg-transparent' 
+                onClick={() => {
+                    resetSMS()
+                    setVisibleSMS(false)
+                }}
+            >Cancel</button>
+            <button 
+                disabled={participant?.contact?.length <= 0 ? true : false}
+                className='px-6 py-2 rounded-md bg-[#008605] text-white' 
+                onClick={() => sendSMS()}
+            >
+                Send
+            </button>
+        </div>
+    );
+
     return (
         <>
             <CustomDialog
@@ -204,6 +328,51 @@ const ActivityForm = () => {
                     <p>Are you sure you want to remove this image? Once it's removed, it cannot be restored again.</p>
                 )}
             />
+            <CustomDialog
+                header={'Send SMS'}
+                visible={visibleSMS}
+                resetForm={resetSMS}
+                setVisible={setVisibleSMS} 
+                footer={footerSMS}
+                classStyle={'w-[90%] md:w-[60%] lg:w-[40%]'}
+                content={(
+                    <div className='grid gap-4'>
+                        <span className='text-sm'>All contact numbers will come from the survey forms conducted this year.</span>
+                        <div className="form-group">
+                            <label htmlFor="participant" className='flex items-center gap-1'>
+                                <span>Participant</span>
+                                {
+                                    participant?.value !== '' &&
+                                    <span className='text-gray-600 font-normal text-xs'>[{participant?.contact?.length} Contact Numbers]</span>
+                                }
+                            </label>
+                            <select name="participant" id="participant" value={participant.value} onChange={handleParticipantChanges}>
+                                <option value="">-- choose participants --</option>
+                                <option value="1">Senior Citizen</option>
+                                <option value="2">Student</option>
+                                <option value="3">Disabled</option>
+                                <option value="4">Solo Parent</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="message">Message</label>
+                            <textarea 
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                name="message" 
+                                id="message" 
+                                rows="5" 
+                                className='resize-none'
+                                placeholder='Type message here...'
+                            ></textarea>
+                            {
+                                message?.length > 0 &&
+                                <span className='text-xs'>{message?.length}/320 Characters</span>
+                            }
+                        </div>
+                    </div>
+                )}
+            />
             <Toast ref={toast} />
             <Header pageName={"Activity Form"} />
             <div className="content">
@@ -213,12 +382,24 @@ const ActivityForm = () => {
                         className='text-3xl' 
                         onClick={() => resetForm()}
                     ><HiOutlineArrowNarrowLeft /></Link>
-                    <button 
-                        className='bg-[#008605] hover:bg-[#008605]/60 duration-150 text-white py-2 px-4 rounded-md' 
-                        onClick={() => setVisible(true)}
-                    >
-                        {id ? 'Save Changes' : 'Save'}
-                    </button>
+                    <div className='flex gap-2'>
+                        {
+                            id &&
+                            <button 
+                                className='bg-gray-600 hover:bg-gray-500 duration-150 text-white py-2 px-4 rounded-md flex gap-2 items-center' 
+                                onClick={() => setVisibleSMS(true)}
+                            >
+                                <FiSend />
+                                <span>SMS</span>
+                            </button>
+                        }
+                        <button 
+                            className='bg-[#008605] hover:bg-[#008605]/60 duration-150 text-white py-2 px-4 rounded-md' 
+                            onClick={() => setVisible(true)}
+                        >
+                            {id ? 'Save Changes' : 'Save'}
+                        </button>
+                    </div>
                 </div>
                 <div className='grid gap-5 pb-10'>
                     <div className='flex flex-col md:flex-row gap-4 md:gap-6'>
@@ -275,33 +456,40 @@ const ActivityForm = () => {
                                 <TextEditor content={activityForm.content} setContent={setActivityForm} />
                             </div>
                         }
+                        <span className='text-xs'>{activityForm?.content?.length}/2600 Characters</span>
                     </div>
-                    {
-                        Number(activityForm?.type) !== 3 ?
-                        activityForm.image === '' || typeof activityForm.image !== 'string' ? 
-                        <div className="form-group">
-                            <label htmlFor="image" className='bg-gray-200 hover:bg-gray-300 cursor-pointer duration-150 rounded-md text-2xl grid place-items-center w-[250px] aspect-square'>
-                                <div className='flex flex-col items-center'>
-                                    <LuImagePlus />
-                                    <span className='text-sm font-normal'>Add Photo</span>
-                                </div>
-                            </label>
-                            <input type="file" id='image' name='image' accept='image/png, image/jpeg, image/jpg' className='hidden' onChange={handleInput}/>
-                        </div>
-                        :
-                        <div className='relative w-[450px] h-auto bg-gray-200 border border-gray-600 rounded-lg overflow-hidden'>
-                            <button className='absolute bg-gray-200 p-1 text-lg rounded-full shadow-sm right-1 top-1' onClick={() => setRemoveVisible(true)}>
-                                <IoClose className='text-gray-700'/>
-                            </button>
-                            <img 
-                                className='object-contain'
-                                src={`http://localhost:4000/${activityForm?.image?.slice(1, -1) + activityForm?.image?.slice(-1)}`} 
-                                alt="uploaded-image" 
-                            />
-                        </div>
-                        : 
-                        <></>
-                    }
+                    <div className='flex flex-col md:flex-row gap-8'>
+                        {
+                            Number(activityForm?.type) !== 3 ?
+                            activityForm.image === '' || typeof activityForm.image !== 'string' ? 
+                            <div className="form-group">
+                                <label htmlFor="image" className='bg-gray-200 hover:bg-gray-300 cursor-pointer duration-150 rounded-md text-2xl grid place-items-center w-[250px] aspect-square'>
+                                    <div className='flex flex-col items-center'>
+                                        <LuImagePlus />
+                                        <span className='text-sm font-normal'>Add Photo</span>
+                                    </div>
+                                </label>
+                                <input type="file" id='image' name='image' accept='image/png, image/jpeg, image/jpg' className='hidden' onChange={handleInput}/>
+                            </div>
+                            :
+                            <div className='relative w-full md:w-[450px] h-auto bg-gray-200 border border-gray-600 rounded-lg overflow-hidden'>
+                                <button className='absolute bg-gray-200 p-1 text-lg rounded-full shadow-sm right-1 top-1' onClick={() => setRemoveVisible(true)}>
+                                    <IoClose className='text-gray-700'/>
+                                </button>
+                                <img 
+                                    className='object-contain'
+                                    src={`http://localhost:4000/${activityForm?.image?.slice(1, -1) + activityForm?.image?.slice(-1)}`} 
+                                    alt="uploaded-image" 
+                                />
+                            </div>
+                            : 
+                            <></>
+                        }
+                        {
+                            Number(activityForm?.type) !== 3 &&
+                            <span className='w-[90%] md:w-[40%] text-sm text-gray-500'>Kindly provide an image to accompany this activity. Feel free to upload an image in either PNG, JPEG, or JPG format.</span>
+                        }
+                    </div>
                 </div>
             </div>
         </>

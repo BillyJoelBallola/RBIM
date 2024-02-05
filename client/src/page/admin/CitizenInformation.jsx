@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Header from '../../components/admin/Header'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import CustomTable from '../../components/admin/CustomTable'
-import { UserContext } from '../../context/UserContext'
 import CustomDialog from '../../components/admin/CustomDialog'
+import { UserContext } from '../../context/UserContext'
+import Header from '../../components/admin/Header'
 import { barangay } from '../../static/Geography'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
+import { Toast } from 'primereact/toast'
 import { MdOutlineEdit } from "react-icons/md";
 import { LuArchive } from "react-icons/lu";
 import { LuTrash2 } from "react-icons/lu";
@@ -40,11 +41,15 @@ const individualHeaders = [
 ]
 
 const CitizenInformation = () => {
+  const year = new Date().getFullYear().toString()
+  const month = new Date().getMonth()
+  const formattedMonth = month.toString().length === 1 ? "0" + month.toString() : ''
   const navigate = useNavigate()
+  const toast = useRef(null)
   const [surveyForms, setSurveyForm] = useState([])
   const [individuals, setIndividuals] = useState([])
   const [query, setQuery] = useState('')
-  const [monthYear, setMonthYear] = useState('')
+  const [monthYear, setMonthYear] = useState(year + "-" + formattedMonth)
   const [individualQuery, setIndividualQuery] = useState('')
   const [visible, setVisible] = useState(false)
   const [barangayFilter, setBarangayFilter] = useState('0');
@@ -104,8 +109,10 @@ const CitizenInformation = () => {
     }
 
     const filteredData = array.filter(item => {
-      return item?.Q1?.toLowerCase()?.includes(query?.toLowerCase());
-    });
+      const matchesMonthYear = item.date_encoded.toString().substring(0, 7) === monthYear.toString();
+      const data = item?.Q1?.toLowerCase()?.includes(query?.toLowerCase());
+      return data && matchesMonthYear
+    }); 
 
     return filteredData.length > 0 ? filteredData : [];
   }
@@ -114,6 +121,7 @@ const CitizenInformation = () => {
   
   return (
     <>
+      <Toast ref={toast} />
       <CustomDialog
         header={'Individual Records'}
         visible={visible}
@@ -141,10 +149,13 @@ const CitizenInformation = () => {
       <div className="content">
         <div className='flex items-center justify-between flex-wrap gap-4'>
           <div className='flex gap-4 items-center flex-wrap'>
-            <div className="form-group">
-              <label htmlFor="search">Search</label>
-              <input type="search" id='search' placeholder='Search respondent name' value={query} onChange={(e) => setQuery(e.target.value)}/>
-            </div>
+            {
+              monthYear !== '' &&
+              <div className="form-group">
+                <label htmlFor="search">Search</label>
+                <input type="search" id='search' placeholder='Search respondent name' value={query} onChange={(e) => setQuery(e.target.value)}/>
+              </div>
+            }
             <div className="form-group">
               <label htmlFor="month">Month/Year</label>
               <input type="month" id="month" value={monthYear} onChange={(e) => setMonthYear(e.target.value)}/>
@@ -166,7 +177,11 @@ const CitizenInformation = () => {
           </div>
           <button 
             className='self-end flex items-center gap-1 bg-gray-200 hover:bg-gray-300 duration-150 text-gray-600 py-1 px-2 rounded-full border'
-            onClick={() => setVisible(true)}
+            onClick={() => {
+              monthYear === '' 
+              ? toast.current.show({ severity: 'error', summary: 'Failed', detail: 'Select month and year' }) 
+              : setVisible(true)
+            }}
           >
             <IoSearch className='text-lg' />
             <span className='text-sm'>Search Individual</span>

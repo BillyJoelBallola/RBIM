@@ -41,7 +41,7 @@ const getAllSurvey = async () => {
 const getAllIndividual = async () => {
   try {
     const individualResult = await new Promise(( resolve, reject ) => {
-      db.query('SELECT questions_and_response.*, household.survey_form_id, household.household_number, household.living_type, household.respondent_name, household.household_head, household.household_member_no, household.address, household.unit_no, household.house_no, household.street, household.phone_no FROM questions_and_response INNER JOIN household ON questions_and_response.household_id = household.id', 
+      db.query('SELECT questions_and_response.*, survey_form.first_visit_supervisor, survey_form.date_encoded, household.survey_form_id, household.household_number, household.living_type, household.respondent_name, household.household_head, household.household_member_no, household.address, household.unit_no, household.house_no, household.street, household.phone_no FROM questions_and_response INNER JOIN household ON questions_and_response.household_id = household.id INNER JOIN survey_form ON household.survey_form_id = survey_form.id', 
       ((error, results) => {
         if (error) {
           reject(error);
@@ -57,10 +57,10 @@ const getAllIndividual = async () => {
   }
 }
 
-const addIndividualImage = async (individualData) => {
+const updateIndividualImage = async (individualData) => {
   try {
     const { image, id } = await individualData
-    const individualResult = await new Promise(( resolve, reject ) => {
+    const individualResult = await new Promise(( resolve, reject ) => { 
       db.query('UPDATE questions_and_response SET image = ? WHERE id = ?',
       [image, id],
       ((error, results) => {
@@ -263,5 +263,5 @@ export const surveyFormModel = {
   getSurveyFormById,
   updateSurveyForm,
   getAllIndividual,
-  addIndividualImage
+  updateIndividualImage
 } 

@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { surveyFormModel } from '../models/SurveyFormModel.js'
 
 export const getAllSurveyForms = async (req, res) => {
@@ -48,12 +49,27 @@ export const getSurveyFormById = async (req, res) => {
   }
 }
 
-export const addIndividualImage = async (req, res) => {
+export const updateIndividualImage = async (req, res) => {
   try {
     const individualData = await req.body
-    await surveyFormModel.addIndividualImage(individualData)
+    await surveyFormModel.updateIndividualImage(individualData)
     return res.json({ success: true, message: 'Uploaded successfully' })
   } catch (error) {
     return res.json({ success: false, message: `Internal server error` })
+  }
+}
+
+export const removeIndividualImage = async (req, res) => {
+  try {
+      const individual = await req.body
+      const { image } = individual
+      const newIndividualData = { ...individual, image: '' }
+      individual?.id && await surveyFormModel.updateIndividualImage(newIndividualData);
+      fs.unlink(`uploads/${image?.slice(1, -1) + image?.slice(-1)}`, (err) => {
+        if (err) throw err
+          return res.json({ success: true, message: 'Image removed successfully' });
+      })
+  } catch (error) {
+      return res.json({ success: false, message: 'Internal Server Error'});
   }
 }

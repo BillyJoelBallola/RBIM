@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import CustomDialog from '../admin/CustomDialog'
 import Divider from '../Divider';
 import Header from './Header'
 import axios from 'axios';
 
+import { Toast } from 'primereact/toast'
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { LuImagePlus } from "react-icons/lu"
 import { IoClose } from "react-icons/io5"
@@ -11,10 +13,16 @@ import PrintableIndividualForm from './PrintableIndividualForm';
 
 const IndividualForm = () => {
     const id = useParams().id
+    const toast = useRef(null)
     const navigate = useNavigate()
     const [preview, setPreview] = useState(false)
+    const [removeVisible, setRemoveVisible] = useState(false)
     const [individual, setIndividual] = useState({})
 
+    const showToast = (severity, summary, detail) => {
+        return toast.current.show({ severity: severity, summary: summary, detail: detail })
+    }
+        
     useEffect(() => {
         const fetchIndividual = async () => {
           const indResponse = await axios.get('/api/individuals')
@@ -22,7 +30,7 @@ const IndividualForm = () => {
           if(indResponse?.data?.success && addressResponse?.data?.success){
             const filteredData = indResponse?.data?.data?.find(item => Number(item.id) === Number(id))
             const matchAddress = addressResponse?.data?.data?.find(item => Number(item.id) === Number(filteredData.address))
-            setIndividual({...filteredData, ...matchAddress})
+            setIndividual({...filteredData, ...{matchAddress, address_id: matchAddress.id}})
           }
         }
 
@@ -40,6 +48,7 @@ const IndividualForm = () => {
                 const image = uploadResponse.data.data
                 await axios.put("/api/individual_image", { image: image, id: id })
                 setIndividual(current => ({...current, image: image}));
+                return showToast('success', 'Success', 'Image uploaded successfully')
             }
         }
 
@@ -56,10 +65,48 @@ const IndividualForm = () => {
         }))
     } 
 
+    const removeImage = async () => {
+        const { data } = await axios.put('/api/individual_remove_image', individual)
+        if(data.success){
+            setRemoveVisible(false)
+            setIndividual(current => ({...current, image: '' }));
+            return showToast('success', 'Success', 'Image removed successfully')
+        }else{
+            return showToast('error', 'Failed', 'Image removed successfully')
+        }
+    }
+
+    const footerRemove = (
+        <div className='flex justify-end'>
+            <button className='px-6 py-2 rounded-md bg-transparent' onClick={() => setRemoveVisible(false)}>No</button>
+            <button 
+                className='px-6 py-2 rounded-md bg-[#008605] text-white' 
+                onClick={() => removeImage()}
+            >
+                Yes
+            </button>
+        </div>
+    );
+
     return (
         <>
-            <PrintableIndividualForm preview={preview} setPreview={setPreview} />
+            <Toast ref={toast} />
             <Header pageName={"Individual Profile Form"} />
+            <CustomDialog
+                header={'Remove'}
+                visible={removeVisible}
+                setVisible={setRemoveVisible} 
+                footer={footerRemove}
+                classStyle={'w-[90%] md:w-[60%] lg:w-[40%]'}
+                content={(
+                    <p>Are you sure you want to remove this image? Once it's removed, it cannot be restored again.</p>
+                )}
+            />
+            <PrintableIndividualForm 
+                preview={preview} 
+                setPreview={setPreview} 
+                individual={individual}
+            />
             <div className="content">
                 <div className='pt-4 pb-3 flex justify-between items-center gap-2'>
                     <button 
@@ -89,7 +136,7 @@ const IndividualForm = () => {
                                     <input 
                                         type="text" 
                                         id='province'
-                                        value={individual?.province || ''} 
+                                        value={individual?.matchAddress?.province || ''} 
                                         onChange={(e) => setIndividual(current => ({...current, province: e.target.value }))}
                                         disabled
                                     />
@@ -99,7 +146,7 @@ const IndividualForm = () => {
                                     <input 
                                         type="text" 
                                         id='municipal'
-                                        value={individual?.municipal || ''} 
+                                        value={individual?.matchAddress?.municipal || ''} 
                                         onChange={(e) => setIndividual(current => ({...current, municipal: e.target.value }))}
                                         disabled
                                     />
@@ -109,7 +156,7 @@ const IndividualForm = () => {
                                     <input 
                                         type="text" 
                                         id='barangay'
-                                        value={individual?.barangay || ''} 
+                                        value={individual?.matchAddress?.barangay || ''} 
                                         onChange={(e) => setIndividual(current => ({...current, barangay: e.target.value }))}
                                         disabled
                                     />
@@ -158,7 +205,7 @@ const IndividualForm = () => {
                                 <input 
                                     type="text" 
                                     id='address'
-                                    value={individual ? `${individual.barangay}, ${individual.municipal}, ${individual.province}` : ''} 
+                                    value={`${individual?.matchAddress?.barangay}, ${individual?.matchAddress?.municipal}, ${individual?.matchAddress?.province}` || ''} 
                                     onChange={(e) => setIndividual(current => ({...current, address: e.target.value }))}
                                     disabled
                                 />
@@ -250,8 +297,8 @@ const IndividualForm = () => {
                                         onChange={(e) => setIndividual(current => ({...current, Q7: e.target.value }))}
                                         disabled
                                     >
-                                        <option value="1">Male</option>
-                                        <option value="2">Female</option>
+                                        <option value="1">Filipino</option>
+                                        <option value="2">Non-Filipino</option>
                                     </select>
                                 </div>
                             </div>
@@ -278,30 +325,33 @@ const IndividualForm = () => {
                             </div>
                         </div>
                     </div>
-                    {
-                        individual &&
-                        individual.image === '' || typeof individual.image !== 'string' ? 
-                        <div className="form-group">
-                            <label htmlFor="image" className='bg-gray-200 hover:bg-gray-300 cursor-pointer duration-150 rounded-md text-2xl grid place-items-center w-[250px] aspect-square'>
-                                <div className='flex flex-col items-center'>
-                                    <LuImagePlus />
-                                    <span className='text-sm font-normal'>Add Photo</span>
-                                </div>
-                            </label>
-                            <input type="file" id='image' name='image' accept='image/png, image/jpeg, image/jpg' className='hidden' onChange={handleInput}/>
-                        </div>
-                        :
-                        <div className='relative w-[250px] h-auto bg-gray-200 border border-gray-600 rounded-lg overflow-hidden'>
-                            <button className='absolute bg-gray-200 p-1 text-lg rounded-full shadow-sm right-1 top-1' onClick={() => setRemoveVisible(true)}>
-                                <IoClose className='text-gray-700'/>
-                            </button>
-                            <img 
-                                className='object-contain'
-                                src={`http://localhost:4000/${individual?.image?.slice(1, -1) + individual?.image?.slice(-1)}`} 
-                                alt="uploaded-image" 
-                            />
-                        </div>
-                    }
+                    <div className='flex flex-col md:flex-row gap-8'>
+                        {
+                            individual &&
+                            individual?.image === '' || typeof individual?.image !== 'string' ? 
+                            <div className="form-group">
+                                <label htmlFor="image" className='bg-gray-200 hover:bg-gray-300 cursor-pointer duration-150 rounded-md text-2xl grid place-items-center w-[250px] aspect-square'>
+                                    <div className='flex flex-col items-center'>
+                                        <LuImagePlus />
+                                        <span className='text-sm font-normal'>Add Photo</span>
+                                    </div>
+                                </label>
+                                <input type="file" id='image' name='image' accept='image/png, image/jpeg, image/jpg' className='hidden' onChange={handleInput}/>
+                            </div>
+                            :
+                            <div className='relative w-full md:w-[250px] h-auto bg-gray-200 border border-gray-600 rounded-lg overflow-hidden'>
+                                <button className='absolute bg-gray-200 p-1 text-lg rounded-full shadow-sm right-1 top-1' onClick={() => setRemoveVisible(true)}>
+                                    <IoClose className='text-gray-700'/>
+                                </button>
+                                <img 
+                                    className='object-contain'
+                                    src={`http://localhost:4000/${individual?.image?.slice(1, -1) + individual?.image?.slice(-1)}`} 
+                                    alt="uploaded-image" 
+                                />
+                            </div>
+                        }
+                        <span className='w-[90%] md:w-[40%] text-sm text-gray-500'>Kindly provide an image to accompany this individual profile. Feel free to upload an image in either PNG, JPEG, or JPG format.</span>
+                     </div>
                 </div>
             </div>
         </>

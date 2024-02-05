@@ -1,6 +1,7 @@
 import fs from 'fs'
 import { activityModel } from '../models/ActivityModel.js';
-
+import Twilio from 'twilio';
+        
 export const uploadImage = async (req, res) => {
     try {
         const image = await req.file
@@ -96,3 +97,22 @@ export const deleteActivityById = async (req, res) => {
         return res.json({ success: false, message: 'Internal Server Error'});
     }
 } 
+
+export const sendSMS = async (req, res) => {
+    try {
+        const { message, contacts } = await req.body
+        const twilio = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN)
+        twilio.messages
+            .create({
+                body: message,
+                from: process.env.TWILIO_PHONE_NUMBER,
+                to: contacts
+            }).then(message => {
+                return res.json({ success: true, message: 'Message send successfully'});
+            }).catch(err => {
+                return res.json({ success: false, message: err});
+            })
+    } catch (error) {
+        return res.json({ success: false, message: 'Internal Server Error'});
+    }
+}

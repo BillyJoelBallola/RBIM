@@ -1,6 +1,6 @@
 import { Router } from "express"
 import multer from "multer"
-import { addActivity, deleteActivityById, getActivityById, getAllActivity, getAllAnnouncements, getAllEventsAnsPrograms, removeUploadedImage, updateActivity, uploadImage } from "../controllers/ActivityController.js"
+import { addActivity, deleteActivityById, getActivityById, getAllActivity, getAllAnnouncements, getAllEventsAnsPrograms, removeUploadedImage, sendSMS, updateActivity, uploadImage } from "../controllers/ActivityController.js"
 
 const route = Router()
 
@@ -9,6 +9,7 @@ const upload = multer({ dest: 'uploads/' })
 route.post("/upload", upload.single('image'), uploadImage)
 route.post("/remove_image", removeUploadedImage)
 route.post("/activity", addActivity)
+route.post("/send_SMS", sendSMS)
 route.put("/activity", updateActivity)
 route.get("/activity/:id", getActivityById)
 route.get("/activities", getAllActivity)

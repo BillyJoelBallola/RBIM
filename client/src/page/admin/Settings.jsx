@@ -22,10 +22,6 @@ const settingsNav = [
     path: "/rbim/settings/manage-survey-form"
   },
   {
-    name: "Backup/Restore",
-    path: "/rbim/settings/backup-restore"
-  },
-  {
     name: "User Management",
     path: "/rbim/settings/manage-user"
   },

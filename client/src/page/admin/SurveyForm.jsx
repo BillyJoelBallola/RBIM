@@ -196,12 +196,12 @@ const SurveyForm = () => {
               onClick={() => navigate('/rbim/citizen-information')}
             ><HiOutlineArrowNarrowLeft /></button>
             <div className='flex items-center gap-2'>
-              <button 
+              {/* <button 
                 className='bg-gray-600 hover:bg-gray-500 duration-150 text-white py-2 px-4 rounded-md' 
                 onClick={() => {
                   setPreview(true)
                   setIsNavigateOpen(true)
-                }}>Download</button>
+                }}>Download</button> */}
               <button className='bg-[#008605] hover:bg-[#008605]/60 duration-150 text-white py-2 px-4 rounded-md' onClick={() => setVisible(true)}>Save Changes</button>
             </div>
           </div>

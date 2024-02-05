@@ -1,6 +1,6 @@
 import { userModel } from '../models/UserModel.js'
 import { authModel } from '../models/AuthModel.js'
-import { HTTP_STATUS } from '../helper/httpStatus.js'
+import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 export const getAllUsers = async (req, res) => {
@@ -81,6 +81,7 @@ export const updateAccount = async (req, res) => {
   }
 }
 
+// web
 export const updateSecurity = async (req, res) => {
   try {
     const { rbim_token } = await req.cookies;
@@ -97,6 +98,26 @@ export const updateSecurity = async (req, res) => {
     }else{
       return res.json('Unathorized access');
     }
+  } catch (error) {
+    return res.json({ success: false, message: 'Internal server error'});
+  }
+}
+
+// mobile
+export const updateSecurityMobile = async (req, res) => {
+  try {
+    const accountData = await req.body
+    const user = await userModel.getUserById(accountData?.id)
+
+    const isCurrentPasswordCorrect = bcrypt.compareSync(accountData?.currentPassword.trim(), user.password);
+    
+    if(!isCurrentPasswordCorrect) {
+      return res.json({ success: false, message: 'Current password is incorrect'});
+    }
+
+    const updatedUser = await userModel.updateSecurity(accountData)
+
+    return res.json({ success: true, data: updatedUser, message: 'Security updated successfully'});
   } catch (error) {
     return res.json({ success: false, message: 'Internal server error'});
   }

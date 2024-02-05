@@ -1,6 +1,7 @@
 import cookieParser from "cookie-parser"
 import express from 'express'
 import cors from 'cors'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 
 import './config.js'
 import db from './dbConnect.js'
@@ -15,13 +16,13 @@ import ReportRoutes from './routes/ReportRoutes.js'
 import ActivityRoutes from './routes/ActivityRoutes.js'
 
 const app = express()
+app.use(cors({
+    credentials: true,
+    origin: ["http://localhost:5173", "http://192.168.1.20:8081"]
+}))
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.static('uploads'))
-app.use(cors({
-    credentials: true,
-    origin: ["http://localhost:5173", "http://192.168.1.35:8081"]
-}))
 
 app.use("/api", userRoutes)
 app.use("/api", authRoutes)
