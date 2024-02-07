@@ -204,22 +204,22 @@ const Reports = () => {
       <Header pageName={"Reports"} />
       <div className="content bg-white">
         <div className='flex gap-4 items-center justify-between flex-wrap'>
-          <div className="form-group">
+          <div className="form-group w-full md:w-auto">
             <label htmlFor="search">Search Report</label>
             <input type="text" id='search' placeholder='Search table number' value={query} onChange={e => setQuery(e.target.value)}/>
           </div>
           <div className='flex gap-4 flex-wrap'>
-            <div className="form-group">
+            <div className="form-group w-full md:w-auto">
               <label htmlFor="from">Date: From</label>
               <input type="date" id="from" value={dateFrom} onChange={e => setDateFrom(e.target.value)}/>
             </div>
-            <div className="form-group">
+            <div className="form-group w-full md:w-auto">
               <label htmlFor="to">To</label>
               <input type="date" id="to" value={dateTo} onChange={e => setDateTo(e.target.value)}/>
             </div>
             {
               loggedUser?.role === 'administrator' && 
-              <div className="form-group">
+              <div className="form-group w-full md:w-auto">
                 <label htmlFor="barangay">Location</label>
                 <select id="barangay" value={selectedAddress} onChange={e => setSelectedAddress(e.target.value)}>
                   <option value="0">Municipal</option>
@@ -231,7 +231,7 @@ const Reports = () => {
                 </select>
               </div>
             }
-            <div className="form-group">
+            <div className="form-group w-full md:w-auto">
               <label htmlFor="file">File Type</label>
               <select id="file" onChange={(e) => setFileType(e.target.value)}>
                 <option value={1}>PDF</option>

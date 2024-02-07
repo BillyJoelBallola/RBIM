@@ -243,7 +243,7 @@ const UserManagement = ({ title, description }) => {
         classStyle={'w-[30vw]'}
         content={
           <form onSubmit={recoverPassword}>
-            <div className="form-group">
+            <div className="form-group w-full md:w-auto">
               <label htmlFor="">Input your password for authentication.</label>
               <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
               <button className='bg-[#008605] rounded-md text-white py-2'>Submit</button>
@@ -340,10 +340,7 @@ const UserManagement = ({ title, description }) => {
             }
           </>
           : actionSelected === 'view' ?
-          <div className='grid gap-4'>
-            <span className='text-sm text-gray-400'>List of all user/s (health workers) in {healthWorkersData[0]?.barangay}</span>
-            <CustomTable data={healthWorkersData} headers={hwHeaders} />
-          </div>
+          <CustomTable description={`List of all user/s (health workers) in ${healthWorkersData[0]?.barangay}`} data={healthWorkersData} headers={hwHeaders} />
           : <></>
         }
       />

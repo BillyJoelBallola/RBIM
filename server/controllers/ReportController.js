@@ -122,7 +122,7 @@ export const getTableOneReport = async (req, res) => {
             data[16][`${migrant}Male`] = result?.filter(item => Number(item.Q4) >= 80 && Number(item.Q36) === migrantCode && Number(item.Q3) === 1)?.length || 0;
             data[16][`${migrant}Female`] = result?.filter(item => Number(item.Q4) >= 80 && Number(item.Q36) === migrantCode && Number(item.Q3) === 2)?.length || 0;
             data[16][`total`] = result?.filter(item => Number(item.Q4) >= 80 && [1, 2, 3].includes(Number(item.Q36)) && [1, 2].includes(Number(item.Q3)))?.length || 0;
-        }
+        };
 
         return res.json({ success: true, data: data });
     } catch (error) {

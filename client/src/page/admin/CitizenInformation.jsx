@@ -13,6 +13,8 @@ import { LuArchive } from "react-icons/lu";
 import { LuTrash2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
 import { MdOpenInNew } from "react-icons/md";
+import { MdArrowBackIosNew } from "react-icons/md";
+import { MdArrowForwardIos } from "react-icons/md";
 
 const headers = [
   {
@@ -136,7 +138,8 @@ const CitizenInformation = () => {
               </div>
             </div>
             <div className='overflow-auto'>
-              <CustomTable  
+              <CustomTable
+                limit={3}
                 headers={individualHeaders} 
                 actions={individualActions}
                 data={filterIndividualData} 
@@ -151,18 +154,18 @@ const CitizenInformation = () => {
           <div className='flex gap-4 items-center flex-wrap'>
             {
               monthYear !== '' &&
-              <div className="form-group">
+              <div className="form-group w-full md:w-auto">
                 <label htmlFor="search">Search</label>
                 <input type="search" id='search' placeholder='Search respondent name' value={query} onChange={(e) => setQuery(e.target.value)}/>
               </div>
             }
-            <div className="form-group">
+            <div className="form-group w-full md:w-auto">
               <label htmlFor="month">Month/Year</label>
               <input type="month" id="month" value={monthYear} onChange={(e) => setMonthYear(e.target.value)}/>
             </div>
             {
               loggedUser?.role === 'administrator' &&
-              <div className="form-group">
+              <div className="form-group w-full md:w-auto">
                 <label htmlFor="barangay">Location</label>
                 <select id="barangay" value={barangayFilter} onChange={(e) => setBarangayFilter(e.target.value)}>
                   <option value={'0'}>Municipal</option>
@@ -188,11 +191,7 @@ const CitizenInformation = () => {
           </button>
         </div>
         <div className='my-6'>
-          <p className='text-gray-400 mb-4'>
-            Manage citizen information.
-            { filteredData.length > 0 ? <span className='text-gray-600'>{` [${filteredData.length}] Filtered Records` }</span> : <></> }  
-          </p>
-          <CustomTable headers={headers} data={filteredData} actions={actions}/>
+          <CustomTable limit={7} description={'Manage citizen information.'} headers={headers} data={filteredData} actions={actions}/>
         </div>
       </div>
     </>

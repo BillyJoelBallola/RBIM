@@ -130,15 +130,15 @@ const Activities = () => {
       <div className="content">
         <div className='flex items-center justify-between flex-wrap gap-4'>
           <div className='flex gap-4 items-center flex-wrap'>
-            <div className="form-group">
+            <div className="form-group w-full md:w-auto">
               <label htmlFor="search">Search</label>
               <input type="text" id='search' placeholder='Search by title' value={query} onChange={e => setQuery(e.target.value)}/>
             </div>
-            <div className="form-group">
+            <div className="form-group w-full md:w-auto">
               <label htmlFor="month">Month/Year</label>
               <input type="month" id="month" value={monthYear} onChange={(e) => setMonthYear(e.target.value)}/>
             </div>
-            <div className="form-group">
+            <div className="form-group w-full md:w-auto">
               <label htmlFor="barangay">Location</label>
               <select id="barangay" value={barangayFilter} onChange={(e) => setBarangayFilter(e.target.value)}>
                 <option value="">Municipal</option>
@@ -149,7 +149,7 @@ const Activities = () => {
                 }
               </select>
             </div>
-            <div className="form-group">
+            <div className="form-group w-full md:w-auto">
               <label htmlFor="type">Type</label>
               <select id="type" value={type} onChange={e => setType(e.target.value)}>
                 <option value="1">Events</option>
@@ -161,8 +161,7 @@ const Activities = () => {
           <Link to={'/rbim/activity_form'} className='self-end rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>ADD NEW</Link>
         </div>
         <div className='my-6'>
-          <p className='text-gray-400 mb-4'>Filter, view, add, edit, delete events and programs</p>
-          <CustomTable headers={headers} data={filteredData} actions={actions}/>
+          <CustomTable limit={7} description={'Filter, view, add, edit, delete events and programs.'} headers={headers} data={filteredData} actions={actions}/>
         </div>
       </div>
     </>

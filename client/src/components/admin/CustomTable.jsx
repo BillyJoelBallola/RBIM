@@ -2,8 +2,23 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import axios from 'axios';
 
-const CustomTable = ({ headers, data, actions }) => {
+import { MdArrowBackIosNew } from "react-icons/md";
+import { MdArrowForwardIos } from "react-icons/md";
+
+const CustomTable = ({ headers, data, actions, description = '', limit = 5}) => {
   const [address, setAddress] = useState([])
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = limit;
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const handleNextPage = () => {
+    setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages));
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+  };
 
   useEffect(() => {
     const fetchAddress = async () => {
@@ -51,6 +66,16 @@ const CustomTable = ({ headers, data, actions }) => {
 
   return (
     <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+      <div className='flex items-center justify-between'>
+        <p className='text-gray-400 mb-4'>{description}</p>
+        <div className='flex gap-4 items-center mb-4 justify-end'>
+          <span className='text-sm text-gray-500'>{totalPages === 0 ? '0' : currentPage}/{totalPages}</span>
+          <div className='flex gap-1'>  
+            <button className='cursor-pointer p-2 rounded-full hover:bg-gray-200 text-gray-500 grid place-items-center' onClick={handlePrevPage} disabled={currentPage === 1}><MdArrowBackIosNew /></button>
+            <button className='cursor-pointer p-2 rounded-full hover:bg-gray-200 text-gray-500 grid place-items-center' onClick={handleNextPage} disabled={currentPage === totalPages}><MdArrowForwardIos /></button>
+          </div>
+        </div>
+      </div>
       <div className="inline-block min-w-full">
         <div className="overflow-hidden drop-shadow-md rounded-lg border border-gray-300">
           <table className="min-w-full bg-gray-100">
@@ -70,7 +95,7 @@ const CustomTable = ({ headers, data, actions }) => {
             </thead>
             <tbody className="bg-white text-sm">
               {data?.length > 0 ? (
-                data.map((rowData, idx) => (
+                data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((rowData, idx) => (
                   <tr className="border-b" key={idx}>
                     {headers?.map((header, index) => (
                       <td className="px-6 py-4 whitespace-nowrap" key={index}>
