@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableTwentySix = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableTwentySix = ({ addresses, address, dateFrom, dateTo, orientation, log
 
     fetchTableTwentySixReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -73,6 +76,19 @@ const TableTwentySix = ({ addresses, address, dateFrom, dateTo, orientation, log
                     </tr>
                   ))
                 }
+                <tr>
+                  <td className='whitespace-nowrap'>Overall Total</td>
+                  <td>{totals.nonMigrantsensoryMale}</td>
+                  <td>{totals.migrantsensoryMale}</td>
+                  <td>{totals.transientsensoryMale}</td>
+                  <td>{totals.nonMigrantphysicalMale}</td>
+                  <td>{totals.migrantphysicalMale}</td>
+                  <td>{totals.transientphysicalMale}</td>
+                  <td>{totals.nonMigrantmentalMale}</td>
+                  <td>{totals.migrantmentalMale}</td>
+                  <td>{totals.transientmentalMale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -126,6 +142,18 @@ const TableTwentySix = ({ addresses, address, dateFrom, dateTo, orientation, log
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantsensoryFemale}</td>
+                  <td>{totals.migrantsensoryFemale}</td>
+                  <td>{totals.transientsensoryFemale}</td>
+                  <td>{totals.nonMigrantphysicalFemale}</td>
+                  <td>{totals.migrantphysicalFemale}</td>
+                  <td>{totals.transientphysicalFemale}</td>
+                  <td>{totals.nonMigrantmentalFemale}</td>
+                  <td>{totals.migrantmentalFemale}</td>
+                  <td>{totals.transientmentalFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableEleven = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableEleven = ({ addresses, address, dateFrom, dateTo, orientation, logo, 
 
     fetchTableElevenReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -85,6 +88,25 @@ const TableEleven = ({ addresses, address, dateFrom, dateTo, orientation, logo, 
                     </tr>
                   ))
                 }
+                <tr>
+                  <td className='w-[80px]'>Overall Total</td>
+                  <td>{totals.nonMigrantemploymentMale}</td>
+                  <td>{totals.migrantemploymentMale}</td>
+                  <td>{totals.transientemploymentMale}</td>
+                  <td>{totals.nonMigrantbusinessMale}</td>
+                  <td>{totals.migrantbusinessMale}</td>
+                  <td>{totals.transientbusinessMale}</td>
+                  <td>{totals.nonMigrantremittanceMale}</td>
+                  <td>{totals.migrantremittanceMale}</td>
+                  <td>{totals.transientremittanceMale}</td>
+                  <td>{totals.nonMigrantinvestmentsMale}</td>
+                  <td>{totals.migrantinvestmentsMale}</td>
+                  <td>{totals.transientinvestmentsMale}</td>
+                  <td>{totals.nonMigrantothersMale}</td>
+                  <td>{totals.migrantothersMale}</td>
+                  <td>{totals.transientothersMale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -150,6 +172,24 @@ const TableEleven = ({ addresses, address, dateFrom, dateTo, orientation, logo, 
                     </tr>
                   ))
                 }
+                <tr>
+                  <td className='w-[80px]'>Overall Total</td>
+                  <td>{totals.nonMigrantemploymentFemale}</td>
+                  <td>{totals.migrantemploymentFemale}</td>
+                  <td>{totals.transientemploymentFemale}</td>
+                  <td>{totals.nonMigrantbusinessFemale}</td>
+                  <td>{totals.migrantbusinessFemale}</td>
+                  <td>{totals.transientbusinessFemale}</td>
+                  <td>{totals.nonMigrantremittanceFemale}</td>
+                  <td>{totals.migrantremittanceFemale}</td>
+                  <td>{totals.transientremittanceFemale}</td>
+                  <td>{totals.nonMigrantinvestmentsFemale}</td>
+                  <td>{totals.migrantinvestmentsFemale}</td>
+                  <td>{totals.transientinvestmentsFemale}</td>
+                  <td>{totals.nonMigrantothersFemale}</td>
+                  <td>{totals.migrantothersFemale}</td>
+                  <td>{totals.transientothersFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>

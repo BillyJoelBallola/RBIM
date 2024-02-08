@@ -257,11 +257,32 @@ export const updateSurveyForm = async ({ household, surveyForm, questionsAndResp
   }
 }
 
+const updateSurveyFormStatus = async (status, id) => {
+  try {
+    const updateResponse = await new Promise(( resolve, reject ) => {
+      db.query('UPDATE survey_form SET status = ? WHERE id = ?', 
+      [status, id],
+      ((error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      }))
+    })
+
+    return updateResponse && updateResponse.affectedRows > 0 ? updateResponse.affectedRows : null
+  } catch (error) {
+    throw error
+  }
+}
+
 export const surveyFormModel = {
   getAllSurvey,
   addSurveyForm,
   getSurveyFormById,
   updateSurveyForm,
   getAllIndividual,
-  updateIndividualImage
+  updateIndividualImage,
+  updateSurveyFormStatus
 } 

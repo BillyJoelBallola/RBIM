@@ -10,15 +10,19 @@ import axios from 'axios'
 const Announcements = () => {
   const { id } = useParams();
   const [announcementData, setAnnouncementData] = useState([])
+  const [recentAnnouncementData, setRecentAnnouncementData] = useState([])
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null)
   const [visible, setVisible] = useState(false)
-  const [displayCount, setDisplayCount] = useState(5)
+  const [displayCount, setDisplayCount] = useState(6)
+  const [activeTab, setActiveTab] = useState(2)
 
   useEffect(() => {
     const fetchEventsAndPrograms = async () => {
       const { data } = await axios.get('/api/activities/announcements')
       if(data.success){
+        const recent = data.data.filter(item => new Date() < new Date(item.date))
         setAnnouncementData(data.data)
+        setRecentAnnouncementData(recent)
       }
     }
 
@@ -52,27 +56,47 @@ const Announcements = () => {
         {
           id ? <ViewAnnouncement /> : 
           <div className='grid gap-4'>
-            <p className='text-sm text-gray-500'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias dicta veritatis atque? Nesciunt accusantium, harum maxime minus earum quod adipisci.</p>
+            <p className='text-sm text-gray-600'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias dicta veritatis atque? Nesciunt accusantium, harum maxime minus earum quod adipisci.</p>
             <div className='flex gap-2'>
-              <button className='border border-gray-500 rounded-md py-1 px-4 text-sm bg-gray-500 text-white'>ALL</button>
-              <button className='border border-gray-500 rounded-md py-1 px-4 text-sm text-gray-600'>RECENT</button>
+            <button className={`border border-gray-500 rounded-md py-1 px-4 text-sm ${activeTab === 1 ? 'text-white bg-gray-500' : 'bg-transparent text-gray-500'}`} onClick={() => setActiveTab(1)}>ALL</button>
+              <button className={`border border-gray-500 rounded-md py-1 px-4 text-sm ${activeTab === 2 ? 'text-white bg-gray-500' : 'bg-transparent text-gray-500'}`} onClick={() => setActiveTab(2)}>RECENT</button>
             </div>
-            <div className='grid md:grid-cols-2 gap-4'>
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4'>
               {
-                announcementData &&
-                announcementData.length > 0 ?
-                <Announcement 
+                activeTab === 1 ?
+                announcementData?.length > 0 
+                ? <Announcement 
                   announcements={announcementData} 
                   display={displayCount} 
                   setSelectedAnnouncement={setSelectedAnnouncement}
                   setVisible={setVisible}
                 />
                 : <div className='pt-4'>No announcement found.</div>
+                : <></>
               }
               {
-                announcementData &&
-                announcementData.length > 5 &&
-                <button className='text-right underline text-gray-500 text-sm' onClick={() => setDisplayCount(current => current + 5)}>view more</button>
+                activeTab === 2 ?
+                recentAnnouncementData?.length > 0 
+                ? <Announcement 
+                  announcements={recentAnnouncementData} 
+                  display={displayCount} 
+                  setSelectedAnnouncement={setSelectedAnnouncement}
+                  setVisible={setVisible}
+                />
+                : <div className='pt-4'>No recent announcement found.</div>
+                : <></>
+              }
+              {
+                activeTab === 1
+                ? announcementData?.length > 6 &&
+                <button className='text-right underline text-gray-500 text-sm' onClick={() => setDisplayCount(current => current + 6)}>view more</button>
+                : <></>
+              }
+              {
+                activeTab === 2
+                ? recentAnnouncementData?.length > 6 &&
+                <button className='text-right underline text-gray-500 text-sm' onClick={() => setDisplayCount(current => current + 6)}>view more</button>
+                : <></>
               }
             </div>
           </div>

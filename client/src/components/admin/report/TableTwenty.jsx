@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableTwenty = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableTwenty = ({ addresses, address, dateFrom, dateTo, orientation, logo, 
 
     fetchTableTwentyReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -60,6 +63,15 @@ const TableTwenty = ({ addresses, address, dateFrom, dateTo, orientation, logo, 
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantgoverment}</td>
+                  <td>{totals.nonMigrantrhu}</td>
+                  <td>{totals.nonMigranthealthStation}</td>
+                  <td>{totals.nonMigrantprivate}</td>
+                  <td>{totals.nonMigrantpharmacy}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -101,6 +113,14 @@ const TableTwenty = ({ addresses, address, dateFrom, dateTo, orientation, logo, 
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.migrantgoverment}</td>
+                  <td>{totals.migrantrhu}</td>
+                  <td>{totals.migranthealthStation}</td>
+                  <td>{totals.migrantprivate}</td>
+                  <td>{totals.migrantpharmacy}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -142,6 +162,14 @@ const TableTwenty = ({ addresses, address, dateFrom, dateTo, orientation, logo, 
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.transientgoverment}</td>
+                  <td>{totals.transientrhu}</td>
+                  <td>{totals.transienthealthStation}</td>
+                  <td>{totals.transientprivate}</td>
+                  <td>{totals.transientpharmacy}</td>
+                </tr>
               </tbody>
             </table>
         </div>

@@ -423,7 +423,7 @@ const ActivityForm = () => {
                     <div className='flex flex-col md:flex-row gap-4 md:gap-6'>
                         <div className="form-group w-full">    
                             <label htmlFor="date">Date</label>
-                            <input type="date" name='date' value={activityForm?.date?.toString()?.split("T")[0]} onChange={handleInput}/>
+                            <input type="date" id='date' name='date' value={activityForm?.date?.toString()?.split("T")[0]} onChange={handleInput}/>
                         </div>
                         <div className="form-group w-full">    
                             <label htmlFor="type">Type</label>
@@ -448,6 +448,7 @@ const ActivityForm = () => {
                         {
                             id && !editContent ?
                             <div 
+                                id='content'
                                 className='tiptap border border-gray-500 p-4 rounded-lg overflow-hidden' 
                                 dangerouslySetInnerHTML={{ __html: activityForm.content }}
                             />

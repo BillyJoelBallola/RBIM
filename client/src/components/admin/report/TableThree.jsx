@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableThree = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableThree = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
 
     fetchTableThreeReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -64,6 +67,17 @@ const TableThree = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantsingle}</td>
+                  <td>{totals.nonMigrantmarried}</td>
+                  <td>{totals.nonMigrantlivingIn}</td>
+                  <td>{totals.nonMigrantwidowed}</td>
+                  <td>{totals.nonMigrantseparated}</td>
+                  <td>{totals.nonMigrantdivorced}</td>
+                  <td>{totals.nonMigrantunknown}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -99,16 +113,26 @@ const TableThree = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                   reportData?.map((data, idx) => (
                     <tr key={idx}>
                       <td>{data.age}</td>
-                      <td>{data.nonMigrantsingle}</td>
-                      <td>{data.nonMigrantmarried}</td>
-                      <td>{data.nonMigrantlivingIn}</td>
-                      <td>{data.nonMigrantwidowed}</td>
-                      <td>{data.nonMigrantseparated}</td>
-                      <td>{data.nonMigrantdivorced}</td>
-                      <td>{data.nonMigrantunknown}</td>
+                      <td>{data.migrantsingle}</td>
+                      <td>{data.migrantmarried}</td>
+                      <td>{data.migrantlivingIn}</td>
+                      <td>{data.migrantwidowed}</td>
+                      <td>{data.migrantseparated}</td>
+                      <td>{data.migrantdivorced}</td>
+                      <td>{data.migrantunknown}</td>
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.migrantsingle}</td>
+                  <td>{totals.migrantmarried}</td>
+                  <td>{totals.migrantlivingIn}</td>
+                  <td>{totals.migrantwidowed}</td>
+                  <td>{totals.migrantseparated}</td>
+                  <td>{totals.migrantdivorced}</td>
+                  <td>{totals.migrantunknown}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -154,6 +178,16 @@ const TableThree = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.transientsingle}</td>
+                  <td>{totals.transientmarried}</td>
+                  <td>{totals.transientlivingIn}</td>
+                  <td>{totals.transientwidowed}</td>
+                  <td>{totals.transientseparated}</td>
+                  <td>{totals.transientdivorced}</td>
+                  <td>{totals.transientunknown}</td>
+                </tr>
               </tbody>
             </table>
         </div>

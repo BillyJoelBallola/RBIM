@@ -19,6 +19,20 @@ const ViewEventsAndProgram = () => {
     fetchEventsAndPrograms()
   }, [])
 
+  const type = (data) => {
+    let returnType = ''
+    const type = Number(data)
+    if(type === 1){
+      returnType = 'Event'
+    }else if(type === 2){
+      returnType = 'Program'
+    }else if(type === 3){
+      returnType = 'Announcement'
+    }
+
+    return returnType
+  }
+
   return (
     <div>
       <div className='h-[250px] md:h-[350px] bg-gray-300 mb-3 flex items-center justify-center rounded-lg overflow-hidden'>
@@ -32,7 +46,7 @@ const ViewEventsAndProgram = () => {
       </div>
       <h2 className='font-semibold text-lg'>{eventsAndPrograms.title}</h2>
       <div className='flex flex-col text-gray-600 text-sm mb-6'>
-        <span>{eventsAndPrograms.address_barangay} • {moment(eventsAndPrograms.date).format("ll")}</span>
+        <span>{eventsAndPrograms.address_barangay} • {moment(eventsAndPrograms.date).format("ll")} • {type(eventsAndPrograms.type)}</span>
         <span className='text-xs'>{moment(eventsAndPrograms.date_posted).startOf('hour').fromNow()}</span>
       </div>
       <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: eventsAndPrograms.content }} />

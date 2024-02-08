@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableTen = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableTen = ({ addresses, address, dateFrom, dateTo, orientation, logo, rep
 
     fetchTableTenReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -91,6 +94,28 @@ const TableTen = ({ addresses, address, dateFrom, dateTo, orientation, logo, rep
                     </tr>
                   ))
                 }
+                <tr>
+                  <td className='w-[100px]'>Overall total</td>
+                  <td>{totals.nonMigrant_5KMale}</td>
+                  <td>{totals.nonMigrant_9KMale}</td>
+                  <td>{totals.nonMigrant_25KMale}</td>
+                  <td>{totals.migrant_5KMale}</td>
+                  <td>{totals.migrant_9KMale}</td>
+                  <td>{totals.migrant_25KMale}</td>
+                  <td>{totals.transient_5KMale}</td>
+                  <td>{totals.transient_9KMale}</td>
+                  <td>{totals.transient_25KMale}</td>
+                  <td>{totals.nonMigrant_14KMale}</td>
+                  <td>{totals.migrant_14KMale}</td>
+                  <td>{totals.transient_14KMale}</td>
+                  <td>{totals.nonMigrant_19KMale}</td>
+                  <td>{totals.migrant_19KMale}</td>
+                  <td>{totals.transient_19KMale}</td>
+                  <td>{totals.nonMigrant_24KMale}</td>
+                  <td>{totals.migrant_24KMale}</td>
+                  <td>{totals.transient_24KMale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -141,27 +166,48 @@ const TableTen = ({ addresses, address, dateFrom, dateTo, orientation, logo, rep
                   reportData?.map((data, idx) => (
                     <tr key={idx}>
                       <td className='w-[100px]'>{data.age}</td>
-                      <td>{data.nonMigrant_5KMale}</td>
-                      <td>{data.nonMigrant_9KMale}</td>
-                      <td>{data.nonMigrant_25KMale}</td>
-                      <td>{data.migrant_5KMale}</td>
-                      <td>{data.migrant_9KMale}</td>
-                      <td>{data.migrant_25KMale}</td>
-                      <td>{data.transient_5KMale}</td>
-                      <td>{data.transient_9KMale}</td>
-                      <td>{data.transient_25KMale}</td>
-                      <td>{data.nonMigrant_14KMale}</td>
-                      <td>{data.migrant_14KMale}</td>
-                      <td>{data.transient_14KMale}</td>
-                      <td>{data.nonMigrant_19KMale}</td>
-                      <td>{data.migrant_19KMale}</td>
-                      <td>{data.transient_19KMale}</td>
-                      <td>{data.nonMigrant_24KMale}</td>
-                      <td>{data.migrant_24KMale}</td>
-                      <td>{data.transient_24KMale}</td>
+                      <td>{data.nonMigrant_5KFemale}</td>
+                      <td>{data.nonMigrant_9KFemale}</td>
+                      <td>{data.nonMigrant_25KFemale}</td>
+                      <td>{data.migrant_5KFemale}</td>
+                      <td>{data.migrant_9KFemale}</td>
+                      <td>{data.migrant_25KFemale}</td>
+                      <td>{data.transient_5KFemale}</td>
+                      <td>{data.transient_9KFemale}</td>
+                      <td>{data.transient_25KFemale}</td>
+                      <td>{data.nonMigrant_14KFemale}</td>
+                      <td>{data.migrant_14KFemale}</td>
+                      <td>{data.transient_14KFemale}</td>
+                      <td>{data.nonMigrant_19KFemale}</td>
+                      <td>{data.migrant_19KFemale}</td>
+                      <td>{data.transient_19KFemale}</td>
+                      <td>{data.nonMigrant_24KFemale}</td>
+                      <td>{data.migrant_24KFemale}</td>
+                      <td>{data.transient_24KFemale}</td>
                     </tr>
                   ))
                 }
+                <tr>
+                  <td className='w-[100px]'>Overall total</td>
+                  <td>{totals.nonMigrant_5KFemale}</td>
+                  <td>{totals.nonMigrant_9KFemale}</td>
+                  <td>{totals.nonMigrant_25KFemale}</td>
+                  <td>{totals.migrant_5KFemale}</td>
+                  <td>{totals.migrant_9KFemale}</td>
+                  <td>{totals.migrant_25KFemale}</td>
+                  <td>{totals.transient_5KFemale}</td>
+                  <td>{totals.transient_9KFemale}</td>
+                  <td>{totals.transient_25KFemale}</td>
+                  <td>{totals.nonMigrant_14KFemale}</td>
+                  <td>{totals.migrant_14KFemale}</td>
+                  <td>{totals.transient_14KFemale}</td>
+                  <td>{totals.nonMigrant_19KFemale}</td>
+                  <td>{totals.migrant_19KFemale}</td>
+                  <td>{totals.transient_19KFemale}</td>
+                  <td>{totals.nonMigrant_24KFemale}</td>
+                  <td>{totals.migrant_24KFemale}</td>
+                  <td>{totals.transient_24KFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>

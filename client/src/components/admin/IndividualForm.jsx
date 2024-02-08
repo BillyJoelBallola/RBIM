@@ -1,15 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { NavigationContext } from '../../context/NavigationContext';
 import { useNavigate, useParams } from 'react-router-dom'
 import CustomDialog from '../admin/CustomDialog'
 import Divider from '../Divider';
 import Header from './Header'
 import axios from 'axios';
 
+import PrintableIndividualForm from './PrintableIndividualForm';
+
 import { Toast } from 'primereact/toast'
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { LuImagePlus } from "react-icons/lu"
 import { IoClose } from "react-icons/io5"
-import PrintableIndividualForm from './PrintableIndividualForm';
 
 const IndividualForm = () => {
     const id = useParams().id
@@ -18,6 +20,7 @@ const IndividualForm = () => {
     const [preview, setPreview] = useState(false)
     const [removeVisible, setRemoveVisible] = useState(false)
     const [individual, setIndividual] = useState({})
+    const { setIsNavigateOpen } = useContext(NavigationContext)
 
     const showToast = (severity, summary, detail) => {
         return toast.current.show({ severity: severity, summary: summary, detail: detail })
@@ -113,7 +116,13 @@ const IndividualForm = () => {
                         className='text-3xl' 
                         onClick={() => navigate('/rbim/citizen-information')}
                     ><HiOutlineArrowNarrowLeft /></button>
-                    <button className='bg-gray-600 hover:bg-gray-500 duration-150 text-white py-2 px-4 rounded-md' onClick={() => setPreview(true)}>Download</button>
+                    <button 
+                        className='bg-gray-600 hover:bg-gray-500 duration-150 text-white py-2 px-4 rounded-md' 
+                        onClick={() => {
+                            setPreview(true)
+                            setIsNavigateOpen(true)
+                        }}
+                    >Download</button>
                 </div>
                 <div className='grid gap-6 pt-4 pb-8'>
                     <div className="form-group">

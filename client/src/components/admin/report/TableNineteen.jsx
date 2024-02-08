@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableNineteen = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableNineteen = ({ addresses, address, dateFrom, dateTo, orientation, logo
 
     fetchTableNineteenReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -70,6 +73,20 @@ const TableNineteen = ({ addresses, address, dateFrom, dateTo, orientation, logo
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantfemaleSterilization}</td>
+                  <td>{totals.nonMigrantmaleSterilization}</td>
+                  <td>{totals.nonMigrantiud}</td>
+                  <td>{totals.nonMigrantinjectibles}</td>
+                  <td>{totals.nonMigrantimplants}</td>
+                  <td>{totals.nonMigrantpill}</td>
+                  <td>{totals.nonMigrantcondom}</td>
+                  <td>{totals.nonMigrantmodern}</td>
+                  <td>{totals.nonMigrantlam}</td>
+                  <td>{totals.nonMigranttraditional}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -121,6 +138,19 @@ const TableNineteen = ({ addresses, address, dateFrom, dateTo, orientation, logo
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.migrantfemaleSterilization}</td>
+                  <td>{totals.migrantmaleSterilization}</td>
+                  <td>{totals.migrantiud}</td>
+                  <td>{totals.migrantinjectibles}</td>
+                  <td>{totals.migrantimplants}</td>
+                  <td>{totals.migrantpill}</td>
+                  <td>{totals.migrantcondom}</td>
+                  <td>{totals.migrantmodern}</td>
+                  <td>{totals.migrantlam}</td>
+                  <td>{totals.migranttraditional}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -172,6 +202,19 @@ const TableNineteen = ({ addresses, address, dateFrom, dateTo, orientation, logo
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.transientfemaleSterilization}</td>
+                  <td>{totals.transientmaleSterilization}</td>
+                  <td>{totals.transientiud}</td>
+                  <td>{totals.transientinjectibles}</td>
+                  <td>{totals.transientimplants}</td>
+                  <td>{totals.transientpill}</td>
+                  <td>{totals.transientcondom}</td>
+                  <td>{totals.transientmodern}</td>
+                  <td>{totals.transientlam}</td>
+                  <td>{totals.transienttraditional}</td>
+                </tr>
               </tbody>
             </table>
         </div>

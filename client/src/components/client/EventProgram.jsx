@@ -5,6 +5,21 @@ import { Link } from 'react-router-dom'
 import { truncate } from '../../helper/truncate'
 
 const EventProgram = ({ eventsAndPrograms, display }) => {
+
+  const type = (data) => {
+    let returnType = ''
+    const type = Number(data)
+    if(type === 1){
+      returnType = 'Event'
+    }else if(type === 2){
+      returnType = 'Program'
+    }else if(type === 3){
+      returnType = 'Announcement'
+    }
+
+    return returnType
+  }
+
   return (
     <>
       {
@@ -20,7 +35,7 @@ const EventProgram = ({ eventsAndPrograms, display }) => {
               <h4 className='font-semibold'>{truncate(eventProg.title, 50)}</h4>
               <div className='text-sm text-gray-500 tiptap' dangerouslySetInnerHTML={{ __html: truncate(eventProg.content, 150) }} />
               <div className='flex items-center text-gray-400 gap-2 text-xs mt-1'>
-                <span>{eventProg.address_barangay} • {moment(eventProg.date_posted).startOf('hour').fromNow()}</span>
+                <span>{eventProg.address_barangay} • {moment(eventProg.date_posted).startOf('hour').fromNow()} • {type(eventProg.type)}</span>
               </div>
             </Link>
           </div>

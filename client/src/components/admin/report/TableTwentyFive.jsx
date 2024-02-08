@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableTwentyFive = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableTwentyFive = ({ addresses, address, dateFrom, dateTo, orientation, lo
 
     fetchTableTwentyFiveReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -97,6 +100,31 @@ const TableTwentyFive = ({ addresses, address, dateFrom, dateTo, orientation, lo
                     </tr>
                   ))
                 }
+                <tr>
+                  <td className='whitespace-nowrap'>Overall Total</td>
+                  <td>{totals.nonMigranthospitalMale}</td>
+                  <td>{totals.migranthospitalMale}</td>
+                  <td>{totals.transienthospitalMale}</td>
+                  <td>{totals.nonMigrantrhuMale}</td>
+                  <td>{totals.migrantrhuMale}</td>
+                  <td>{totals.transientrhuMale}</td>
+                  <td>{totals.nonMigranthealthStationMale}</td>
+                  <td>{totals.migranthealthStationMale}</td>
+                  <td>{totals.transienthealthStationMale}</td>
+                  <td>{totals.nonMigrantprivateHospitalMale}</td>
+                  <td>{totals.migrantprivateHospitalMale}</td>
+                  <td>{totals.transientprivateHospitalMale}</td>
+                  <td>{totals.nonMigrantprivateClinicMale}</td>
+                  <td>{totals.migrantprivateClinicMale}</td>
+                  <td>{totals.transientprivateClinicMale}</td>
+                  <td>{totals.nonMigrantpharmacyMale}</td>
+                  <td>{totals.migrantpharmacyMale}</td>
+                  <td>{totals.transientpharmacyMale}</td>
+                  <td>{totals.nonMigranthilotMale}</td>
+                  <td>{totals.migranthilotMale}</td>
+                  <td>{totals.transienthilotMale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -174,6 +202,30 @@ const TableTwentyFive = ({ addresses, address, dateFrom, dateTo, orientation, lo
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigranthospitalFemale}</td>
+                  <td>{totals.migranthospitalFemale}</td>
+                  <td>{totals.transienthospitalFemale}</td>
+                  <td>{totals.nonMigrantrhuFemale}</td>
+                  <td>{totals.migrantrhuFemale}</td>
+                  <td>{totals.transientrhuFemale}</td>
+                  <td>{totals.nonMigranthealthStationFemale}</td>
+                  <td>{totals.migranthealthStationFemale}</td>
+                  <td>{totals.transienthealthStationFemale}</td>
+                  <td>{totals.nonMigrantprivateHospitalFemale}</td>
+                  <td>{totals.migrantprivateHospitalFemale}</td>
+                  <td>{totals.transientprivateHospitalFemale}</td>
+                  <td>{totals.nonMigrantprivateClinicFemale}</td>
+                  <td>{totals.migrantprivateClinicFemale}</td>
+                  <td>{totals.transientprivateClinicFemale}</td>
+                  <td>{totals.nonMigrantpharmacyFemale}</td>
+                  <td>{totals.migrantpharmacyFemale}</td>
+                  <td>{totals.transientpharmacyFemale}</td>
+                  <td>{totals.nonMigranthilotFemale}</td>
+                  <td>{totals.migranthilotFemale}</td>
+                  <td>{totals.transienthilotFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>

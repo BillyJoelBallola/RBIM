@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableEight = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableEight = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
 
     fetchTableEightReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -73,6 +76,19 @@ const TableEight = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantpublicMale}</td>
+                  <td>{totals.nonMigrantprivateMale}</td>
+                  <td>{totals.nonMigrantnoneMale}</td>
+                  <td>{totals.migrantpublicMale}</td>
+                  <td>{totals.migrantprivateMale}</td>
+                  <td>{totals.migrantnoneMale}</td>
+                  <td>{totals.transientpublicMale}</td>
+                  <td>{totals.transientprivateMale}</td>
+                  <td>{totals.transientnoneMale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -126,6 +142,18 @@ const TableEight = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantpublicFemale}</td>
+                  <td>{totals.nonMigrantprivateFemale}</td>
+                  <td>{totals.nonMigrantnoneFemale}</td>
+                  <td>{totals.migrantpublicFemale}</td>
+                  <td>{totals.migrantprivateFemale}</td>
+                  <td>{totals.migrantnoneFemale}</td>
+                  <td>{totals.transientpublicFemale}</td>
+                  <td>{totals.transientprivateFemale}</td>
+                  <td>{totals.transientnoneFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>

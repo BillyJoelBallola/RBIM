@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableSixteen = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableSixteen = ({ addresses, address, dateFrom, dateTo, orientation, logo,
 
     fetchTableSixteenReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -70,6 +73,20 @@ const TableSixteen = ({ addresses, address, dateFrom, dateTo, orientation, logo,
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantone}</td>
+                  <td>{totals.nonMigranttwo}</td>
+                  <td>{totals.nonMigrantthree}</td>
+                  <td>{totals.nonMigrantfour}</td>
+                  <td>{totals.nonMigrantfive}</td>
+                  <td>{totals.nonMigrantsix}</td>
+                  <td>{totals.nonMigrantseven}</td>
+                  <td>{totals.nonMigranteight}</td>
+                  <td>{totals.nonMigrantnine}</td>
+                  <td>{totals.nonMigrantten}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -121,6 +138,19 @@ const TableSixteen = ({ addresses, address, dateFrom, dateTo, orientation, logo,
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.migrantone}</td>
+                  <td>{totals.migranttwo}</td>
+                  <td>{totals.migrantthree}</td>
+                  <td>{totals.migrantfour}</td>
+                  <td>{totals.migrantfive}</td>
+                  <td>{totals.migrantsix}</td>
+                  <td>{totals.migrantseven}</td>
+                  <td>{totals.migranteight}</td>
+                  <td>{totals.migrantnine}</td>
+                  <td>{totals.migrantten}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -172,6 +202,19 @@ const TableSixteen = ({ addresses, address, dateFrom, dateTo, orientation, logo,
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.transientone}</td>
+                  <td>{totals.transienttwo}</td>
+                  <td>{totals.transientthree}</td>
+                  <td>{totals.transientfour}</td>
+                  <td>{totals.transientfive}</td>
+                  <td>{totals.transientsix}</td>
+                  <td>{totals.transientseven}</td>
+                  <td>{totals.transienteight}</td>
+                  <td>{totals.transientnine}</td>
+                  <td>{totals.transientten}</td>
+                </tr>
               </tbody>
             </table>
         </div>

@@ -73,3 +73,14 @@ export const removeIndividualImage = async (req, res) => {
       return res.json({ success: false, message: 'Internal Server Error'});
   }
 }
+
+export const updateSurveyFormStatus = async (req, res) => {
+  try {
+      const surveyForm = await req.body
+      const { status, id } = surveyForm
+      await surveyFormModel.updateSurveyFormStatus(status, id);
+      return res.json({ success: true, message: 'Status updated successfully' });
+  } catch (error) {
+      return res.json({ success: false, message: 'Internal Server Error'});
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableTwelve = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableTwelve = ({ addresses, address, dateFrom, dateTo, orientation, logo, 
 
     fetchTableTwelveReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -91,6 +94,28 @@ const TableTwelve = ({ addresses, address, dateFrom, dateTo, orientation, logo, 
                     </tr>
                   ))
                 }
+                <tr>
+                  <td className='w-[80px]'>Overall total</td>
+                  <td>{totals.nonMigrantpermanentMale}</td>
+                  <td>{totals.migrantpermanentMale}</td>
+                  <td>{totals.transientpermanentMale}</td>
+                  <td>{totals.nonMigrantcasualMale}</td>
+                  <td>{totals.migrantcasualMale}</td>
+                  <td>{totals.transientcasualMale}</td>
+                  <td>{totals.nonMigrantcontractualMale}</td>
+                  <td>{totals.migrantcontractualMale}</td>
+                  <td>{totals.transientcontractualMale}</td>
+                  <td>{totals.nonMigrantindividualMale}</td>
+                  <td>{totals.migrantindividualMale}</td>
+                  <td>{totals.transientindividualMale}</td>
+                  <td>{totals.nonMigrantsharedMale}</td>
+                  <td>{totals.migrantsharedMale}</td>
+                  <td>{totals.transientsharedMale}</td>
+                  <td>{totals.nonMigrantcorporateMale}</td>
+                  <td>{totals.migrantcorporateMale}</td>
+                  <td>{totals.transientcorporateMale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -162,6 +187,27 @@ const TableTwelve = ({ addresses, address, dateFrom, dateTo, orientation, logo, 
                     </tr>
                   ))
                 }
+                <tr>
+                  <td className='w-[80px]'>Overall total</td>
+                  <td>{totals.nonMigrantpermanentFemale}</td>
+                  <td>{totals.migrantpermanentFemale}</td>
+                  <td>{totals.transientpermanentFemale}</td>
+                  <td>{totals.nonMigrantcasualFemale}</td>
+                  <td>{totals.migrantcasualFemale}</td>
+                  <td>{totals.transientcasualFemale}</td>
+                  <td>{totals.nonMigrantcontractualFemale}</td>
+                  <td>{totals.migrantcontractualFemale}</td>
+                  <td>{totals.transientcontractualFemale}</td>
+                  <td>{totals.nonMigrantindividualFemale}</td>
+                  <td>{totals.migrantindividualFemale}</td>
+                  <td>{totals.transientindividualFemale}</td>
+                  <td>{totals.nonMigrantsharedFemale}</td>
+                  <td>{totals.migrantsharedFemale}</td>
+                  <td>{totals.transientsharedFemale}</td>
+                  <td>{totals.nonMigrantcorporateFemale}</td>
+                  <td>{totals.migrantcorporateFemale}</td>
+                  <td>{totals.transientcorporateFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>

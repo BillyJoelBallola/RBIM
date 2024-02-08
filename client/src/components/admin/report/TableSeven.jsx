@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableSeven = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableSeven = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
 
     fetchTableSevenReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -122,6 +125,38 @@ const TableSeven = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantnoEducationMale}</td>
+                  <td>{totals.nonMigrantnoEducationFemale}</td>
+                  <td>{totals.nonMigrantpreSchoolMale}</td>
+                  <td>{totals.nonMigrantpreSchoolFemale}</td>
+                  <td>{totals.nonMigrantelementaryMale}</td>
+                  <td>{totals.nonMigrantelementaryFemale}</td>
+                  <td>{totals.nonMigrantelementaryGraduateMale}</td>
+                  <td>{totals.nonMigrantelementaryGraduateFemale}</td>
+                  <td>{totals.nonMigranthighSchoolMale}</td>
+                  <td>{totals.nonMigranthighSchoolFemale}</td>
+                  <td>{totals.nonMigranthighSchoolGraduateMale}</td>
+                  <td>{totals.nonMigranthighSchoolGraduateFemale}</td>
+                  <td>{totals.nonMigrantjuniorHighSchoolMale}</td>
+                  <td>{totals.nonMigrantjuniorHighSchoolFemale}</td>
+                  <td>{totals.nonMigrantjuniorHighSchoolGraduateMale}</td>
+                  <td>{totals.nonMigrantjuniorHighSchoolGraduateFemale}</td>
+                  <td>{totals.nonMigrantseniorHighSchoolMale}</td>
+                  <td>{totals.nonMigrantseniorHighSchoolFemale}</td>
+                  <td>{totals.nonMigrantseniorHighSchoolGraduateMale}</td>
+                  <td>{totals.nonMigrantseniorHighSchoolGraduateFemale}</td>
+                  <td>{totals.nonMigrantvocationalMale}</td>
+                  <td>{totals.nonMigrantvocationalFemale}</td>
+                  <td>{totals.nonMigrantcollegeMale}</td>
+                  <td>{totals.nonMigrantcollegeFemale}</td>
+                  <td>{totals.nonMigrantcollegeGraduateMale}</td>
+                  <td>{totals.nonMigrantcollegeGraduateFemale}</td>
+                  <td>{totals.nonMigrantpostGraduateMale}</td>
+                  <td>{totals.nonMigrantpostGraduateFemale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -224,6 +259,37 @@ const TableSeven = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.migrantnoEducationMale}</td>
+                  <td>{totals.migrantnoEducationFemale}</td>
+                  <td>{totals.migrantpreSchoolMale}</td>
+                  <td>{totals.migrantpreSchoolFemale}</td>
+                  <td>{totals.migrantelementaryMale}</td>
+                  <td>{totals.migrantelementaryFemale}</td>
+                  <td>{totals.migrantelementaryGraduateMale}</td>
+                  <td>{totals.migrantelementaryGraduateFemale}</td>
+                  <td>{totals.migranthighSchoolMale}</td>
+                  <td>{totals.migranthighSchoolFemale}</td>
+                  <td>{totals.migranthighSchoolGraduateMale}</td>
+                  <td>{totals.migranthighSchoolGraduateFemale}</td>
+                  <td>{totals.migrantjuniorHighSchoolMale}</td>
+                  <td>{totals.migrantjuniorHighSchoolFemale}</td>
+                  <td>{totals.migrantjuniorHighSchoolGraduateMale}</td>
+                  <td>{totals.migrantjuniorHighSchoolGraduateFemale}</td>
+                  <td>{totals.migrantseniorHighSchoolMale}</td>
+                  <td>{totals.migrantseniorHighSchoolFemale}</td>
+                  <td>{totals.migrantseniorHighSchoolGraduateMale}</td>
+                  <td>{totals.migrantseniorHighSchoolGraduateFemale}</td>
+                  <td>{totals.migrantvocationalMale}</td>
+                  <td>{totals.migrantvocationalFemale}</td>
+                  <td>{totals.migrantcollegeMale}</td>
+                  <td>{totals.migrantcollegeFemale}</td>
+                  <td>{totals.migrantcollegeGraduateMale}</td>
+                  <td>{totals.migrantcollegeGraduateFemale}</td>
+                  <td>{totals.migrantpostGraduateMale}</td>
+                  <td>{totals.migrantpostGraduateFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -326,6 +392,37 @@ const TableSeven = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.transientnoEducationMale}</td>
+                  <td>{totals.transientnoEducationFemale}</td>
+                  <td>{totals.transientpreSchoolMale}</td>
+                  <td>{totals.transientpreSchoolFemale}</td>
+                  <td>{totals.transientelementaryMale}</td>
+                  <td>{totals.transientelementaryFemale}</td>
+                  <td>{totals.transientelementaryGraduateMale}</td>
+                  <td>{totals.transientelementaryGraduateFemale}</td>
+                  <td>{totals.transienthighSchoolMale}</td>
+                  <td>{totals.transienthighSchoolFemale}</td>
+                  <td>{totals.transienthighSchoolGraduateMale}</td>
+                  <td>{totals.transienthighSchoolGraduateFemale}</td>
+                  <td>{totals.transientjuniorHighSchoolMale}</td>
+                  <td>{totals.transientjuniorHighSchoolFemale}</td>
+                  <td>{totals.transientjuniorHighSchoolGraduateMale}</td>
+                  <td>{totals.transientjuniorHighSchoolGraduateFemale}</td>
+                  <td>{totals.transientseniorHighSchoolMale}</td>
+                  <td>{totals.transientseniorHighSchoolFemale}</td>
+                  <td>{totals.transientseniorHighSchoolGraduateMale}</td>
+                  <td>{totals.transientseniorHighSchoolGraduateFemale}</td>
+                  <td>{totals.transientvocationalMale}</td>
+                  <td>{totals.transientvocationalFemale}</td>
+                  <td>{totals.transientcollegeMale}</td>
+                  <td>{totals.transientcollegeFemale}</td>
+                  <td>{totals.transientcollegeGraduateMale}</td>
+                  <td>{totals.transientcollegeGraduateFemale}</td>
+                  <td>{totals.transientpostGraduateMale}</td>
+                  <td>{totals.transientpostGraduateFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>

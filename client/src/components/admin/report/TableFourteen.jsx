@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableFourteen = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -17,6 +18,8 @@ const TableFourteen = ({ addresses, address, dateFrom, dateTo, orientation, logo
       fetchTableFourteenReport()
     }
   }, [reportDetails])
+
+  const totals = getSum(reportData)
 
   return (
     <div className={`bg-white py-8 ${orientation}`}>
@@ -48,6 +51,12 @@ const TableFourteen = ({ addresses, address, dateFrom, dateTo, orientation, logo
                   </tr>
                 ))
               }
+              <tr>
+                <td>Overall Total</td>
+                <td>{totals.male}</td>
+                <td>{totals.female}</td>
+                <td>{totals.total}</td>
+              </tr>
             </tbody>
           </table>
       </div>

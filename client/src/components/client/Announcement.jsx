@@ -4,6 +4,21 @@ import moment from 'moment/moment'
 import { truncate } from '../../helper/truncate'
 
 const Announcement = ({ announcements, display, setSelectedAnnouncement, setVisible}) => {
+
+  const type = (data) => {
+    let returnType = ''
+    const type = Number(data)
+    if(type === 1){
+      returnType = 'Event'
+    }else if(type === 2){
+      returnType = 'Program'
+    }else if(type === 3){
+      returnType = 'Announcement'
+    }
+
+    return returnType
+  }
+
   return (
     <>
       {
@@ -20,7 +35,7 @@ const Announcement = ({ announcements, display, setSelectedAnnouncement, setVisi
               <h4 className='font-semibold'>{truncate(announcement.title, 50)}</h4>
               <div className='text-sm text-gray-500 tiptap' dangerouslySetInnerHTML={{ __html: truncate(announcement.content, 100) }} />
               <div className='flex items-center text-gray-400 gap-2 text-xs mt-1'>
-                <span>{announcement.address_barangay} • {moment(announcement.date_posted).startOf('hour').fromNow()}</span>
+                <span>{announcement.address_barangay} • {moment(announcement.date_posted).startOf('hour').fromNow()} • {type(announcement.type)}</span>
               </div>
             </button>
           </div>
