@@ -1,19 +1,47 @@
 import React, { Fragment, useEffect, useState } from 'react'
+import axios from 'axios'
+
 import Header from '../../components/admin/Header'
 import PieMigrant from '../../components/admin/graphs/PieMigrant'
 import PieEmployment from '../../components/admin/graphs/PieEmployment'
-import PieVoter from '../../components/admin/graphs/PieVoter'
+import PieSeniorCitizen from '../../components/admin/graphs/PieSeniorCitizen'
 import LineMigrant from '../../components/admin/graphs/LineMigrant'
 import EventAndProgram from '../../components/admin/EventAndProgram'
 import Announcement from '../../components/admin/Announcement'
-import axios from 'axios'
 
 const Dashboard = () => {
   const [individuals, setIndividuals] = useState([])
+  const [address, setAddress] = useState([])
+  const [selectedAddress, setSelectedAddress] = useState(0)
   const [activities, setActivities] = useState({
     eventsAndPrograms: [],
     announcements: []
   })
+
+  useEffect(() => {
+    const fetchIndividualData = async () => {
+      const { data } = await axios.get('/api/individuals')
+      if(data.success){
+        const response = data?.data
+        setIndividuals(response)
+      }
+    }
+
+    fetchIndividualData()
+  }, [])
+
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      const { data } = await axios.get('/api/address')
+      if(data.success){
+        setAddress(data.data)
+      }
+    }
+
+    if(address.length === 0){
+      fetchAddresses()
+    }
+  }, [address])
 
   useEffect(() => {
     const fetchEventsAndPrograms = async () => {
@@ -27,7 +55,6 @@ const Dashboard = () => {
     fetchEventsAndPrograms()
   }, [])
 
-
   useEffect(() => {
     const fetchEventsAndPrograms = async () => {
       const { data } = await axios.get('/api/activities/announcements')
@@ -39,7 +66,7 @@ const Dashboard = () => {
 
     fetchEventsAndPrograms()
   }, [])
-  
+
   return (
     <>
       <Header pageName={'Dashboard'} />
@@ -50,14 +77,20 @@ const Dashboard = () => {
             <div className='shadow-sm rounded-lg p-5 grid gap-4 border'>
               <div className='flex items-center justify-between'>
                 <span className='text-xl font-bold'>Population Distribution</span>
-                <select>
-                  <option value="">-- select --</option>
+                <select value={selectedAddress} onChange={e => setSelectedAddress(e.target.value)}>
+                  <option value="0">Municipal</option>
+                  {
+                    address.length > 0 &&
+                    address.map(item => (
+                      <option value={item.id} key={item.id}>{item.barangay}</option>
+                    ))
+                  }
                 </select>
               </div>
               <div className='flex flex-wrap gap-8 justify-center'>
-                <PieMigrant />
-                <PieEmployment />
-                <PieVoter />
+                <PieMigrant data={individuals} selectedAddress={selectedAddress}/>
+                <PieEmployment data={individuals} selectedAddress={selectedAddress}/>
+                <PieSeniorCitizen data={individuals} selectedAddress={selectedAddress}/>
               </div>
             </div>
             {/* lines */}
@@ -74,7 +107,7 @@ const Dashboard = () => {
             </div>
             {/* activities */}
             <div className='grid gap-8'>
-              <div className='w-full relative shadow-sm rounded-lg overflow-hidden p-5 grid gap-4 border h-fit'>
+              <div className='relative shadow-sm rounded-lg overflow-hidden p-5 grid gap-4 border h-fit'>
                 <span className='text-xl font-bold'>Recent Announcements</span>
                 <div className='grid gap-4'>
                   {
@@ -89,7 +122,7 @@ const Dashboard = () => {
                   }
                   {
                     activities &&
-                    activities?.announcements?.length > 0 
+                    activities?.announcements?.length > 2
                     ? <div className='absolute h-32 bottom-0 left-0 right-0 bg-gradient-to-t from-white' />
                     : <></>
                   }
@@ -110,7 +143,7 @@ const Dashboard = () => {
                   }
                   {
                      activities &&
-                     activities?.eventsAndPrograms?.length > 0 
+                     activities?.eventsAndPrograms?.length > 2 
                      ? <div className='absolute h-32 bottom-0 left-0 right-0 bg-gradient-to-t from-white' />
                      : <></>
                   }

@@ -16,22 +16,26 @@ const LineMigrant = () => {
                 {
                     label: 'Migrant',
                     data: [65, 59, 80, 81, 56, 55, 40],
-                    fill: false,
-                    borderColor: documentStyle.getPropertyValue('--pink-500'),
+                    fill: true,
+                    borderColor: 'rgba(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     tension: 0.4
                 },
                 {
                     label: 'Non Migrant',
                     data: [28, 48, 40, 19, 86, 27, 90],
-                    fill: false,
-                    borderColor: documentStyle.getPropertyValue('--blue-500'),
+                    fill: true,
+                    borderColor: 'rgba(255, 159, 64)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+
                     tension: 0.4
                 },
                 {
                     label: 'Transient',
                     data: [30, 50, 29, 60, 26, 17, 40],
-                    fill: false,
-                    borderColor: documentStyle.getPropertyValue('--green-500'),
+                    fill: true,
+                    borderColor: 'rgba(54, 162, 235)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     tension: 0.4
                 }
             ]
