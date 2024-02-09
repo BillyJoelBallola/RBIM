@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
 
     fetchTableFortyReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -65,6 +68,16 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.migrantoneMale}</td>
+                  <td>{totals.migranttwoMale}</td>
+                  <td>{totals.migrantthreeMale}</td>
+                  <td>{totals.migrantfourMale}</td>
+                  <td>{totals.migrantsixMale}</td>
+                  <td>{totals.migrantwillNotTansferMale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -81,12 +94,10 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                 <tr>
                   <th>Age</th>
                   <th colSpan={6}>Male</th>
-                  <th>Overall total</th>
                 </tr>
                 <tr>
                   <th></th>
                   <th colSpan={6}>Transients</th>
-                  <th></th>
                 </tr>
                 <tr>
                   <th></th>
@@ -96,7 +107,6 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                   <th>4 Years</th>
                   <th>6 Years above</th>
                   <th>Will not transfer</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -110,10 +120,18 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                       <td>{data.transientfourMale}</td>
                       <td>{data.transientsixMale}</td>
                       <td>{data.transientwillNotTansferMale}</td>
-                      <td>{data.total}</td>
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Table</td>
+                  <td>{totals.transientoneMale}</td>
+                  <td>{totals.transienttwoMale}</td>
+                  <td>{totals.transientthreeMale}</td>
+                  <td>{totals.transientfourMale}</td>
+                  <td>{totals.transientsixMale}</td>
+                  <td>{totals.transientwillNotTansferMale}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -130,12 +148,10 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                 <tr>
                   <th>Age</th>
                   <th colSpan={6}>Female</th>
-                  <th>Overall total</th>
                 </tr>
                 <tr>
                   <th></th>
                   <th colSpan={6}>Migrants</th>
-                  <th></th>
                 </tr>
                 <tr>
                   <th></th>
@@ -145,7 +161,6 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                   <th>4 Years</th>
                   <th>6 Years above</th>
                   <th>Will not transfer</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -159,10 +174,18 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                       <td>{data.transientfourFemale}</td>
                       <td>{data.transientsixFemale}</td>
                       <td>{data.transientwillNotTansferFemale}</td>
-                      <td>{data.total}</td>
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.transientoneFemale}</td>
+                  <td>{totals.transienttwoFemale}</td>
+                  <td>{totals.transientthreeFemale}</td>
+                  <td>{totals.transientfourFemale}</td>
+                  <td>{totals.transientsixFemale}</td>
+                  <td>{totals.transientwillNotTansferFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -179,12 +202,10 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                 <tr>
                   <th>Age</th>
                   <th colSpan={6}>Female</th>
-                  <th>Overall total</th>
                 </tr>
                 <tr>
                   <th></th>
                   <th colSpan={6}>Transients</th>
-                  <th></th>
                 </tr>
                 <tr>
                   <th></th>
@@ -194,7 +215,6 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                   <th>4 Years</th>
                   <th>6 Years above</th>
                   <th>Will not transfer</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -208,10 +228,18 @@ const TableForty = ({ addresses, address, dateFrom, dateTo, orientation, logo, r
                       <td>{data.migrantfourFemale}</td>
                       <td>{data.migrantsixFemale}</td>
                       <td>{data.migrantwillNotTansferFemale}</td>
-                      <td>{data.total}</td>
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.migrantoneFemale}</td>
+                  <td>{totals.migranttwoFemale}</td>
+                  <td>{totals.migrantthreeFemale}</td>
+                  <td>{totals.migrantfourFemale}</td>
+                  <td>{totals.migrantsixFemale}</td>
+                  <td>{totals.migrantwillNotTansferFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>

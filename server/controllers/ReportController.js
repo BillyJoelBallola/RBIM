@@ -4159,10 +4159,6 @@ export const getTableFortyReport = async (req, res) => {
 
         const noAlphabeticRegex = /^[^A-Za-z]+$/;
 
-        response.map(item => {
-            console.log(noAlphabeticRegex.test(item.Q41) && Number(item.Q41));
-        })
-
         for(const [year, yearCode] of Object.entries(yearCodes)){
             residentStatus.map((resident, idx) => {
                 data[0][`${resident}${year}Male`] = result?.filter(item => Number(item.Q4) >= 5 && Number(item.Q4) <= 9 && (noAlphabeticRegex.test(item.Q41) && Number(item.Q41) === yearCode) && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableThirtyFive = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableThirtyFive = ({ addresses, address, dateFrom, dateTo, orientation, lo
 
     fetchTableThirtyFiveReport()
   }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -137,6 +140,44 @@ const TableThirtyFive = ({ addresses, address, dateFrom, dateTo, orientation, lo
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantairconditionMale}</td>
+                  <td>{totals.nonMigrantairconditionFemale}</td>
+                  <td>{totals.nonMigrantautomotiveMale}</td>
+                  <td>{totals.nonMigrantautomotiveFemale}</td>
+                  <td>{totals.nonMigrantmetalMale}</td>
+                  <td>{totals.nonMigrantmetalFemale}</td>
+                  <td>{totals.nonMigrantwiringMale}</td>
+                  <td>{totals.nonMigrantwiringFemale}</td>
+                  <td>{totals.nonMigrantequipmentMale}</td>
+                  <td>{totals.nonMigrantequipmentFemale}</td>
+                  <td>{totals.nonMigrantplumbingMale}</td>
+                  <td>{totals.nonMigrantplumbingFemale}</td>
+                  <td>{totals.nonMigrantweldingMale}</td>
+                  <td>{totals.nonMigrantweldingFemale}</td>
+                  <td>{totals.nonMigrantcarpentryMale}</td>
+                  <td>{totals.nonMigrantcarpentryFemale}</td>
+                  <td>{totals.nonMigrantbakingMale}</td>
+                  <td>{totals.nonMigrantbakingFemale}</td>
+                  <td>{totals.nonMigrantdressmakingMale}</td>
+                  <td>{totals.nonMigrantdressmakingFemale}</td>
+                  <td>{totals.nonMigrantlinguistMale}</td>
+                  <td>{totals.nonMigrantlinguistFemale}</td>
+                  <td>{totals.nonMigrantgraphicsMale}</td>
+                  <td>{totals.nonMigrantgraphicsFemale}</td>
+                  <td>{totals.nonMigrantpaintingMale}</td>
+                  <td>{totals.nonMigrantpaintingFemale}</td>
+                  <td>{totals.nonMigrantbeautyMale}</td>
+                  <td>{totals.nonMigrantbeautyFemale}</td>
+                  <td>{totals.nonMigrantcookingMale}</td>
+                  <td>{totals.nonMigrantcookingFemale}</td>
+                  <td>{totals.nonMigranthousekeepingMale}</td>
+                  <td>{totals.nonMigranthousekeepingFemale}</td>
+                  <td>{totals.nonMigrantmassageMale}</td>
+                  <td>{totals.nonMigrantmassageFemale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -254,6 +295,43 @@ const TableThirtyFive = ({ addresses, address, dateFrom, dateTo, orientation, lo
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.migrantairconditionMale}</td>
+                  <td>{totals.migrantairconditionFemale}</td>
+                  <td>{totals.migrantautomotiveMale}</td>
+                  <td>{totals.migrantautomotiveFemale}</td>
+                  <td>{totals.migrantmetalMale}</td>
+                  <td>{totals.migrantmetalFemale}</td>
+                  <td>{totals.migrantwiringMale}</td>
+                  <td>{totals.migrantwiringFemale}</td>
+                  <td>{totals.migrantequipmentMale}</td>
+                  <td>{totals.migrantequipmentFemale}</td>
+                  <td>{totals.migrantplumbingMale}</td>
+                  <td>{totals.migrantplumbingFemale}</td>
+                  <td>{totals.migrantweldingMale}</td>
+                  <td>{totals.migrantweldingFemale}</td>
+                  <td>{totals.migrantcarpentryMale}</td>
+                  <td>{totals.migrantcarpentryFemale}</td>
+                  <td>{totals.migrantbakingMale}</td>
+                  <td>{totals.migrantbakingFemale}</td>
+                  <td>{totals.migrantdressmakingMale}</td>
+                  <td>{totals.migrantdressmakingFemale}</td>
+                  <td>{totals.migrantlinguistMale}</td>
+                  <td>{totals.migrantlinguistFemale}</td>
+                  <td>{totals.migrantgraphicsMale}</td>
+                  <td>{totals.migrantgraphicsFemale}</td>
+                  <td>{totals.migrantpaintingMale}</td>
+                  <td>{totals.migrantpaintingFemale}</td>
+                  <td>{totals.migrantbeautyMale}</td>
+                  <td>{totals.migrantbeautyFemale}</td>
+                  <td>{totals.migrantcookingMale}</td>
+                  <td>{totals.migrantcookingFemale}</td>
+                  <td>{totals.migranthousekeepingMale}</td>
+                  <td>{totals.migranthousekeepingFemale}</td>
+                  <td>{totals.migrantmassageMale}</td>
+                  <td>{totals.migrantmassageFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -371,6 +449,43 @@ const TableThirtyFive = ({ addresses, address, dateFrom, dateTo, orientation, lo
                     </tr>
                   ))
                 }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.transientairconditionMale}</td>
+                  <td>{totals.transientairconditionFemale}</td>
+                  <td>{totals.transientautomotiveMale}</td>
+                  <td>{totals.transientautomotiveFemale}</td>
+                  <td>{totals.transientmetalMale}</td>
+                  <td>{totals.transientmetalFemale}</td>
+                  <td>{totals.transientwiringMale}</td>
+                  <td>{totals.transientwiringFemale}</td>
+                  <td>{totals.transientequipmentMale}</td>
+                  <td>{totals.transientequipmentFemale}</td>
+                  <td>{totals.transientplumbingMale}</td>
+                  <td>{totals.transientplumbingFemale}</td>
+                  <td>{totals.transientweldingMale}</td>
+                  <td>{totals.transientweldingFemale}</td>
+                  <td>{totals.transientcarpentryMale}</td>
+                  <td>{totals.transientcarpentryFemale}</td>
+                  <td>{totals.transientbakingMale}</td>
+                  <td>{totals.transientbakingFemale}</td>
+                  <td>{totals.transientdressmakingMale}</td>
+                  <td>{totals.transientdressmakingFemale}</td>
+                  <td>{totals.transientlinguistMale}</td>
+                  <td>{totals.transientlinguistFemale}</td>
+                  <td>{totals.transientgraphicsMale}</td>
+                  <td>{totals.transientgraphicsFemale}</td>
+                  <td>{totals.transientpaintingMale}</td>
+                  <td>{totals.transientpaintingFemale}</td>
+                  <td>{totals.transientbeautyMale}</td>
+                  <td>{totals.transientbeautyFemale}</td>
+                  <td>{totals.transientcookingMale}</td>
+                  <td>{totals.transientcookingFemale}</td>
+                  <td>{totals.transienthousekeepingMale}</td>
+                  <td>{totals.transienthousekeepingFemale}</td>
+                  <td>{totals.transientmassageMale}</td>
+                  <td>{totals.transientmassageFemale}</td>
+                </tr>
               </tbody>
             </table>
         </div>

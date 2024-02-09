@@ -43,7 +43,7 @@ import TableThirtySix from './report/TableThirtySix.jsx';
 import TableThirtySeven from './report/TableThirtySeven.jsx';
 import TableThirtyEight from './report/TableThirtyEight.jsx';
 import TableThirtyNine from './report/TableThirtyNine.jsx';
-import TableForty from './report/TableThirtyForty.jsx';
+import TableForty from './report/TableForty.jsx';
 import TableFourtyOne from './report/TableFortyOne.jsx';
 import TableFourtyTwo from './report/TableFortyTwo.jsx';
 

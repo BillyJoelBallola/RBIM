@@ -8,5 +8,5 @@ export const getSum = (array) => {
         }
     }
 
-  return columnTotals;
+    return columnTotals;
 }
