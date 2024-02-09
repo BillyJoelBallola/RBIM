@@ -1,124 +1,124 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import Header from '../../components/admin/Header'
-import { Chart } from 'primereact/chart';
+import PieMigrant from '../../components/admin/graphs/PieMigrant'
+import PieEmployment from '../../components/admin/graphs/PieEmployment'
+import PieVoter from '../../components/admin/graphs/PieVoter'
+import LineMigrant from '../../components/admin/graphs/LineMigrant'
+import EventAndProgram from '../../components/admin/EventAndProgram'
+import Announcement from '../../components/admin/Announcement'
+import axios from 'axios'
 
 const Dashboard = () => {
   const [individuals, setIndividuals] = useState([])
-  const [pieChartData, setPieChartData] = useState({});
-  const [pieChartOptions, setPieChartOptions] = useState({});
-  const [lineChartData, setLineChartData] = useState({});
-  const [lineChartOptions, setLineChartOptions] = useState({});
-  
-  useEffect(() => {
+  const [activities, setActivities] = useState({
+    eventsAndPrograms: [],
+    announcements: []
+  })
 
+  useEffect(() => {
+    const fetchEventsAndPrograms = async () => {
+      const { data } = await axios.get('/api/activities/events_and_programs')
+      if(data.success){
+        const info = data?.data?.filter(item => new Date(item.date) > new Date())
+        setActivities(current => ({...current, eventsAndPrograms: info }))
+      }
+    }
+
+    fetchEventsAndPrograms()
   }, [])
 
-  // pie
+
   useEffect(() => {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const data = {
-      labels: ['Migrants', 'Non-Migrants', 'Transients'],
-      datasets: [
-        {
-          data: [540, 325, 702],
-          backgroundColor: [
-            documentStyle.getPropertyValue('--blue-500'), 
-            documentStyle.getPropertyValue('--yellow-500'), 
-            documentStyle.getPropertyValue('--green-500')
-          ],
-          hoverBackgroundColor: [
-            documentStyle.getPropertyValue('--blue-400'), 
-            documentStyle.getPropertyValue('--yellow-400'), 
-            documentStyle.getPropertyValue('--green-400')
-          ]
-        }
-        ]
+    const fetchEventsAndPrograms = async () => {
+      const { data } = await axios.get('/api/activities/announcements')
+      if(data.success){
+        const info = data?.data?.filter(item => new Date(item.date) > new Date())
+        setActivities(current => ({...current, announcements: info }))
+      }
     }
-    const options = {
-      plugins: {
-        legend: {
-          labels: {
-            usePointStyle: true
-          }
-        }
-      }
-    };
 
-    setPieChartData(data);
-    setPieChartOptions(options);
-  }, []);
-
-  // line
-  useEffect(() => {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-    const data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          tension: 0.4
-        },
-        {
-          label: 'Second Dataset',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--pink-500'),
-          tension: 0.4
-        }
-      ]
-    };
-
-    const options = {
-      maintainAspectRatio: false,
-      aspectRatio: 0.6,
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: textColorSecondary
-          },
-          grid: {
-            color: surfaceBorder
-          }
-        },
-        y: {
-          ticks: {
-            color: textColorSecondary
-          },
-          grid: {
-            color: surfaceBorder
-          }
-        }
-      }
-    };
-
-    setLineChartData(data);
-    setLineChartOptions(options);
-  }, []);
-
+    fetchEventsAndPrograms()
+  }, [])
+  
   return (
     <>
       <Header pageName={'Dashboard'} />
       <div className='content'>
-        <div className='grid md:grid-cols-2 gap-4'>
-          <div className='bg-gray-200 rounded-lg w-full p-5'>
-           <Chart type="line" data={lineChartData} options={lineChartOptions} className='w-full'/>
+        <div className='grid gap-8'>
+          <div className='w-full grid gap-8'>
+            {/* pie */}
+            <div className='shadow-sm rounded-lg p-5 grid gap-4 border'>
+              <div className='flex items-center justify-between'>
+                <span className='text-xl font-bold'>Population Distribution</span>
+                <select>
+                  <option value="">-- select --</option>
+                </select>
+              </div>
+              <div className='flex flex-wrap gap-8 justify-center'>
+                <PieMigrant />
+                <PieEmployment />
+                <PieVoter />
+              </div>
+            </div>
+            {/* lines */}
+            <div className='shadow-sm rounded-lg p-5 grid gap-4 border'>
+              <div className='flex items-center justify-between'>
+                <span className='text-xl font-bold'>Population Trends</span>
+                <select>
+                  <option value="">-- select --</option>
+                </select>
+              </div>
+              <div className='max-w-[99%]'>
+                <LineMigrant />
+              </div>
+            </div>
+            {/* activities */}
+            <div className='grid gap-8'>
+              <div className='w-full relative shadow-sm rounded-lg overflow-hidden p-5 grid gap-4 border h-fit'>
+                <span className='text-xl font-bold'>Recent Announcements</span>
+                <div className='grid gap-4'>
+                  {
+                    activities &&
+                    activities?.announcements?.length > 0 
+                    ? activities?.announcements?.slice(0, 2).map(item => (
+                      <Fragment key={item.id}>
+                        <Announcement title={item.title} content={item.content}/>
+                      </Fragment>
+                    )) 
+                    : <span className='text-gray-500'>No recent announcements</span>
+                  }
+                  {
+                    activities &&
+                    activities?.announcements?.length > 0 
+                    ? <div className='absolute h-32 bottom-0 left-0 right-0 bg-gradient-to-t from-white' />
+                    : <></>
+                  }
+                </div>
+              </div>
+              <div className='relative shadow-sm rounded-lg p-5 grid gap-4 border h-fit'>
+                <span className='text-xl font-bold'>Upcoming Events & Programs</span>
+                <div className='grid gap-4'>
+                  {
+                    activities &&
+                    activities?.eventsAndPrograms?.length > 0 
+                    ? activities?.eventsAndPrograms?.slice(0, 2).map(item => (
+                      <Fragment key={item.id}>
+                        <EventAndProgram title={item.title} content={item.content} image={item.image}/>
+                      </Fragment>
+                    )) 
+                    : <span className='text-gray-500'>No upcoming events and programs</span>
+                  }
+                  {
+                     activities &&
+                     activities?.eventsAndPrograms?.length > 0 
+                     ? <div className='absolute h-32 bottom-0 left-0 right-0 bg-gradient-to-t from-white' />
+                     : <></>
+                  }
+                </div>
+              </div>
+            </div>
           </div>
-          <div className='bg-gray-200 shadow-lg rounded-lg grid place-items-center p-5'>
-            <Chart type="pie" data={pieChartData} options={pieChartOptions} className="w-full md:w-[300px]" />
-          </div>
+          <div className='bg-red-200 w-full'></div>
         </div>
       </div>
     </>

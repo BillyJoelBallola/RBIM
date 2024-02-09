@@ -56,7 +56,6 @@ const Navbar = () => {
             ))
           }
           <div className='px-4 font-bold text-white mt-8 mb-4'>More</div>
-        
             {
               moreLinks?.map((link, idx) => (
                 <li key={idx}>
