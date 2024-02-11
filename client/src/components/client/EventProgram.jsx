@@ -25,7 +25,7 @@ const EventProgram = ({ eventsAndPrograms, display }) => {
       {
         eventsAndPrograms?.length > 0 ?
         eventsAndPrograms.slice(0, display).map((eventProg, idx) => (
-          <div className='py-2 bg-white px-4 border rounded-lg h-fit' key={idx}>
+          <div className='p-4 bg-white border rounded-lg h-fit' key={idx}>
             <Link to={`/events-and-programs/${eventProg.id}`}>
               <div className='h-[150px] md:h-[250px] bg-gray-300 mb-3 flex items-center justify-center rounded-lg overflow-hidden'>
                 <div className='w-full aspect-ratio'>

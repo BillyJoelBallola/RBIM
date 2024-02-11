@@ -47,7 +47,7 @@ const TableThirtySix = ({ addresses, address, dateFrom, dateTo, orientation, log
               }
               <tr>
                 <td>Overall Total</td>
-                <td>{totals.total}</td>
+                <td>{totals.total || 0}</td>
               </tr>
             </tbody>
           </table>

@@ -13,11 +13,12 @@ const Dashboard = () => {
   const [individuals, setIndividuals] = useState([])
   const [address, setAddress] = useState([])
   const [selectedAddress, setSelectedAddress] = useState(0)
+  const [yearRange, setYearRange] = useState(5)
   const [activities, setActivities] = useState({
     eventsAndPrograms: [],
     announcements: []
   })
-
+  
   useEffect(() => {
     const fetchIndividualData = async () => {
       const { data } = await axios.get('/api/individuals')
@@ -70,7 +71,7 @@ const Dashboard = () => {
   return (
     <>
       <Header pageName={'Dashboard'} />
-      <div className='content'>
+      <div className='content pb-8'>
         <div className='grid gap-8'>
           <div className='w-full grid gap-8'>
             {/* pie */}
@@ -97,12 +98,14 @@ const Dashboard = () => {
             <div className='shadow-sm rounded-lg p-5 grid gap-4 border'>
               <div className='flex items-center justify-between'>
                 <span className='text-xl font-bold'>Population Trends</span>
-                <select>
-                  <option value="">-- select --</option>
+                <select value={yearRange} onChange={e => setYearRange(e.target.value)}>
+                  <option value={5}>5 Years</option>
+                  <option value={10}>10 Years</option>
+                  <option value={15}>15 Years</option>
                 </select>
               </div>
               <div className='max-w-[99%]'>
-                <LineMigrant />
+                <LineMigrant yearRange={yearRange} data={individuals} />
               </div>
             </div>
             {/* activities */}
@@ -142,16 +145,15 @@ const Dashboard = () => {
                     : <span className='text-gray-500'>No upcoming events and programs</span>
                   }
                   {
-                     activities &&
-                     activities?.eventsAndPrograms?.length > 2 
-                     ? <div className='absolute h-32 bottom-0 left-0 right-0 bg-gradient-to-t from-white' />
-                     : <></>
+                    activities &&
+                    activities?.eventsAndPrograms?.length > 2 
+                    ? <div className='absolute h-32 bottom-0 left-0 right-0 bg-gradient-to-t from-white' />
+                    : <></>
                   }
                 </div>
               </div>
             </div>
           </div>
-          <div className='bg-red-200 w-full'></div>
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import html2canvas from 'html2canvas';
 import moment from 'moment'
 import jsPDF from 'jspdf';
@@ -117,6 +117,7 @@ const PrintableIndividualForm = ({ preview, setPreview, individual }) => {
       });
     }
   };
+
   return (
     <div className={`absolute h-auto w-full ${preview ? 'z-[99999] block' : '-z-[99999] hidden'} bg-black/90 p-10 font-semibold text-sm`}>
         <div className='mb-4'>
@@ -177,7 +178,7 @@ const PrintableIndividualForm = ({ preview, setPreview, individual }) => {
                 <div className='flex justify-center'>
                   <div className='w-[100px] border border-black aspect-auto'>
                     {
-                      individual?.image !== undefined && individual?.image !== '' && typeof individual?.image !== 'string' ?
+                      individual?.image !== '' ?
                       <img src={`http://localhost:4000/${individual?.image?.slice(1, -1) + individual?.image?.slice(-1)}`} alt="profile" />
                       : <></>
                     }

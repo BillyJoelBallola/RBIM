@@ -41,7 +41,7 @@ const Activities = () => {
   const [query, setQuery] = useState('')
   const [type, setType] = useState('1')
   const [monthYear, setMonthYear] = useState(year + "-" + formattedMonth)
-  const [barangayFilter, setBarangayFilter] = useState('')
+  const [barangayFilter, setBarangayFilter] = useState('Municipal')
   const [action, setAction] = useState('')
 
   useEffect(() => {
@@ -92,10 +92,10 @@ const Activities = () => {
     }
   }
 
-  const filteredData = activities.filter(item => {
+  const filteredData = activities?.filter(item => {
     const matchesName = item.title.toLowerCase().includes(query.toLowerCase());
     const matchesMonthYear = item.date.toString().substring(0, 7) === monthYear.toString();
-    const matchesBarangay = barangayFilter.toString() === '' || item.address_barangay.toString() === barangayFilter;
+    const matchesBarangay = item.address_barangay.toString() === barangayFilter;
     const matchesType = item.type === type;
     
     return matchesMonthYear && matchesName && matchesBarangay && matchesType;
@@ -141,7 +141,7 @@ const Activities = () => {
             <div className="form-group w-full md:w-auto">
               <label htmlFor="barangay">Location</label>
               <select id="barangay" value={barangayFilter} onChange={(e) => setBarangayFilter(e.target.value)}>
-                <option value="">Municipal</option>
+                <option value="Municipal">Municipal</option>
                 {
                   barangay?.map((place, idx) => (
                     <option key={idx} value={place}>{place}</option>

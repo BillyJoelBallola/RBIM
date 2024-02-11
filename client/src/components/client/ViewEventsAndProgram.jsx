@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Image } from 'primereact/image'
+import { truncate } from '../../helper/truncate'
 import moment from 'moment'
 import axios from 'axios'
 
 const ViewEventsAndProgram = () => {
   const id = useParams().id
+  const [allEventsAndPrograms, setAllEventsAndPrograms] = useState([])
   const [eventsAndPrograms, setEventsAndPrograms] = useState({})
 
   useEffect(() => {
@@ -17,7 +19,19 @@ const ViewEventsAndProgram = () => {
     }
 
     fetchEventsAndPrograms()
-  }, [])
+  }, [id])
+
+  useEffect(() => {
+    const fetchAllEventsAndPrograms = async () => {
+      const { data } = await axios.get(`/api//activities/events_and_programs`)
+      if(data.success){
+        const info = data?.data?.filter(item => Number(item.id) !== Number(id))
+        setAllEventsAndPrograms(info)
+      }
+    }
+
+    fetchAllEventsAndPrograms()
+  }, [id])
 
   const type = (data) => {
     let returnType = ''
@@ -34,22 +48,45 @@ const ViewEventsAndProgram = () => {
   }
 
   return (
-    <div>
-      <div className='h-[250px] md:h-[350px] bg-gray-300 mb-3 flex items-center justify-center rounded-lg overflow-hidden'>
-        <Image 
-          className='object-fit object-center' 
-          src={eventsAndPrograms?.image && `http://localhost:4000/${eventsAndPrograms.image.slice(1, -1) + eventsAndPrograms.image.slice(-1)}`} 
-          alt="Image" 
-          preview 
-        />
-        {/* <img className='object-fit object-center' src={} alt="image" /> */}
+    <div className='flex gap-8 w-full'>
+      <div className='w-full'>
+        <div className='h-[250px] md:h-[350px] bg-gray-300 mb-3 flex items-center justify-center rounded-lg overflow-hidden'>
+          <Image 
+            className='object-fit object-center' 
+            src={eventsAndPrograms?.image && `http://localhost:4000/${eventsAndPrograms.image.slice(1, -1) + eventsAndPrograms.image.slice(-1)}`} 
+            alt="Image" 
+            preview 
+          />
+          {/* <img className='object-fit object-center' src={} alt="image" /> */}
+        </div>
+        <h2 className='font-semibold text-lg'>{eventsAndPrograms.title}</h2>
+        <div className='flex flex-col text-gray-600 text-sm mb-6'>
+          <span>{eventsAndPrograms.address_barangay} • {moment(eventsAndPrograms.date).format("ll")} • {type(eventsAndPrograms.type)}</span>
+          <span className='text-xs'>{moment(eventsAndPrograms.date_posted).startOf('hour').fromNow()}</span>
+        </div>
+        <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: eventsAndPrograms.content }} />
       </div>
-      <h2 className='font-semibold text-lg'>{eventsAndPrograms.title}</h2>
-      <div className='flex flex-col text-gray-600 text-sm mb-6'>
-        <span>{eventsAndPrograms.address_barangay} • {moment(eventsAndPrograms.date).format("ll")} • {type(eventsAndPrograms.type)}</span>
-        <span className='text-xs'>{moment(eventsAndPrograms.date_posted).startOf('hour').fromNow()}</span>
-      </div>
-      <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: eventsAndPrograms.content }} />
+      {
+        allEventsAndPrograms.length > 0 && 
+        <div className='basis-[40%]'>
+          <h2 className='mb-2 font-semibold'>Other events and programs</h2>
+          <div className='grid gap-2'>
+            {
+              allEventsAndPrograms &&
+              allEventsAndPrograms.slice(0, 5).map(item => (
+                <Link to={`/events-and-programs/${item.id}`} className='bg-white p-2 rounded-lg hover:underline' key={item.id}>
+                  <span className='text-md font-semibold'>{truncate(item.title, 25)}</span>
+                  <div className='text-xs text-justify' dangerouslySetInnerHTML={{ __html: truncate(item.content, 100) }} />
+                  <div className='text-[11px] mt-1'>
+                    <span>{item.address_barangay}</span> • 
+                    <span> {moment(item.date_posted).startOf('hour').fromNow()}</span>
+                  </div>
+                </Link> 
+              ))
+            }
+          </div>
+        </div>
+      }
     </div>
   )
 }
