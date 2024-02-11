@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
+import { UserContext } from '../../context/UserContext'
 import axios from 'axios'
 
 import Header from '../../components/admin/Header'
@@ -10,6 +11,7 @@ import EventAndProgram from '../../components/admin/EventAndProgram'
 import Announcement from '../../components/admin/Announcement'
 
 const Dashboard = () => {
+  const { loggedUser } = useContext(UserContext)
   const [individuals, setIndividuals] = useState([])
   const [address, setAddress] = useState([])
   const [selectedAddress, setSelectedAddress] = useState(0)
@@ -49,24 +51,26 @@ const Dashboard = () => {
       const { data } = await axios.get('/api/activities/events_and_programs')
       if(data.success){
         const info = data?.data?.filter(item => new Date(item.date) > new Date())
-        setActivities(current => ({...current, eventsAndPrograms: info }))
+        const filteredInfo = loggedUser?.role !== 'administrator' ? info.filter(item => item.address === loggedUser?.address_id) : info
+        setActivities(current => ({...current, eventsAndPrograms: filteredInfo }))
       }
     }
 
     fetchEventsAndPrograms()
-  }, [])
+  }, [loggedUser])
 
   useEffect(() => {
     const fetchEventsAndPrograms = async () => {
       const { data } = await axios.get('/api/activities/announcements')
       if(data.success){
         const info = data?.data?.filter(item => new Date(item.date) > new Date())
-        setActivities(current => ({...current, announcements: info }))
+        const filteredInfo = loggedUser?.role !== 'administrator' ? info.filter(item => item.address === loggedUser?.address_id) : info
+        setActivities(current => ({...current, announcements: filteredInfo }))
       }
     }
 
     fetchEventsAndPrograms()
-  }, [])
+  }, [loggedUser])
 
   return (
     <>

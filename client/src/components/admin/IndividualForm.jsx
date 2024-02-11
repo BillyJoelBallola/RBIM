@@ -117,7 +117,7 @@ const IndividualForm = () => {
                         onClick={() => navigate('/rbim/citizen-information')}
                     ><HiOutlineArrowNarrowLeft /></button>
                     <button 
-                        className='bg-gray-600 hover:bg-gray-500 duration-150 text-white py-2 px-4 rounded-md' 
+                        className='hidden md:block bg-gray-600 hover:bg-gray-500 duration-150 text-white py-2 px-4 rounded-md' 
                         onClick={() => {
                             setPreview(true)
                             setIsNavigateOpen(true)

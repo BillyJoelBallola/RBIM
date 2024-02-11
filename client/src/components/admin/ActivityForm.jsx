@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import TextEditor from './TextEditor'
 import Header from './Header'
@@ -11,6 +11,7 @@ import { IoClose } from "react-icons/io5"
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi"
 import { barangay } from '../../static/Geography'
 import { FiSend } from "react-icons/fi";
+import { UserContext } from '../../context/UserContext'
 
 const ActivityForm = () => {
     const id = useParams().id
@@ -35,6 +36,28 @@ const ActivityForm = () => {
         content: '<p>Type the content of activity here...</p>',
         image: ''
     })
+    const [address, setAddress] = useState('')
+    const { loggedUser } = useContext(UserContext)
+
+    useEffect(() => {
+        const fetchAllAddress = async () => {
+        const { data } = await axios.get("/api/address")
+            if(data.success){
+                const filtered = data?.data?.find(item => item?.id === loggedUser?.address_id)
+                setAddress(filtered)
+            }
+        }
+
+        if(loggedUser?.role !== 'administrator'){
+            fetchAllAddress()
+        }
+    }, [loggedUser])
+
+    useEffect(() => {
+        if(address){
+            setActivityForm(current => ({...current, address_barangay: address?.barangay}))
+        }
+    }, [address])
 
     useEffect(() => {
         const fetchActivityData = async () => {
@@ -409,7 +432,12 @@ const ActivityForm = () => {
                         </div>
                         <div className="form-group w-full">
                             <label htmlFor="address_barangay">Barangay</label>
-                            <select name="address_barangay" id="address_barangay" value={activityForm.address_barangay} onChange={handleInput}>
+                            <select
+                                disabled={loggedUser?.role !== 'administrator' ? true : false}
+                                name="address_barangay" id="address_barangay" 
+                                value={activityForm.address_barangay} 
+                                onChange={handleInput}
+                            >
                                 <option value="">-- choose barangay --</option>
                                 <option value="Municipal">Municipal</option>
                                 {

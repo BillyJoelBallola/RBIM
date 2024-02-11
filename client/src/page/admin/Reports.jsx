@@ -202,7 +202,10 @@ const Reports = () => {
       <ConfirmDialog />
       <Toast ref={toast} />
       <Header pageName={"Reports"} />
-      <div className="content bg-white">
+      <div className='content block md:hidden'>
+        <span>This feature is not available for mobile view.</span>
+      </div>
+      <div className="content bg-white hidden md:block">
         <div className='flex gap-4 items-center justify-between flex-wrap'>
           <div className="form-group w-full md:w-auto">
             <label htmlFor="search">Search Report</label>

@@ -1,14 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Header from '../../components/admin/Header'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import CustomDialog from '../../components/admin/CustomDialog'
 import CustomTable from '../../components/admin/CustomTable'
-import { barangay } from '../../static/Geography'
+import { UserContext } from '../../context/UserContext'
 import { Link, useNavigate } from 'react-router-dom'
+import Header from '../../components/admin/Header'
+import { barangay } from '../../static/Geography'
 import axios from 'axios'
 
 import { LiaTrashAlt } from "react-icons/lia";
 import { MdOutlineEdit } from "react-icons/md";
 import { Toast } from 'primereact/toast'
-import CustomDialog from '../../components/admin/CustomDialog'
 
 const headers = [
   {
@@ -39,16 +40,39 @@ const Activities = () => {
   const [activities, setActivities] = useState([])
   const [selectedData, setSelectedData] = useState(null)
   const [query, setQuery] = useState('')
+  const [address, setAddress] = useState('')
   const [type, setType] = useState('1')
   const [monthYear, setMonthYear] = useState(year + "-" + formattedMonth)
   const [barangayFilter, setBarangayFilter] = useState('Municipal')
   const [action, setAction] = useState('')
+  const { loggedUser } = useContext(UserContext)
+
+  useEffect(() => {
+    const fetchAllAddress = async () => {
+      const { data } = await axios.get("/api/address")
+      if(data.success){
+        const filtered = data?.data?.find(item => item?.id === loggedUser?.address_id)
+        setAddress(filtered)
+      }
+    }
+
+    if(loggedUser?.role !== 'administrator'){
+      fetchAllAddress()
+    }
+  }, [loggedUser])
+
+  useEffect(() => {
+    if(address){
+      setBarangayFilter(address?.barangay)
+    }
+  }, [address])
 
   useEffect(() => {
     const fetchAllActivities = async () => {
       const { data } = await axios.get("/api/activities")
       if(data.success){
-        setActivities(data.data)
+        const info = loggedUser?.role !== 'administrator' ? data?.data?.filter(item => item.address_barangay === address.barangay) : data?.data
+        setActivities(info)
       }
     }
 
@@ -138,17 +162,20 @@ const Activities = () => {
               <label htmlFor="month">Month/Year</label>
               <input type="month" id="month" value={monthYear} onChange={(e) => setMonthYear(e.target.value)}/>
             </div>
-            <div className="form-group w-full md:w-auto">
-              <label htmlFor="barangay">Location</label>
-              <select id="barangay" value={barangayFilter} onChange={(e) => setBarangayFilter(e.target.value)}>
-                <option value="Municipal">Municipal</option>
-                {
-                  barangay?.map((place, idx) => (
-                    <option key={idx} value={place}>{place}</option>
-                  ))
-                }
-              </select>
-            </div>
+            {
+              loggedUser?.role === 'administrator' &&
+              <div className="form-group w-full md:w-auto">
+                <label htmlFor="barangay">Location</label>
+                <select id="barangay" value={barangayFilter} onChange={(e) => setBarangayFilter(e.target.value)}>
+                  <option value="Municipal">Municipal</option>
+                  {
+                    barangay?.map((place, idx) => (
+                      <option key={idx} value={place}>{place}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            }
             <div className="form-group w-full md:w-auto">
               <label htmlFor="type">Type</label>
               <select id="type" value={type} onChange={e => setType(e.target.value)}>
