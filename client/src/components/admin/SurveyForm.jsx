@@ -216,8 +216,8 @@ const SurveyForm = ({ title, description }) => {
             }
           </div>
         </div>
-        <div className='grid gap-4'>
-          <form onSubmit={responseForm.question_id === '' ? handleSubmitResponse : handleEditResponse}>
+        <div>
+          <form className='mb-4' onSubmit={responseForm.question_id === '' ? handleSubmitResponse : handleEditResponse}>
             <div className='grid md:flex md:flex-row items-center gap-4'>
               <div className='form-group basis-1/4'>
                 <label htmlFor="response_code">Code</label>
@@ -240,7 +240,7 @@ const SurveyForm = ({ title, description }) => {
               </div>
             </div>
           </form>
-          <CustomTable headers={headers} actions={actions} data={responsesOfSelectedQuestions}/>
+          <CustomTable limit={5} headers={headers} actions={actions} data={responsesOfSelectedQuestions}/>
         </div>
         <button onClick={saveDialog} className='mt-4 w-min whitespace-nowrap rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>SAVE CHANGES</button>
       </div>

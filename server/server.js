@@ -1,7 +1,6 @@
 import cookieParser from "cookie-parser"
 import express from 'express'
 import cors from 'cors'
-import { createProxyMiddleware } from 'http-proxy-middleware'
 
 import './config.js'
 import db from './dbConnect.js'
@@ -23,7 +22,6 @@ app.use(cors({
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.static('uploads'))
-
 app.use("/api", userRoutes)
 app.use("/api", authRoutes)
 app.use("/api", questionRoutes)

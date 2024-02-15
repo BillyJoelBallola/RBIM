@@ -46,9 +46,9 @@ const ViewEventsAndProgram = () => {
 
     return returnType
   }
-
+''
   return (
-    <div className='flex gap-8 w-full'>
+    <div className='flex flex-col md:flex-row gap-8 w-full'>
       <div className='w-full'>
         <div className='h-[250px] md:h-[350px] bg-gray-300 mb-3 flex items-center justify-center rounded-lg overflow-hidden'>
           <Image 
@@ -66,27 +66,25 @@ const ViewEventsAndProgram = () => {
         </div>
         <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: eventsAndPrograms.content }} />
       </div>
-      {
-        allEventsAndPrograms.length > 0 && 
         <div className='basis-[40%]'>
           <h2 className='mb-2 font-semibold'>Other events and programs</h2>
           <div className='grid gap-2'>
-            {
-              allEventsAndPrograms &&
-              allEventsAndPrograms.slice(0, 5).map(item => (
-                <Link to={`/events-and-programs/${item.id}`} className='bg-white p-2 rounded-lg hover:underline' key={item.id}>
-                  <span className='text-md font-semibold'>{truncate(item.title, 25)}</span>
-                  <div className='text-xs text-justify' dangerouslySetInnerHTML={{ __html: truncate(item.content, 100) }} />
-                  <div className='text-[11px] mt-1'>
-                    <span>{item.address_barangay}</span> • 
-                    <span> {moment(item.date_posted).startOf('hour').fromNow()}</span>
-                  </div>
-                </Link> 
-              ))
-            }
+          {
+            allEventsAndPrograms.length > 0 
+            ? allEventsAndPrograms && allEventsAndPrograms.slice(0, 5).map(item => (
+              <Link to={`/events-and-programs/${item.id}`} className='bg-white p-2 rounded-lg hover:underline' key={item.id}>
+                <span className='text-md font-semibold'>{truncate(item.title, 25)}</span>
+                <div className='text-xs text-justify' dangerouslySetInnerHTML={{ __html: truncate(item.content, 100) }} />
+                <div className='text-[11px] mt-1'>
+                  <span>{item.address_barangay}</span> • 
+                  <span> {moment(item.date_posted).startOf('hour').fromNow()}</span>
+                </div>
+              </Link> 
+            )) 
+            : <div>No other events and programs found.</div>
+          }
           </div>
-        </div>
-      }
+        </div> 
     </div>
   )
 }
