@@ -360,7 +360,7 @@ const ActivityForm = () => {
                 classStyle={'w-[90%] md:w-[60%] lg:w-[40%]'}
                 content={(
                     <div className='grid gap-4'>
-                        <span className='text-sm'>All contact numbers will come from the survey forms conducted this year.</span>
+                        <span className='text-sm'>{`All contact numbers will come from the survey forms conducted to ${activityForm.address_barangay} on the year ${new Date().getFullYear()}.`}</span>
                         <div className="form-group">
                             <label htmlFor="participant" className='flex items-center gap-1'>
                                 <span>Participant</span>

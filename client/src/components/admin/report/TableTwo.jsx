@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
-const TableSix = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
+const TableSix = ({ address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
 
-//   useEffect(() => {
-//     const fetchTableSixReport = async () => {
-//       const { data } = await axios.get('/api/table_six')
-//       if(data.success){
-//         setReportData(data.data)
-//       }
-//     }
+  useEffect(() => {
+    const fetchTableTwoReport = async () => {
+      const { data } = await axios.get(`/api/table_two/${address}/${dateFrom}/${dateTo}`)
+      if(data.success){
+        setReportData(data.data)
+      }
+    }
 
-//     if(reportDetails){
-//       fetchTableSixReport()
-//     }
-//   }, [reportDetails])
+    if(reportDetails){
+      fetchTableTwoReport()
+    }
+  }, [reportDetails])
+
+  const totals = getSum(reportData)
 
   return (
     <div className={`bg-white py-4 ${orientation}`}>
@@ -51,10 +54,10 @@ const TableSix = ({ addresses, address, dateFrom, dateTo, orientation, logo, rep
               </tr>
             </thead>
             <tbody>
-              {/* {
+              {
                 reportData?.map((data, idx) => (
                   <tr key={idx}>
-                    <td>{data.ethnicity}</td>
+                    <td>{data.household_no}</td>
                     <td>{data.nonMigrantMale}</td>
                     <td>{data.nonMigrantFemale}</td>
                     <td>{data.migrantMale}</td>
@@ -64,7 +67,17 @@ const TableSix = ({ addresses, address, dateFrom, dateTo, orientation, logo, rep
                     <td>{data.total}</td>
                   </tr>
                 ))
-              } */}
+              }
+              <tr>
+                <td>Overall Total</td>
+                <td>{totals.nonMigrantMale}</td>
+                <td>{totals.nonMigrantFemale}</td>
+                <td>{totals.migrantMale}</td>
+                <td>{totals.migrantFemale}</td>
+                <td>{totals.transientMale}</td>
+                <td>{totals.transientFemale}</td>
+                <td>{totals.total}</td>
+              </tr>
             </tbody>
           </table>
       </div>

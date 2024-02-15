@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableThirtyTwo = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
 
-  // useEffect(() => {
-  //   const fetchTableThirtyTwoReport = async () => {
-  //     const { data } = await axios.get(`/api/table_thirtyTwo/${address}/${dateFrom}/${dateTo}`)
-  //     if(data.success){
-  //       setReportData(data.data)
-  //     }
-  //   }
+  useEffect(() => {
+    const fetchTableThirtyTwoReport = async () => {
+      const { data } = await axios.get(`/api/table_thirtyTwo/${address}/${dateFrom}/${dateTo}`)
+      if(data.success){
+        setReportData(data.data)
+      }
+    }
 
-  //   fetchTableThirtyTwoReport()
-  // }, [])
+    fetchTableThirtyTwoReport()
+  }, [])
+
+  const totals = getSum(reportData)
 
   return (
     <>
-      <div className={`bg-white py-8 ${orientation}`}>
+      <div className={`bg-white py-4 ${orientation}`}>
         <div className='text-sm grid gap-2 place-items-center mb-4'>
-            <img src={logo} className='w-24 aspect-square' alt="rbim_logo" />
+            <img src={logo} className='w-20 aspect-square' alt="rbim_logo" />
             <div className='grid text-center'>
               <span className='font-semibold'>{Number(address) !== 0 ? addresses?.find(item => item.id === Number(address))?.barangay : 'Municipal'} [{moment(dateFrom).format('LL')} - {moment(dateTo).format('LL')}]</span>
               <span className='font-semibold text-xs'>{reportDetails?.label} : {reportDetails?.detail}</span>
@@ -56,21 +59,42 @@ const TableThirtyTwo = ({ addresses, address, dateFrom, dateTo, orientation, log
                 </tr>
               </thead>
               <tbody>
-                {/* {
+                {
                   reportData?.map((data, idx) => (
                     <tr key={idx}>
-                      <td>{data.cause}</td>
+                      <td>{data.age}</td>
+                      <td>{data.nonMigrantregisteredMale}</td>
+                      <td>{data.migrantregisteredMale}</td>
+                      <td>{data.transientregisteredMale}</td>
+                      <td>{data.nonMigrantnonSoloMale}</td>
+                      <td>{data.migrantnonSoloMale}</td>
+                      <td>{data.transientnonSoloMale}</td>
+                      <td>{data.nonMigrantUnregisteredMale}</td>
+                      <td>{data.migrantUnregisteredMale}</td>
+                      <td>{data.transientUnregisteredMale}</td>
                       <td>{data.total}</td>
                     </tr>
                   ))
-                } */}
+                }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantregisteredMale}</td>
+                  <td>{totals.migrantregisteredMale}</td>
+                  <td>{totals.transientregisteredMale}</td>
+                  <td>{totals.nonMigrantnonSoloMale}</td>
+                  <td>{totals.migrantnonSoloMale}</td>
+                  <td>{totals.transientnonSoloMale}</td>
+                  <td>{totals.nonMigrantUnregisteredMale}</td>
+                  <td>{totals.migrantUnregisteredMale}</td>
+                  <td>{totals.transientUnregisteredMale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
       </div>
       <div className={`bg-white py-8 ${orientation}`}>
         <div className='text-sm grid gap-2 place-items-center mb-4'>
-            <img src={logo} className='w-24 aspect-square' alt="rbim_logo" />
             <div className='grid text-center'>
               <span className='font-semibold'>{Number(address) !== 0 ? addresses?.find(item => item.id === Number(address))?.barangay : 'Municipal'} [{moment(dateFrom).format('LL')} - {moment(dateTo).format('LL')}]</span>
               <span className='font-semibold text-xs'>{reportDetails?.label} : {reportDetails?.detail}</span>
@@ -106,14 +130,36 @@ const TableThirtyTwo = ({ addresses, address, dateFrom, dateTo, orientation, log
                 </tr>
               </thead>
               <tbody>
-                {/* {
+                {
                   reportData?.map((data, idx) => (
                     <tr key={idx}>
-                      <td>{data.cause}</td>
+                      <td>{data.age}</td>
+                      <td>{data.nonMigrantregisteredFemale}</td>
+                      <td>{data.migrantregisteredFemale}</td>
+                      <td>{data.transientregisteredFemale}</td>
+                      <td>{data.nonMigrantnonSoloFemale}</td>
+                      <td>{data.migrantnonSoloFemale}</td>
+                      <td>{data.transientnonSoloFemale}</td>
+                      <td>{data.nonMigrantUnregisteredFemale}</td>
+                      <td>{data.migrantUnregisteredFemale}</td>
+                      <td>{data.transientUnregisteredFemale}</td>
                       <td>{data.total}</td>
                     </tr>
                   ))
-                } */}
+                }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.nonMigrantregisteredFemale}</td>
+                  <td>{totals.migrantregisteredFemale}</td>
+                  <td>{totals.transientregisteredFemale}</td>
+                  <td>{totals.nonMigrantnonSoloFemale}</td>
+                  <td>{totals.migrantnonSoloFemale}</td>
+                  <td>{totals.transientnonSoloFemale}</td>
+                  <td>{totals.nonMigrantUnregisteredFemale}</td>
+                  <td>{totals.migrantUnregisteredFemale}</td>
+                  <td>{totals.transientUnregisteredFemale}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
