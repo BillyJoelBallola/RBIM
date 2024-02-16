@@ -4370,11 +4370,198 @@ export const getTableThirtyEightReport = async (req, res) => {
         ];
 
         const reasons = {
-            one: '1',
-            two: '2',
-            three: '3',
-            four: '4',
-            five: '5'
+            one: 1,
+            two: 2,
+            three: 3,
+            four: 4,
+            five: 5,
+            six: 6,
+            seven: 7,
+            eight: 8,
+            nine: 9,
+            ten: 10,
+            eleven: 11,
+            twelve: 12,
+            thirteen: 13,
+            fourteen: 14
+        }
+
+        const residentStatus = [
+            "migrant",
+            'transient'
+        ]
+
+        for(const [reason, reasonCode] of Object.entries(reasons)){
+            residentStatus.map((resident, idx) => {
+                data[0][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 5 && Number(item.Q4) <= 9 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[0][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 5 && Number(item.Q4) <= 9 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[0][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 5 && Number(item.Q4) <= 9 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[1][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[1][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[1][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 10 && Number(item.Q4) <= 14 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[2][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[2][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[2][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 15 && Number(item.Q4) <= 19 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[3][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[3][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[3][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 20 && Number(item.Q4) <= 24 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[4][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[4][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[4][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 25 && Number(item.Q4) <= 29 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[5][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[5][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[5][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 30 && Number(item.Q4) <= 34 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[6][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[6][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[6][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 35 && Number(item.Q4) <= 39 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[7][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[7][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[7][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 40 && Number(item.Q4) <= 44 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[8][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[8][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[8][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 45 && Number(item.Q4) <= 49 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[9][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[9][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[9][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 50 && Number(item.Q4) <= 54 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[10][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 55 && Number(item.Q4) <= 59 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[10][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 55 && Number(item.Q4) <= 59 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[10][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 55 && Number(item.Q4) <= 59 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[11][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 60 && Number(item.Q4) <= 64 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[11][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 60 && Number(item.Q4) <= 64 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[11][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 60 && Number(item.Q4) <= 64 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[12][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 65 && Number(item.Q4) <= 69 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[12][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 65 && Number(item.Q4) <= 69 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[12][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 65 && Number(item.Q4) <= 69 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[13][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 70 && Number(item.Q4) <= 74 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[13][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 70 && Number(item.Q4) <= 74 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[13][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 70 && Number(item.Q4) <= 74 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[14][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 75 && Number(item.Q4) <= 79 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[14][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 75 && Number(item.Q4) <= 79 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[14][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 75 && Number(item.Q4) <= 79 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+                    
+                data[15][`${resident}_${reason}_male`] = result?.filter(item => Number(item.Q4) >= 80 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 1)?.length || 0;
+                data[15][`${resident}_${reason}_female`] = result?.filter(item => Number(item.Q4) >= 80 && Number(item.Q38A) === reasonCode && Number(item.Q36) === idx + 2 && Number(item.Q3) === 2)?.length || 0;
+                data[15][`total`] = result?.filter(item => 
+                    Number(item.Q4) >= 80 && 
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(Number(item.Q38A)) &&
+                    [1, 2, 3].includes(Number(item.Q36)) && 
+                    [1, 2].includes(Number(item.Q3)))?.length || 0;
+            })
+        }
+
+        return res.json({ success: true, data: data });
+    } catch (error) {
+        return res.json({ success: false, message: "Internal server error"});
+    }
+}
+
+export const getTableThirtyNineReport = async (req, res) => {
+    try {
+        const { address, dateFrom, dateTo } = req.params;
+        const response = await reportModel.getAllSurveyFormsData();
+        const result = address !== 0 ? 
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo)) :
+            response.filter(data => isDateInRange(data?.date_encoded, dateFrom, dateTo) && Number(data.address) === address)
+
+        const data = [
+            { age: '5-9' },
+            { age: '10-14' },
+            { age: '15-19' },
+            { age: '20-24' },
+            { age: '25-29' },
+            { age: '30-34' },
+            { age: '35-39' },
+            { age: '40-44' },
+            { age: '45-49' },
+            { age: '50-54' },
+            { age: '55-59' },
+            { age: '60-64' },
+            { age: '65-69' },
+            { age: '70-74' },
+            { age: '75-79' },
+            { age: '80+' }
+        ];
+
+        const reasons = {
+            one: 1,
+            two: 2,
+            three: 3,
+            four: 4,
+            five: 5
         }
 
         const residentStatus = [
@@ -4515,14 +4702,6 @@ export const getTableThirtyEightReport = async (req, res) => {
         }
 
         return res.json({ success: true, data: data });
-    } catch (error) {
-        return res.json({ success: false, message: "Internal server error"});
-    }
-}
-
-export const getTableThirtyNineReport = async (req, res) => {
-    try {
-        return res.json({ success: false, data: data });
     } catch (error) {
         return res.json({ success: false, message: "Internal server error"});
     }

@@ -6,18 +6,18 @@ import { getSum } from '../../../helper/getSum'
 const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
 
-  // useEffect(() => {
-  //   const fetchTableThirtyNineReport = async () => {
-  //     const { data } = await axios.get(`/api/table_thirtyNine/${address}/${dateFrom}/${dateTo}`)
-  //     if(data.success){
-  //       setReportData(data.data)
-  //     }
-  //   }
+  useEffect(() => {
+    const fetchTableThirtyNineReport = async () => {
+      const { data } = await axios.get(`/api/table_thirtyNine/${address}/${dateFrom}/${dateTo}`)
+      if(data.success){
+        setReportData(data.data)
+      }
+    }
 
-  //   fetchTableThirtyNineReport()
-  // }, [])
+    fetchTableThirtyNineReport()
+  }, [])
 
-  // const totals = getSum(reportData)
+  const totals = getSum(reportData)
 
   return (
     <>
@@ -33,7 +33,7 @@ const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, lo
             <table className='report_table'>
               <thead>
                 <tr>
-                  <th>Age</th>
+                  <th className='w-[100px]'>Age</th>
                   <th colSpan={5}>Male</th>
                   <th>Overall total</th>
                 </tr>
@@ -53,14 +53,28 @@ const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, lo
                 </tr>
               </thead>
               <tbody>
-                {/* {
+                {
                   reportData?.map((data, idx) => (
                     <tr key={idx}>
                       <td>{data.age}</td>
+                      <td>{data.migrant_one_male}</td>
+                      <td>{data.migrant_two_male}</td>
+                      <td>{data.migrant_three_male}</td>
+                      <td>{data.migrant_four_male}</td>
+                      <td>{data.migrant_five_male}</td>
                       <td>{data.total}</td>
                     </tr>
                   ))
-                } */}
+                }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.migrant_one_male}</td>
+                  <td>{totals.migrant_two_male}</td>
+                  <td>{totals.migrant_three_male}</td>
+                  <td>{totals.migrant_four_male}</td>
+                  <td>{totals.migrant_five_male}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -75,7 +89,7 @@ const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, lo
             <table className='report_table'>
               <thead>
                 <tr>
-                  <th>Age</th>
+                  <th className='w-[100px]'>Age</th>
                   <th colSpan={5}>Male</th>
                   <th>Overall total</th>
                 </tr>
@@ -95,14 +109,28 @@ const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, lo
                 </tr>
               </thead>
               <tbody>
-                {/* {
+                {
                   reportData?.map((data, idx) => (
                     <tr key={idx}>
                       <td>{data.age}</td>
+                      <td>{data.transient_one_male}</td>
+                      <td>{data.transient_two_male}</td>
+                      <td>{data.transient_three_male}</td>
+                      <td>{data.transient_four_male}</td>
+                      <td>{data.transient_five_male}</td>
                       <td>{data.total}</td>
                     </tr>
                   ))
-                } */}
+                }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.transient_one_male}</td>
+                  <td>{totals.transient_two_male}</td>
+                  <td>{totals.transient_three_male}</td>
+                  <td>{totals.transient_four_male}</td>
+                  <td>{totals.transient_five_male}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -117,7 +145,7 @@ const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, lo
             <table className='report_table'>
               <thead>
                 <tr>
-                  <th>Age</th>
+                  <th className='w-[100px]'>Age</th>
                   <th colSpan={5}>Female</th>
                   <th>Overall total</th>
                 </tr>
@@ -137,14 +165,28 @@ const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, lo
                 </tr>
               </thead>
               <tbody>
-                {/* {
+                {
                   reportData?.map((data, idx) => (
                     <tr key={idx}>
                       <td>{data.age}</td>
+                      <td>{data.migrant_one_female}</td>
+                      <td>{data.migrant_two_female}</td>
+                      <td>{data.migrant_three_female}</td>
+                      <td>{data.migrant_four_female}</td>
+                      <td>{data.migrant_five_female}</td>
                       <td>{data.total}</td>
                     </tr>
                   ))
-                } */}
+                }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.migrant_one_female}</td>
+                  <td>{totals.migrant_two_female}</td>
+                  <td>{totals.migrant_three_female}</td>
+                  <td>{totals.migrant_four_female}</td>
+                  <td>{totals.migrant_five_female}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>
@@ -159,7 +201,7 @@ const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, lo
             <table className='report_table'>
               <thead>
                 <tr>
-                  <th>Age</th>
+                  <th className='w-[100px]'>Age</th>
                   <th colSpan={5}>Female</th>
                   <th>Overall total</th>
                 </tr>
@@ -179,14 +221,28 @@ const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, lo
                 </tr>
               </thead>
               <tbody>
-                {/* {
+                {
                   reportData?.map((data, idx) => (
                     <tr key={idx}>
                       <td>{data.age}</td>
+                      <td>{data.transient_one_female}</td>
+                      <td>{data.transient_two_female}</td>
+                      <td>{data.transient_three_female}</td>
+                      <td>{data.transient_four_female}</td>
+                      <td>{data.transient_five_female}</td>
                       <td>{data.total}</td>
                     </tr>
                   ))
-                } */}
+                }
+                <tr>
+                  <td>Overall Total</td>
+                  <td>{totals.transient_one_female}</td>
+                  <td>{totals.transient_two_female}</td>
+                  <td>{totals.transient_three_female}</td>
+                  <td>{totals.transient_four_female}</td>
+                  <td>{totals.transient_five_female}</td>
+                  <td>{totals.total}</td>
+                </tr>
               </tbody>
             </table>
         </div>

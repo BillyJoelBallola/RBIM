@@ -61,11 +61,11 @@ const CitizenInformation = () => {
   const actions = [
     { 
       label: <MdOutlineEdit className='text-lg'/>, 
-      onClick: ({rowData}) => navigate(`/rbim/survey_form/form1/${rowData.survey_form_id}`)
+      onClick: ({rowData}) => navigate(`/rbim/survey_form/form1/${rowData?.survey_form_id}`)
     }, 
     { 
       label: <LuArchive className='text-lg'/>, 
-      onClick: ({rowData}) => {
+      onClick: () => {
         setArchiveVisible(true)
       }
     }
@@ -74,7 +74,7 @@ const CitizenInformation = () => {
   const individualActions = [
     { 
       label: <MdOpenInNew className='text-lg'/>, 
-      onClick: ({rowData}) => navigate(`/rbim/individual_form/${rowData.id}`)
+      onClick: ({rowData}) => navigate(`/rbim/individual_form/${rowData?.id}`)
     }
   ] 
 
