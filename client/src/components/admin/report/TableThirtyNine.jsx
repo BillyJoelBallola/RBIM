@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import { getSum } from '../../../helper/getSum'
 
 const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, logo, reportDetails }) => {
   const [reportData, setReportData] = useState([])
@@ -15,6 +16,8 @@ const TableThirtyNine = ({ addresses, address, dateFrom, dateTo, orientation, lo
 
   //   fetchTableThirtyNineReport()
   // }, [])
+
+  // const totals = getSum(reportData)
 
   return (
     <>

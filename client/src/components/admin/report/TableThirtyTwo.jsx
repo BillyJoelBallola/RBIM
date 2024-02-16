@@ -33,7 +33,7 @@ const TableThirtyTwo = ({ addresses, address, dateFrom, dateTo, orientation, log
             <table className='report_table'>
               <thead>
                 <tr>
-                  <th>Age</th>
+                  <th className='w-[100px]'>Age</th>
                   <th colSpan={9}>Male</th>
                   <th>Overall Total</th>
                 </tr>
@@ -63,30 +63,30 @@ const TableThirtyTwo = ({ addresses, address, dateFrom, dateTo, orientation, log
                   reportData?.map((data, idx) => (
                     <tr key={idx}>
                       <td>{data.age}</td>
-                      <td>{data.nonMigrantregisteredMale}</td>
-                      <td>{data.migrantregisteredMale}</td>
-                      <td>{data.transientregisteredMale}</td>
-                      <td>{data.nonMigrantnonSoloMale}</td>
-                      <td>{data.migrantnonSoloMale}</td>
-                      <td>{data.transientnonSoloMale}</td>
-                      <td>{data.nonMigrantUnregisteredMale}</td>
-                      <td>{data.migrantUnregisteredMale}</td>
-                      <td>{data.transientUnregisteredMale}</td>
+                      <td>{data.nonMigrant_registered_male}</td>
+                      <td>{data.nonMigrant_nonSolo_male}</td>
+                      <td>{data.nonMigrant_unRegistered_male}</td>
+                      <td>{data.migrant_registered_male}</td>
+                      <td>{data.migrant_nonSolo_male}</td>
+                      <td>{data.migrant_unRegistered_male}</td>
+                      <td>{data.transient_registered_male}</td>
+                      <td>{data.transient_nonSolo_male}</td>
+                      <td>{data.transient_unRegistered_male}</td>
                       <td>{data.total}</td>
                     </tr>
                   ))
                 }
                 <tr>
                   <td>Overall Total</td>
-                  <td>{totals.nonMigrantregisteredMale}</td>
-                  <td>{totals.migrantregisteredMale}</td>
-                  <td>{totals.transientregisteredMale}</td>
-                  <td>{totals.nonMigrantnonSoloMale}</td>
-                  <td>{totals.migrantnonSoloMale}</td>
-                  <td>{totals.transientnonSoloMale}</td>
-                  <td>{totals.nonMigrantUnregisteredMale}</td>
-                  <td>{totals.migrantUnregisteredMale}</td>
-                  <td>{totals.transientUnregisteredMale}</td>
+                  <td>{totals.nonMigrant_registered_male}</td>
+                  <td>{totals.nonMigrant_nonSolo_male}</td>
+                  <td>{totals.nonMigrant_unRegistered_male}</td>
+                  <td>{totals.migrant_registered_male}</td>
+                  <td>{totals.migrant_nonSolo_male}</td>
+                  <td>{totals.migrant_unRegistered_male}</td>
+                  <td>{totals.transient_registered_male}</td>
+                  <td>{totals.transient_nonSolo_male}</td>
+                  <td>{totals.transient_unRegistered_male}</td>
                   <td>{totals.total}</td>
                 </tr>
               </tbody>
@@ -96,7 +96,6 @@ const TableThirtyTwo = ({ addresses, address, dateFrom, dateTo, orientation, log
       <div className={`bg-white py-8 ${orientation}`}>
         <div className='text-sm grid gap-2 place-items-center mb-4'>
             <div className='grid text-center'>
-              <span className='font-semibold'>{Number(address) !== 0 ? addresses?.find(item => item.id === Number(address))?.barangay : 'Municipal'} [{moment(dateFrom).format('LL')} - {moment(dateTo).format('LL')}]</span>
               <span className='font-semibold text-xs'>{reportDetails?.label} : {reportDetails?.detail}</span>
             </div>
         </div>
@@ -104,7 +103,7 @@ const TableThirtyTwo = ({ addresses, address, dateFrom, dateTo, orientation, log
             <table className='report_table'>
               <thead>
                 <tr>
-                  <th>Age</th>
+                  <th className='w-[100px]'>Age</th>
                   <th colSpan={9}>Female</th>
                   <th>Overall Total</th>
                 </tr>
@@ -134,30 +133,30 @@ const TableThirtyTwo = ({ addresses, address, dateFrom, dateTo, orientation, log
                   reportData?.map((data, idx) => (
                     <tr key={idx}>
                       <td>{data.age}</td>
-                      <td>{data.nonMigrantregisteredFemale}</td>
-                      <td>{data.migrantregisteredFemale}</td>
-                      <td>{data.transientregisteredFemale}</td>
-                      <td>{data.nonMigrantnonSoloFemale}</td>
-                      <td>{data.migrantnonSoloFemale}</td>
-                      <td>{data.transientnonSoloFemale}</td>
-                      <td>{data.nonMigrantUnregisteredFemale}</td>
-                      <td>{data.migrantUnregisteredFemale}</td>
-                      <td>{data.transientUnregisteredFemale}</td>
+                      <td>{data.nonMigrant_registered_female}</td>
+                      <td>{data.nonMigrant_nonSolo_female}</td>
+                      <td>{data.nonMigrant_unRegistered_female}</td>
+                      <td>{data.migrant_registered_female}</td>
+                      <td>{data.migrant_nonSolo_female}</td>
+                      <td>{data.migrant_unRegistered_female}</td>
+                      <td>{data.transient_registered_female}</td>
+                      <td>{data.transient_nonSolo_female}</td>
+                      <td>{data.transient_unRegistered_female}</td>
                       <td>{data.total}</td>
                     </tr>
                   ))
                 }
                 <tr>
                   <td>Overall Total</td>
-                  <td>{totals.nonMigrantregisteredFemale}</td>
-                  <td>{totals.migrantregisteredFemale}</td>
-                  <td>{totals.transientregisteredFemale}</td>
-                  <td>{totals.nonMigrantnonSoloFemale}</td>
-                  <td>{totals.migrantnonSoloFemale}</td>
-                  <td>{totals.transientnonSoloFemale}</td>
-                  <td>{totals.nonMigrantUnregisteredFemale}</td>
-                  <td>{totals.migrantUnregisteredFemale}</td>
-                  <td>{totals.transientUnregisteredFemale}</td>
+                  <td>{totals.nonMigrant_registered_female}</td>
+                  <td>{totals.nonMigrant_nonSolo_female}</td>
+                  <td>{totals.nonMigrant_unRegistered_female}</td>
+                  <td>{totals.migrant_registered_female}</td>
+                  <td>{totals.migrant_nonSolo_female}</td>
+                  <td>{totals.migrant_unRegistered_female}</td>
+                  <td>{totals.transient_registered_female}</td>
+                  <td>{totals.transient_nonSolo_female}</td>
+                  <td>{totals.transient_unRegistered_female}</td>
                   <td>{totals.total}</td>
                 </tr>
               </tbody>
