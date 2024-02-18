@@ -123,6 +123,17 @@ export const updateSecurityMobile = async (req, res) => {
   }
 }
 
+// mobile
+export const updateInformationMobile = async (req, res) => {
+  try {
+    const accountData = await req.body
+    const updatedUser = await userModel.updateInformation(accountData)
+    return res.json({ success: true, data: updatedUser, message: 'Information updated successfully'});
+  } catch (error) {
+    return res.json({ success: false, message: 'Internal server error'});
+  }
+}
+
 // web
 export const getLoggedUser = async (req, res) => {
   try {

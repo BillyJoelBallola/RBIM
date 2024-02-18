@@ -155,6 +155,24 @@ const updateSecurity = async (accountData) => {
   }
 }
 
+const updateInformation = async (accountData) => {
+  try {
+    const result = await new Promise((resolve, reject) => {
+      db.query("UPDATE users SET username = ? WHERE id = ?", [accountData.username, accountData.id], ((error, results) => {
+        if (error) {
+          reject(error)
+        }else{
+          resolve(results);
+        }
+      }))
+    })
+
+    return result && result.affectedRows > 0 ? result : null
+  } catch (error) {
+    throw error
+  }
+}
+
 const removeUser = async (userId) => {
   try {
     const result = await new Promise((resolve, reject) => {
@@ -181,5 +199,6 @@ export const userModel = {
   updateUser,
   updateAccount,
   updateSecurity,
+  updateInformation,
   removeUser
 }

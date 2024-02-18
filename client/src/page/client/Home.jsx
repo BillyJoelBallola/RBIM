@@ -6,6 +6,7 @@ import PageHeader from '../../components/client/PageHeader'
 import axios from 'axios'
 import CustomDialog from '../../components/client/CustomDialog'
 import moment from 'moment'
+import Divider from '../../components/Divider'
 
 const Home = () => {
   const [eventsAndProgramsData, setEventsAndProgramsData] = useState([])
@@ -62,10 +63,13 @@ const Home = () => {
       />
       <PageHeader title={"Municipal of Magdalena"}/>
       <div className='side-margin py-12'>
-        <p className='text-sm text-gray-500'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, perspiciatis.</p>
+        <p className='text-sm text-gray-500 text-justify mb-4'>
+          Welcome to our website, your go-to destination for staying informed about all the exciting events, programs, and announcements happening in the Municipality of Magdalena. Whether you're a resident, visitor, or simply curious about what's happening in our vibrant community, you'll find everything you need right here. Our platform serves as a central hub for keeping you up-to-date with the latest happenings in Magdalena. Explore our comprehensive listings, stay connected, and never miss out on the pulse of our municipality.
+        </p>
+        <Divider />
         <div className="flex flex-col md:flex-row gap-6 mt-4">
           <div className='w-full h-fit flex flex-col justify-between'>
-            <div className='font-bold text-lg mb-2'>
+            <div className='font-bold text-lg mb-2'>  
               <span className='text-gray-500'>EVENTS AND PROGRAMS</span>
             </div>
             <div className='grid gap-4'>

@@ -6,6 +6,7 @@ import ViewAnnouncement from '../../components/client/ViewAnnouncement'
 import CustomDialog from '../../components/client/CustomDialog'
 import moment from 'moment'
 import axios from 'axios'
+import Divider from '../../components/Divider'
 
 const Announcements = () => {
   const { id } = useParams();
@@ -56,7 +57,10 @@ const Announcements = () => {
         {
           id ? <ViewAnnouncement /> : 
           <div className='grid gap-4'>
-            <p className='text-sm text-gray-600'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias dicta veritatis atque? Nesciunt accusantium, harum maxime minus earum quod adipisci.</p>
+            <p className='text-sm text-justify text-gray-600'>
+              Welcome to the <span className='text-[#008056] font-semibold'>Announcements</span> page! Here you will discover the most recent updates, news, and relevant announcements about events, programs, and initiatives in the Municipality of Magdalena. From upcoming festivals and community events to important municipal announcements and project updates, this page is your one-stop shop for staying informed and connected to the lifeblood of our thriving town. Check back periodically for the most latest news, and join us in enjoying the various tapestry of experiences that make Magdalena a really unique place to live and visit.
+            </p>
+            <Divider />
             <div className='flex gap-2'>
             <button className={`border border-gray-500 rounded-md py-1 px-4 text-sm ${activeTab === 1 ? 'text-white bg-gray-500' : 'bg-transparent text-gray-500'}`} onClick={() => setActiveTab(1)}>ALL</button>
               <button className={`border border-gray-500 rounded-md py-1 px-4 text-sm ${activeTab === 2 ? 'text-white bg-gray-500' : 'bg-transparent text-gray-500'}`} onClick={() => setActiveTab(2)}>RECENT</button>

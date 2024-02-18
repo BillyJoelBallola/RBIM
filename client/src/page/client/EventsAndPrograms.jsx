@@ -4,6 +4,7 @@ import PageHeader from '../../components/client/PageHeader'
 import EventProgram from '../../components/client/EventProgram'
 import ViewEventsAndProgram from '../../components/client/ViewEventsAndProgram';
 import axios from 'axios';
+import Divider from '../../components/Divider';
 
 const EventsAndPrograms = () => {
   const { id } = useParams();
@@ -32,7 +33,10 @@ const EventsAndPrograms = () => {
         {
           id ? <ViewEventsAndProgram /> :
           <div className='grid gap-4'>
-            <p className='text-sm text-gray-500'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias dicta veritatis atque? Nesciunt accusantium, harum maxime minus earum quod adipisci.</p>
+            <p className='text-sm text-justify text-gray-500'>              
+              Welcome to the <span className='text-[#008056] font-semibold'>Events and Programs</span> page! The Municipality of Magdalena offers a diverse range of cultural, educational, and recreational opportunities. Everyone may find something to enjoy, from exciting festivals honoring our rich heritage to engaging workshops and programs aimed to inspire and educate. Whether you're a resident looking for local activities or a visitor eager to discover our community's lively energy, our carefully curated collection of events and programs is sure to capture your interest and enrich your experience. Stay tuned for regular updates, and join us in celebrating the wide range of activities that make Magdalena an exciting place of activity and interaction.
+            </p>
+            <Divider />
             <div className='flex gap-2'>
               <button className={`border border-gray-500 rounded-md py-1 px-4 text-sm ${activeTab === 1 ? 'text-white bg-gray-500' : 'bg-transparent text-gray-500'}`} onClick={() => setActiveTab(1)}>ALL</button>
               <button className={`border border-gray-500 rounded-md py-1 px-4 text-sm ${activeTab === 2 ? 'text-white bg-gray-500' : 'bg-transparent text-gray-500'}`} onClick={() => setActiveTab(2)}>UPCOMING</button>

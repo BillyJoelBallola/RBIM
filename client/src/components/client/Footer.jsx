@@ -33,7 +33,7 @@ const Footer = () => {
         <img src={POPCOMGoldLogo} className="w-[150px] aspect-auto" alt="popcom-logo" />
       </div>
       <div className='side-margin text-center mt-10'>
-        <small className='text-gray-400'>Copyright © {currentYear?.toString()?.split(" ")[3]} • Registry of Inhabitants and Migrants</small>
+        <small className='text-gray-400'>Copyright © {currentYear.getFullYear()} • Registry of Inhabitants and Migrants</small>
       </div>
     </footer> 
   )

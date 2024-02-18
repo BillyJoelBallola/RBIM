@@ -17,7 +17,7 @@ import ActivityRoutes from './routes/ActivityRoutes.js'
 const app = express()
 app.use(cors({
     credentials: true,
-    origin: ["http://localhost:5173", "http://192.168.1.20:8081"]
+    origin: ['http://localhost:5173', '*']
 }))
 app.use(express.json())
 app.use(cookieParser())

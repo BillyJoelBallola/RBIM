@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { addUser, getAllUserByBarangay, getAllUserById, getAllUserByRole, getAllUsers, getLoggedUser, getLoggedUserMobile, removeUser, updateAccount, updateSecurity, updateSecurityMobile, updateUser } from "../controllers/UserController.js"
+import { addUser, getAllUserByBarangay, getAllUserById, getAllUserByRole, getAllUsers, getLoggedUser, getLoggedUserMobile, removeUser, updateAccount, updateInformationMobile, updateSecurity, updateSecurityMobile, updateUser } from "../controllers/UserController.js"
 
 const route = Router()
 
@@ -14,6 +14,7 @@ route.put("/user", updateUser)
 route.put("/user/account", updateAccount)
 route.put("/user/security", updateSecurity)
 route.put("/user/mobile/security", updateSecurityMobile)
+route.put("/user/mobile/information", updateInformationMobile)
 route.delete("/user/:user_id", removeUser)
 
 export default route
