@@ -5,13 +5,15 @@ import Footer from '../components/client/Footer'
 import Messenger from '../components/client/Messenger'
 
 const ClientLayout = () => {
+
+  console.log(window);
   return (
     <>
       <Navbar />
       <Messenger />
       <div className='bg-[#f1f1f1] overflow-hidden pt-[100px] pb-[10px] h-full'>
         <Outlet />
-      </div>
+      </div>  
       <Footer />
     </>
   )

@@ -5,16 +5,14 @@ import { UserContext } from '../../context/UserContext'
 import Header from '../../components/admin/Header'
 import { barangay } from '../../static/Geography'
 import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
 import axios from 'axios'
 
 import { Toast } from 'primereact/toast'
 import { MdOutlineEdit } from "react-icons/md";
 import { LuArchive } from "react-icons/lu";
-import { LuTrash2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
 import { MdOpenInNew } from "react-icons/md";
-import { MdArrowBackIosNew } from "react-icons/md";
-import { MdArrowForwardIos } from "react-icons/md";
 
 const headers = [
   {
@@ -43,8 +41,9 @@ const individualHeaders = [
 ]
 
 const CitizenInformation = () => {
-  const year = new Date().getFullYear().toString()
-  const month = new Date().getMonth()
+  const currentDate = new Date()
+  const year = currentDate.getFullYear().toString()
+  const month = moment(currentDate).format('l')[0]
   const formattedMonth = month.toString().length === 1 ? "0" + month.toString() : ''
   const navigate = useNavigate()
   const toast = useRef(null)

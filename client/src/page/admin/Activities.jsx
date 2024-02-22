@@ -10,6 +10,7 @@ import axios from 'axios'
 import { LiaTrashAlt } from "react-icons/lia";
 import { MdOutlineEdit } from "react-icons/md";
 import { Toast } from 'primereact/toast'
+import moment from 'moment'
 
 const headers = [
   {
@@ -31,8 +32,9 @@ const headers = [
 ]
 
 const Activities = () => {
+  const currentDate = new Date()
   const year = new Date().getFullYear().toString()
-  const month = new Date().getMonth()
+  const month = moment(currentDate).format('l')[0]
   const formattedMonth = month.toString().length === 1 ? "0" + month.toString() : ''
   const toast = useRef(null)
   const navigate = useNavigate()
