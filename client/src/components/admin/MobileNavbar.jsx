@@ -4,10 +4,12 @@ import POPCOMWhiteLogo from '../../assets/popcom-logo-white.png'
 import { NavigationContext } from '../../context/NavigationContext'
 import { operationLinks, moreLinks } from '../../static/NavLinks'
 import { IoCloseSharp } from "react-icons/io5";
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import CustomDialog from './CustomDialog'
+import axios from 'axios'
 
 const MobileNavbar = () => {
+  const navigate = useNavigate()
   const { toggleNav, isNavigateOpen } = useContext(NavigationContext)
   const [visible, setVisible] = useState(false);
   const [dialogData, setDialogData] = useState({

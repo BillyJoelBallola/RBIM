@@ -6,6 +6,7 @@ import MobileNavbar from '../components/admin/MobileNavbar'
 
 const AdminLayout = () => {
   const { isNavigateOpen } = useContext(NavigationContext)
+  document.title = 'RBIM'
 
   return (
     <>

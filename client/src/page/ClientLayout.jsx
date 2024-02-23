@@ -5,8 +5,8 @@ import Footer from '../components/client/Footer'
 import Messenger from '../components/client/Messenger'
 
 const ClientLayout = () => {
-
-  console.log(window);
+  document.title = 'Magdalena Community Hub'
+  
   return (
     <>
       <Navbar />
