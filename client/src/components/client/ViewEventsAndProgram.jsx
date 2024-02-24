@@ -76,7 +76,7 @@ const ViewEventsAndProgram = () => {
                 <div className='text-xs text-justify' dangerouslySetInnerHTML={{ __html: truncate(item.content, 100) }} />
                 <div className='text-[11px] mt-1'>
                   <span>{item.address_barangay}</span> • 
-                  <span> {moment(item.date_posted).startOf('hour').fromNow()}</span>
+                  <span> Posted {moment(item.date_posted).startOf('hour').fromNow()}</span>
                 </div>
               </Link> 
             )) 
