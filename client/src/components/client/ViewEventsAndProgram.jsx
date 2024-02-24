@@ -57,12 +57,11 @@ const ViewEventsAndProgram = () => {
             alt="Image" 
             preview 
           />
-          {/* <img className='object-fit object-center' src={} alt="image" /> */}
         </div>
         <h2 className='font-semibold text-lg'>{eventsAndPrograms.title}</h2>
         <div className='flex flex-col text-gray-600 text-sm mb-6'>
-          <span>{eventsAndPrograms.address_barangay} • {moment(eventsAndPrograms.date).format("ll")} • {type(eventsAndPrograms.type)}</span>
-          <span className='text-xs'>{moment(eventsAndPrograms.date_posted).startOf('hour').fromNow()}</span>
+          <span>{type(eventsAndPrograms.type)} • {moment(eventsAndPrograms.date).format("ll")} • {eventsAndPrograms.address_barangay}</span>
+          <span className='text-xs'>Posted {moment(eventsAndPrograms.date_posted).startOf('hour').fromNow()}</span>
         </div>
         <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: eventsAndPrograms.content }} />
       </div>

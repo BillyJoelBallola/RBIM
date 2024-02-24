@@ -35,7 +35,7 @@ const EventProgram = ({ eventsAndPrograms, display }) => {
               <h4 className='font-semibold'>{truncate(eventProg.title, 50)}</h4>
               <div className='text-sm text-gray-500 tiptap' dangerouslySetInnerHTML={{ __html: truncate(eventProg.content, 150) }} />
               <div className='flex items-center text-gray-400 gap-2 text-xs mt-1'>
-                <span>{eventProg.address_barangay} • {moment(eventProg.date_posted).startOf('hour').fromNow()} • {type(eventProg.type)}</span>
+                <span>{type(eventProg.type)} • {eventProg.address_barangay} • Posted {moment(eventProg.date_posted).startOf('hour').fromNow()}</span>
               </div>
             </Link>
           </div>

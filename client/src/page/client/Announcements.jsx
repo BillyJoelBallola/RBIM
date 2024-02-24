@@ -46,7 +46,8 @@ const Announcements = () => {
           <div>
             <h2 className='font-semibold text-lg'>{selectedAnnouncement?.title}</h2>
             <div className='text-gray-600 text-sm mb-6'>
-              <span>{selectedAnnouncement?.address_barangay} • {moment(selectedAnnouncement?.date).format("ll")}</span>
+              <span>{selectedAnnouncement?.address_barangay} • {moment(selectedAnnouncement?.date).format("ll")}</span><br />
+              <span className='text-xs'>Posted {moment(selectedAnnouncement?.date_posted).startOf('hour').fromNow()}</span>
             </div>
             <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: selectedAnnouncement?.content }} />
           </div>
