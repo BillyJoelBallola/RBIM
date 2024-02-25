@@ -35,7 +35,7 @@ const Login = () => {
       try {
         const { data } = await axios.post('/api/login', loginForm)
         if(data.success) {
-          window.localStorage.setItem('rbim_system', data?.rbim_token)
+          window.localStorage.setItem('rbim_token', data?.rbim_token)
           navigate("/rbim/")
           setUpdate("logged-in")
         }else{

@@ -33,7 +33,7 @@ const Navbar = () => {
 
   const logout = () => {
     // axios.post('/api/logout');
-    window.localStorage.removeItem('rbim_system')
+    window.localStorage.removeItem('rbim_token')
     navigate("/login")
   }
 
