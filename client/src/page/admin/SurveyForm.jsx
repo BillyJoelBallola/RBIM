@@ -13,7 +13,7 @@ import Form2 from '../../components/admin/form/Form2'
 import Form3 from '../../components/admin/form/Form3'
 import Form4 from '../../components/admin/form/Form4'
 import Form5 from '../../components/admin/form/Form5'
-import Form6 from '../../components/admin/form/form6'
+import Form6 from '../../components/admin/form/Form6'
 import PrintableForm from '../../components/admin/PrintableForm'
 
 const SurveyForm = () => {
