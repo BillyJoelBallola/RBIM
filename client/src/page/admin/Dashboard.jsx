@@ -51,7 +51,7 @@ const Dashboard = () => {
       const { data } = await axios.get('/api/activities/events_and_programs')
       if(data.success){
         const info = data?.data?.filter(item => new Date(item.date) > new Date())
-        const filteredInfo = loggedUser?.role !== 'administrator' ? info.filter(item => item.address === loggedUser?.address_id) : info
+        const filteredInfo = loggedUser?.role !== 'administrator' ? info?.filter(item => item.address === loggedUser?.address_id) : info
         setActivities(current => ({...current, eventsAndPrograms: filteredInfo }))
       }
     }
@@ -64,7 +64,7 @@ const Dashboard = () => {
       const { data } = await axios.get('/api/activities/announcements')
       if(data.success){
         const info = data?.data?.filter(item => new Date(item.date) > new Date())
-        const filteredInfo = loggedUser?.role !== 'administrator' ? info.filter(item => item.address === loggedUser?.address_id) : info
+        const filteredInfo = loggedUser?.role !== 'administrator' ? info?.filter(item => item.address === loggedUser?.address_id) : info
         setActivities(current => ({...current, announcements: filteredInfo }))
       }
     }

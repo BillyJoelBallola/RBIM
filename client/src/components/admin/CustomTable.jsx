@@ -10,7 +10,7 @@ const CustomTable = ({ headers, data, actions, description = '', limit = 5}) => 
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = limit;
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   const handleNextPage = () => {
     setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages));

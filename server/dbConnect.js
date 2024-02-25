@@ -7,6 +7,6 @@ const config = {
   database: process.env.DB_NAME
 }
 
-const connection = mysql.createConnection(config)
+const connection = mysql.createPool(config)
 
 export default connection
