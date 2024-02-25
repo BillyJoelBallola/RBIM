@@ -37,5 +37,5 @@ db.connect((err) => {
     if(err) return console.log("Database Disconnected");
     console.log("Database Connected");
 })
-  
+
 app.listen(PORT, () => console.log(`Server runnning on port ${PORT}`));
