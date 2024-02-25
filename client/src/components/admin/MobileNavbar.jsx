@@ -33,7 +33,8 @@ const MobileNavbar = () => {
   }
 
   const logout = () => {
-    axios.post('/api/logout');
+    // axios.post('/api/logout');
+    window.localStorage.removeItem('rbim_system')
     navigate("/login")
   }
 

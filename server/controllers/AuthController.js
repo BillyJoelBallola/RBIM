@@ -25,8 +25,7 @@ export const loginWeb = async (req, res) => {
     const tokenPayload = { password: password, id: user.id, username: user.username, address_id: user.address_id, role: user.role };
     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {});
 
-    localStorage.setItem('rbim_token', token);
-    return res.json({ success: true, message: 'Login successfull'});
+    return res.json({ success: true, rbim_token: token, message: 'Login successfull'});
   } catch (error) {
     return res.json({ success: false, message: 'Internal server error'});
   }
