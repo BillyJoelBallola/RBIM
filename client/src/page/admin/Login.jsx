@@ -35,9 +35,8 @@ const Login = () => {
       try {
         const { data } = await axios.post('/api/login', loginForm)
         if(data.success) {
-          console.log(data);
-          // navigate("/rbim/");
-          // setUpdate("logged-in")
+          navigate("/rbim/")
+          setUpdate("logged-in")
         }else{
           return toast.current.show({
             severity: 'error',
