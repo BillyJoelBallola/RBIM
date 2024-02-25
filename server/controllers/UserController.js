@@ -139,7 +139,7 @@ export const getLoggedUser = async (req, res) => {
   try {
     const { rbim_token } = await req.cookies;
     if(rbim_token){
-      await jwt.verify(rbim_token, process.env.JWT_SECRET, {}, async (err, user) => {
+      jwt.verify(rbim_token, process.env.JWT_SECRET, {}, async (err, user) => {
         if(err) throw err;
         const userLogged = await userModel.getUserById(user.id);
         const { id, name, username, address_id, role } = userLogged;
@@ -158,7 +158,7 @@ export const getLoggedUserMobile = async (req, res) => {
   try {
     const { token } = await req.body;
     if(token){
-      await jwt.verify(token, process.env.JWT_SECRET, {}, async (err, user) => {
+      jwt.verify(token, process.env.JWT_SECRET, {}, async (err, user) => {
         if(err) throw err;
         const userLogged = await userModel.getUserById(user.id);
         const { id, name, username, address_id, role } = userLogged;
