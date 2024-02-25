@@ -354,7 +354,7 @@ const IndividualForm = () => {
                                 </button>
                                 <img 
                                     className='object-contain'
-                                    src={`http://localhost:4000/${individual?.image?.slice(1, -1) + individual?.image?.slice(-1)}`} 
+                                    src={`https://rbim-server.onrender.com/${individual?.image?.slice(1, -1) + individual?.image?.slice(-1)}`} 
                                     alt="uploaded-image" 
                                 />
                             </div>

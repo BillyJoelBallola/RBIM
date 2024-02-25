@@ -29,7 +29,7 @@ const EventProgram = ({ eventsAndPrograms, display }) => {
             <Link to={`/events-and-programs/${eventProg.id}`}>
               <div className='h-[150px] md:h-[250px] bg-gray-300 mb-3 flex items-center justify-center rounded-lg overflow-hidden'>
                 <div className='w-full aspect-ratio'>
-                  <img className='object-fit object-center' src={`http://localhost:4000/${eventProg?.image?.slice(1, -1) + eventProg?.image?.slice(-1)}`} alt="image" />
+                  <img className='object-fit object-center' src={`https://rbim-server.onrender.com/${eventProg?.image?.slice(1, -1) + eventProg?.image?.slice(-1)}`} alt="image" />
                 </div>
               </div>
               <h4 className='font-semibold'>{truncate(eventProg.title, 50)}</h4>

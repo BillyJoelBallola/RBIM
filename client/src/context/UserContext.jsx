@@ -6,7 +6,12 @@ export const UserContext = createContext({})
 export const UserContextProvider = ({ children }) => {
   const [loggedUser, setLoggedUser] = useState(null)
   const [update, setUpdate] = useState(null)
-  const token = window.localStorage.getItem('rbim_token')
+  const [token, setToken] = useState(null)
+
+  useEffect(() => {
+    if(token === null)
+    setToken(window.localStorage.getItem('rbim_token'))
+  }, [null])
 
   useEffect(() => {
     const getLoggedUser = async () => {
@@ -24,11 +29,13 @@ export const UserContextProvider = ({ children }) => {
       }
     }
 
-    if(loggedUser === null || update !== null || token !== null){
-      getLoggedUser()
+    if(token){
+      if(loggedUser === null || update !== null){
+        getLoggedUser()
+      }
     }
-  }, [update, loggedUser]);
-
+  }, [update, loggedUser, token]);
+  
   return(
     <UserContext.Provider value={{ loggedUser, setLoggedUser, setUpdate }}>
       {children}

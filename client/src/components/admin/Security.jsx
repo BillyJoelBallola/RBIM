@@ -67,7 +67,7 @@ const Security = ({ title, description }) => {
         resetForm()
         showToast("success", "Success", data.message + ". You are require to re-loggin to the system")
         setTimeout(() => {
-          axios.post("/api/logout")
+          window.localStorage.removeItem('rbim_token')
           navigate("/login")
         }, [2000])
       }else{

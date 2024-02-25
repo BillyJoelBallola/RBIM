@@ -1,9 +1,11 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { UserContext } from "./UserContext";
 
 export const SurveyFormContext = createContext({})
 
 export const SurveyFormContextProvider = ({ children }) => {
+  const { loggedUser } = useContext(UserContext)
   const [questionsAndResponses, setQuestionsAndResponses] = useState([])
   const [questionsAndAnswerMember1, setQuestionAndAnswerMember1] = useState([])
   const [questionsAndAnswerMember2, setQuestionAndAnswerMember2] = useState([])
@@ -155,8 +157,10 @@ export const SurveyFormContextProvider = ({ children }) => {
       }
     }
 
-    fetchAllResponses()
-  }, [])
+    if(loggedUser){
+      fetchAllResponses()
+    }
+  }, [loggedUser])
 
   return (
     <SurveyFormContext.Provider
