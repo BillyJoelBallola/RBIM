@@ -11,7 +11,7 @@ export const UserContextProvider = ({ children }) => {
   useEffect(() => {
     const getLoggedUser = async () => {
       try {
-        const { data } = await axios.get("/api/user_logged", { rbim_token: token });
+        const { data } = await axios.get(`/api/user_logged/${token}`);
         if(data.success){
           setLoggedUser(data.data);
         }else{
@@ -24,7 +24,7 @@ export const UserContextProvider = ({ children }) => {
       }
     }
 
-    if(loggedUser === null || update !== null){
+    if(loggedUser === null || update !== null || token !== null){
       getLoggedUser()
     }
   }, [update, loggedUser]);

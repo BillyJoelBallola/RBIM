@@ -136,7 +136,7 @@ export const updateInformationMobile = async (req, res) => {
 // web
 export const getLoggedUser = async (req, res) => {
   try {
-    const { rbim_token } = await req.body;
+    const { rbim_token } = await req.params;
     if(rbim_token){
       jwt.verify(rbim_token, process.env.JWT_SECRET, {}, async (err, user) => {
         if(err) throw err;
