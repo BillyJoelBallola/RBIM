@@ -6,11 +6,12 @@ export const UserContext = createContext({})
 export const UserContextProvider = ({ children }) => {
   const [loggedUser, setLoggedUser] = useState(null)
   const [update, setUpdate] = useState(null)
-  
+  const token = window.localStorage.getItem('rbim_token')
+
   useEffect(() => {
     const getLoggedUser = async () => {
       try {
-        const { data } = await axios.get("/api/user_logged");
+        const { data } = await axios.get("/api/user_logged", { rbim_token: token });
         if(data.success){
           setLoggedUser(data.data);
         }else{
