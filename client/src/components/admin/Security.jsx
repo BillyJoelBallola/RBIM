@@ -47,6 +47,7 @@ const Security = ({ title, description }) => {
 
   const saveChanges = async (e) => {
     e.preventDefault()
+    const token = window.localStorage.getItem('rbim_token')
     try {
       if(securityForm.currentPassword === '' || securityForm.newPassword === '' || securityForm.confirmPassword === ''){
         return showToast("error", "Failed", "Fill up all fields")
@@ -60,7 +61,7 @@ const Security = ({ title, description }) => {
         return showToast("error", "Failed", "Password must be 5 characters or more")
       }
 
-      const { data } = await axios.put("/api/user/security", securityForm)
+      const { data } = await axios.put("/api/user/security", { accountData: securityForm, rbim_token: token })
       if(data.success){
         setUpdate("update")  
         resetForm()

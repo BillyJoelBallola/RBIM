@@ -209,14 +209,14 @@ const UserManagement = ({ title, description }) => {
   const recoverPassword = async (e) => {
     e.preventDefault()
     const userId = userForm?.id
-    const rbim_token = await window.cookieStore.get('rbim_token')
+    const token = window.localStorage.getItem('rbim_token')
 
     if(password === ''){
       return showToast("error", "Failed", 'Fillup the text field.')
     }
 
     try {
-      const { data } = await axios.post("/api/reset_password", { password, userId, rbim_token: rbim_token?.value })
+      const { data } = await axios.post("/api/reset_password", { password, userId, rbim_token: token })
       if(data.success){
         setVisible(false)
         setValidationVisible(false)

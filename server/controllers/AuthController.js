@@ -25,7 +25,7 @@ export const loginWeb = async (req, res) => {
     const tokenPayload = { password: password, id: user.id, username: user.username, address_id: user.address_id, role: user.role };
     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {});
 
-    res.cookie('rbim_token', token, { sameSite: 'None', secure: true });
+    localStorage.setItem('rbim_token', token);
     return res.json({ success: true, message: 'Login successfull'});
   } catch (error) {
     return res.json({ success: false, message: 'Internal server error'});
@@ -88,6 +88,7 @@ export const resetPassword = async (req, res) => {
 }
 
 export const logout = (req, res) => {
-	res.cookie("rbim_token", "").json(true);
+  localStorage.removeItem('rbim_token');
+  return res.json(true);
 };
 

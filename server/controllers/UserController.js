@@ -84,8 +84,7 @@ export const updateAccount = async (req, res) => {
 // web
 export const updateSecurity = async (req, res) => {
   try {
-    const { rbim_token } = await req.cookies;
-    const accountData = await req.body
+    const { accountData, rbim_token} = await req.body
     if(rbim_token){
       jwt.verify(rbim_token, process.env.JWT_SECRET, {}, async (err, user) => {
         if(err) throw err;
@@ -137,7 +136,7 @@ export const updateInformationMobile = async (req, res) => {
 // web
 export const getLoggedUser = async (req, res) => {
   try {
-    const { rbim_token } = await req.cookies;
+    const { rbim_token } = await req.body;
     if(rbim_token){
       jwt.verify(rbim_token, process.env.JWT_SECRET, {}, async (err, user) => {
         if(err) throw err;

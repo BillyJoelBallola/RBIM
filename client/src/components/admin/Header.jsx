@@ -10,14 +10,15 @@ const Header = ({ pageName }) => {
   const { toggleNav, isNavigateOpen } = useContext(NavigationContext)
 
   useEffect(() => {
-    window.cookieStore.get('rbim_token')
-      .then(({ value }) => {
-        if(!value) navigate("/login");
-      })
-      .catch((err) => {
-        navigate("/login");
-      })
-  }, [])
+    const getToken = () => {
+      const token = window.localStorage.getItem('rbim_token')
+      if(!token){
+        navigate('/login')
+      }
+    }
+    
+    getToken()    
+  }, [loggedUser])
 
   return (
     <header>
