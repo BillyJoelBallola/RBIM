@@ -26,7 +26,7 @@ export const uploadImage = async (req, res) => {
             data: fileContents,
         });
 
-        const publicUrl = `https://f002.backblazeb2.com/file/${bucketName}/${fileName}`;
+        const publicUrl = `https://s3.us-east-005.backblazeb2.com/file/${bucketName}/${fileName}`;
 
         return res.json({ success: true, data: publicUrl });
     } catch (error) {
@@ -54,11 +54,24 @@ export const removeUploadedImage = async (req, res) => {
     try {
         const activityData = await req.body
         const { image } = activityData
-        activityData?.id && await activityModel.updateActivity({...activityData, image: ''});
-        fs.unlink(`uploads/${image.slice(1, -1) + image.slice(-1)}`, async (err) => {
-            if (err) throw err
-            return res.json({ success: true, message: 'Image removed successfully' });
-        })
+
+        await b2.authorize();
+
+        const urlParts = image.split('/');
+        const bucketName = urlParts[urlParts.length - 2];
+        const fileName = urlParts[urlParts.length - 1];
+
+        await b2.deleteFileVersion({
+            fileName,
+            bucketName,
+        });
+        
+        return { success: true, message: 'File removed successfully' };
+        // activityData?.id && await activityModel.updateActivity({...activityData, image: ''});
+        // fs.unlink(`uploads/${image.slice(1, -1) + image.slice(-1)}`, async (err) => {
+        //     if (err) throw err
+        //     return res.json({ success: true, message: 'Image removed successfully' });
+        // })
     } catch (error) {
         return res.json({ success: false, message: 'Internal Server Error'});
     }
