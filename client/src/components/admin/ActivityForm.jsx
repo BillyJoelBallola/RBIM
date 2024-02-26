@@ -509,7 +509,8 @@ const ActivityForm = () => {
                                 </button>
                                 <img 
                                     className='object-contain'
-                                    src={`https://rbim-server.onrender.com/${activityForm?.image?.slice(1, -1) + activityForm?.image?.slice(-1)}`} 
+                                    // src={`https://rbim-server.onrender.com/${activityForm?.image?.slice(1, -1) + activityForm?.image?.slice(-1)}`} 
+                                    src={activityForm?.image} 
                                     alt="uploaded-image" 
                                 />
                             </div>

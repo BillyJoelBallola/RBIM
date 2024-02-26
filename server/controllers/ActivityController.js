@@ -1,21 +1,53 @@
 import fs from 'fs'
 import { activityModel } from '../models/ActivityModel.js';
 import Twilio from 'twilio';
+import B2 from 'b2';
+
+const b2 = new B2({
+    applicationKeyId: process.env.APP_KEY,
+    applicationKey: process.env.KEY_ID,
+}) 
         
 export const uploadImage = async (req, res) => {
     try {
-        const image = await req.file
-        const { path, originalname } = image;
-        const parts = originalname.split(".");
-        const ext = parts[parts.length - 1];
-        const newPath = path + "." + ext;
-        fs.renameSync(path, newPath);
+        await b2.authorize();
 
-        return res.json({ success: true, data: newPath.replace("uploads", "")});
+        const file = req.file;
+        const { path, originalname } = file;
+
+        const fileContents = fs.readFileSync(path);
+
+        const bucketName = 'rbimupload';
+        const fileName = originalname;
+
+        const response = await b2.uploadFile({
+            bucketName,
+            fileName,
+            data: fileContents,
+        });
+
+        const publicUrl = `https://f002.backblazeb2.com/file/${bucketName}/${fileName}`;
+
+        return res.json({ success: true, data: publicUrl });
     } catch (error) {
         return res.json({ success: false, message: 'Internal Server Error'});
     }
 }
+
+// export const uploadImage = async (req, res) => {
+//     try {
+//         const image = await req.file
+//         const { path, originalname } = image;
+//         const parts = originalname.split(".");
+//         const ext = parts[parts.length - 1];
+//         const newPath = path + "." + ext;
+//         fs.renameSync(path, newPath);
+
+//         return res.json({ success: true, data: newPath.replace("uploads", "")});
+//     } catch (error) {
+//         return res.json({ success: false, message: 'Internal Server Error'});
+//     }
+// }
 
 export const removeUploadedImage = async (req, res) => {
     try {
