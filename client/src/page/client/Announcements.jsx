@@ -21,7 +21,7 @@ const Announcements = () => {
     const fetchEventsAndPrograms = async () => {
       const { data } = await axios.get('/api/activities/announcements')
       if(data.success){
-        const recent = data.data.filter(item => new Date() < new Date(item.date))
+        const recent = data?.data?.filter(item => new Date() < new Date(item.date))
         setAnnouncementData(data.data)
         setRecentAnnouncementData(recent)
       }

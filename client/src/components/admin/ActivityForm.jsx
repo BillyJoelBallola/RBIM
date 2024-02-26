@@ -101,7 +101,9 @@ const ActivityForm = () => {
             const { data } = await axios.get('/api/address')
             if(data.success){
                 const address = data?.data
-                const addressData = address.find(item => item?.barangay?.toLowerCase()?.includes(activityForm.address_barangay.toLowerCase()))
+                const addressData = activityForm?.address_barangay !== 'Municipal' 
+                                    ? address.find(item => item?.barangay?.toLowerCase()?.includes(activityForm.address_barangay.toLowerCase()))
+                                    : address 
                 setAddressData(addressData)
             }
         }
