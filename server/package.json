@@ -5,7 +5,7 @@
     "start": "nodemon server.js"
   },
   "dependencies": {
-    "b2": "^0.1.11",
+    "backblaze-b2": "^1.7.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

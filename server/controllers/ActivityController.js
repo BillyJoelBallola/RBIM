@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { activityModel } from '../models/ActivityModel.js';
 import Twilio from 'twilio';
-import B2 from 'b2';
+import B2 from 'backblaze-b2';
 
 const b2 = new B2({
     applicationKeyId: process.env.APP_KEY,
