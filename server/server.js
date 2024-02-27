@@ -33,7 +33,11 @@ app.use("/api", ActivityRoutes)
 
 const PORT = process.env.SERVER_PORT || 4000;
 
-db.getConnection((err, connection) => {
+// db.getConnection((err, connection) => {
+//     if(err) return console.log("Database Disconnected");
+//     console.log("Database Connected");
+// })
+db.connect((err, connection) => {
     if(err) return console.log("Database Disconnected");
     console.log("Database Connected");
 })

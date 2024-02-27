@@ -104,7 +104,7 @@ const ActivityForm = () => {
                 const address = data?.data
                 const addressData = activityForm?.address_barangay !== 'Municipal' 
                                     ? address.find(item => item?.barangay?.toLowerCase()?.includes(activityForm.address_barangay.toLowerCase()))
-                                    : address 
+                                    : { id: 0, address: 'Municipal'} 
                 setAddressData(addressData)
             }
         }
@@ -120,7 +120,9 @@ const ActivityForm = () => {
             if(data.success){
                 const individualData = data?.data
                 const date = new Date()
-                const individualDataConductedThisYear = individualData.filter(item => Number(item?.date_encoded?.toString()?.split("-")[0]) === date.getFullYear() && Number(item?.address) === Number(addressData?.id))
+                const individualDataConductedThisYear = addressData.id !== 0 
+                                                    ? individualData.filter(item => Number(item?.date_encoded?.toString()?.split("-")[0]) === date.getFullYear() && Number(item?.address) === Number(addressData?.id))
+                                                    : individualData.filter(item => Number(item?.date_encoded?.toString()?.split("-")[0]) === date.getFullYear())
                 setIndividualDataThisYear(individualDataConductedThisYear);
             }
         }
@@ -231,33 +233,41 @@ const ActivityForm = () => {
         }else if(Number(value) === 1){
             individualDataThisYear?.map(item => {
                 if(Number(item.Q4) >= 60){
-                    if(!contacts.includes(code + item.phone_no)){
-                        contacts.push(code + item.phone_no)
-                    } 
+                    if(item?.phone_no?.toString().length === 10 || item?.phone_no?.toString().length === 11){
+                        if(!contacts.includes(code + item.phone_no)){
+                            contacts.push(code + item.phone_no)
+                        }
+                    }
                 }
             })
         }else if(Number(value) === 2){
             individualDataThisYear?.map(item => {
                 if(Number(item.Q12) === 1 || Number(item.Q12) === 2 && item.Q12 !== null){
-                    if(!contacts.includes(code + item.phone_no)){
-                        contacts.push(code + item.phone_no)
-                    } 
+                    if(item?.phone_no?.toString().length === 10 || item?.phone_no?.toString().length === 11){
+                        if(!contacts.includes(code + item.phone_no)){
+                            contacts.push(code + item.phone_no)
+                        } 
+                    }
                 }
             })
         }else if(Number(value) === 3){
             individualDataThisYear?.map(item => {
                 if(Number(item.Q29) !== 99 && item.Q29 !== null){
-                    if(!contacts.includes(code + item.phone_no)){
-                        contacts.push(code + item.phone_no)
-                    } 
+                    if(item?.phone_no?.toString().length === 10 || item?.phone_no?.toString().length === 11){
+                        if(!contacts.includes(code + item.phone_no)){
+                            contacts.push(code + item.phone_no)
+                        }
+                    }
                 }
             })
         }else if(Number(value) === 4){
             individualDataThisYear?.map(item => {
                 if(Number(item.Q29) !== 2 && Number(item.Q29) !== 99 && item.Q29 !== null){
-                    if(!contacts.includes(code + item.phone_no)){
-                        contacts.push(code + item.phone_no)
-                    } 
+                    if(item?.phone_no?.toString().length === 10 || item?.phone_no?.toString().length === 11){
+                        if(!contacts.includes(code + item.phone_no)){
+                            contacts.push(code + item.phone_no)
+                        }
+                    }
                 }
             })
         }
