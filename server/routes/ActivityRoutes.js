@@ -1,10 +1,8 @@
+import upload from "../multer.js"
 import { Router } from "express"
-import multer from "multer"
 import { addActivity, deleteActivityById, getActivityById, getAllActivity, getAllAnnouncements, getAllEventsAnsPrograms, removeUploadedImage, sendSMS, updateActivity, uploadImage } from "../controllers/ActivityController.js"
 
 const route = Router()
-
-const upload = multer({ dest: 'uploads/' })
 
 route.post("/upload", upload.single('image'), uploadImage)
 route.post("/remove_image", removeUploadedImage)

@@ -48,7 +48,8 @@ const IndividualForm = () => {
             formData.append('image', individual?.image)
             const uploadResponse = await axios.post("/api/upload", formData)
             if(uploadResponse.data.success){
-                const image = uploadResponse.data.data
+                const { public_id, format } = uploadResponse?.data?.data
+                const image = public_id + "." + format
                 await axios.put("/api/individual_image", { image: image, id: id })
                 setIndividual(current => ({...current, image: image}));
                 return showToast('success', 'Success', 'Image uploaded successfully')
@@ -354,7 +355,7 @@ const IndividualForm = () => {
                                 </button>
                                 <img 
                                     className='object-contain'
-                                    src={`https://rbim-server.onrender.com/${individual?.image?.slice(1, -1) + individual?.image?.slice(-1)}`} 
+                                    src={`http://res.cloudinary.com/dplelvfxi/image/upload/v1709045429/${individual?.image}`}   
                                     alt="uploaded-image" 
                                 />
                             </div>

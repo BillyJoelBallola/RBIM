@@ -178,8 +178,8 @@ const PrintableIndividualForm = ({ preview, setPreview, individual }) => {
                 <div className='flex justify-center'>
                   <div className='w-[100px] border border-black aspect-auto'>
                     {
-                      individual?.image !== '' ?
-                      <img src={`https://rbim-server.onrender.com/${individual?.image?.slice(1, -1) + individual?.image?.slice(-1)}`} alt="profile" />
+                      individual?.image ?
+                      <img src={`http://res.cloudinary.com/dplelvfxi/image/upload/v1709045429/${individual?.image}`} alt="profile" />
                       : <></>
                     }
                   </div>

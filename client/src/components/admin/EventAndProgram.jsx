@@ -5,7 +5,7 @@ const EventAndProgram = ({ title, content, image }) => {
     return (
         <div className='flex flex-col md:flex-row gap-4'>
             <div className='bg-gray-200 rounded-lg w-full h-[150px] md:h-[100px] md:min-w-[120px] md:max-w-[150px] overflow-hidden'>
-                <img src={`https://rbim-server.onrender.com/${image?.slice(1, -1) + image?.slice(-1)}`} alt="image" className='object-fill object-center'/>
+                <img src={`http://res.cloudinary.com/dplelvfxi/image/upload/v1709045429/${image}`} alt="image" className='object-fill object-center'/>
             </div>
             <div>
                 <span className='text-lg font-semibold'>{truncate(title, 30)}</span>

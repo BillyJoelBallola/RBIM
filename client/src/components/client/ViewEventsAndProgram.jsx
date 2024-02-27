@@ -53,7 +53,7 @@ const ViewEventsAndProgram = () => {
         <div className='h-[250px] md:h-[350px] bg-gray-300 mb-3 flex items-center justify-center rounded-lg overflow-hidden'>
           <Image 
             className='object-fit object-center' 
-            src={eventsAndPrograms?.image && `https://rbim-server.onrender.com/${eventsAndPrograms.image.slice(1, -1) + eventsAndPrograms.image.slice(-1)}`} 
+            src={eventsAndPrograms?.image && `http://res.cloudinary.com/dplelvfxi/image/upload/v1709045429/${eventsAndPrograms?.image}`} 
             alt="Image" 
             preview 
           />

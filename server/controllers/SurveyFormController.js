@@ -65,10 +65,10 @@ export const removeIndividualImage = async (req, res) => {
       const { image } = individual
       const newIndividualData = { ...individual, image: '' }
       individual?.id && await surveyFormModel.updateIndividualImage(newIndividualData);
-      fs.unlink(`uploads/${image?.slice(1, -1) + image?.slice(-1)}`, (err) => {
+      cloudinary.uploader.destroy(`${image?.split('.')[0]}`, async (err,result) => {
         if (err) throw err
-          return res.json({ success: true, message: 'Image removed successfully' });
-      })
+        return res.json({ success: true, message: 'Image removed successfully' })
+      });
   } catch (error) {
       return res.json({ success: false, message: 'Internal Server Error'});
   }

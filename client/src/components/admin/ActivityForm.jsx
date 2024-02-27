@@ -86,8 +86,9 @@ const ActivityForm = () => {
             formData.append('image', activityForm.image)
             const { data } = await axios.post("/api/upload", formData)
             if(data.success){
-                const image = data.data
-                setActivityForm(current => ({...current, image: image}));
+                const { public_id, format } = data?.data
+                const image = public_id + "." + format                
+                setActivityForm(current => ({...current, image: image }));
             }
         }
 
@@ -509,8 +510,7 @@ const ActivityForm = () => {
                                 </button>
                                 <img 
                                     className='object-contain'
-                                    // src={`https://rbim-server.onrender.com/${activityForm?.image?.slice(1, -1) + activityForm?.image?.slice(-1)}`} 
-                                    src={activityForm?.image} 
+                                    src={`http://res.cloudinary.com/dplelvfxi/image/upload/v1709045429/${activityForm?.image}`}
                                     alt="uploaded-image" 
                                 />
                             </div>
