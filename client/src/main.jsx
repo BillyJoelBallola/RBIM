@@ -12,8 +12,7 @@ import "primereact/resources/primereact.min.css";
 import './index.css'
 import { SurveyFormContextProvider } from './context/SurveyFormContext.jsx'
 
-// axios.defaults.baseURL = "https://rbim-server.onrender.com";
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = "https://rbim-server.onrender.com";
 axios.defaults.withCredentials = true;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
