@@ -93,8 +93,8 @@ const addSurveyForm = async ({ household, surveyForm, questionsAndResponses }) =
     })
 
     const householdResult = await new Promise(( resolve, reject ) => {
-      db.query('INSERT INTO `household`(`survey_form_id`, `household_number`, `living_type`, `respondent_name`, `household_head`, `household_member_no`, `address`, `unit_no`, `house_no`, `street`, `phone_no`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-      [surveyFormResult, household.household_number, household.living_type, household.respondent_name, household.household_head, household.household_member_no, household.address, household.unit_no, household.house_no, household.street, phone_no], 
+      db.query('INSERT INTO `household`(`survey_form_id`, `household_number`, `living_type`, `respondent_name`, `household_head`, `household_member_no`, `address`, `unit_no`, `house_no`, `street`, `phone_no`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+      [surveyFormResult, household.household_number, household.living_type, household.respondent_name, household.household_head, household.household_member_no, household.address, household.unit_no, household.house_no, household.street, household.phone_no], 
       (( error, result ) => {
         if (error) {
           reject(error);
