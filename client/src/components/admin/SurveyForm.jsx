@@ -28,7 +28,7 @@ const SurveyForm = ({ title, description }) => {
 
   const headers = [{ key: "response_code", label: "Code" }, { key: "response_text", label: "Responses" }]
   
-  const actions = [{ label: <MdOutlineEdit />, onClick: ({idx}) => editResponse(idx) }, { label: <LuTrash2 />, onClick: ({idx}) => deleteDialog(idx) }]
+  const actions = [{ label: <MdOutlineEdit />, onClick: ({rowData}) => editResponse(rowData) }, { label: <LuTrash2 />, onClick: ({rowData}) => deleteDialog(rowData) }]
 
   const showToast = (severity, summary, detail) => {
     return toast.current.show({ severity: severity, summary: summary, detail: detail})
@@ -131,12 +131,11 @@ const SurveyForm = ({ title, description }) => {
     resetResponseForm()
   }
 
-  const editResponse = (idx) => {
-    const selectedResponse = responsesOfSelectedQuestions[idx]
+  const editResponse = (rowData) => {
     setResponseForm({
-      question_id: selectedResponse.question_id,
-      response_code: selectedResponse.response_code,
-      response_text: selectedResponse.response_text
+      question_id: rowData?.question_id,
+      response_code: rowData?.response_code,
+      response_text: rowData?.response_text
     })
   }
 
@@ -159,19 +158,20 @@ const SurveyForm = ({ title, description }) => {
     }
   }
 
-  const handleRemoveResponse = (idx) => {
+  const handleRemoveResponse = (rowData) => {
+    const indexOfDeletedResponse = responsesOfSelectedQuestions?.findIndex(value => value.response_code === rowData?.response_code)
     const newResponse = [...responsesOfSelectedQuestions]
-    newResponse.splice(idx, 1)
+    newResponse.splice(indexOfDeletedResponse, 1)
     setResponsesOfSelectedQuestions(newResponse)
     return showToast("success", "Success", "Response remove successfully")
   }
 
-  const deleteDialog = (idx) => {
+  const deleteDialog = (rowData) => {
     confirmDialog({
-        draggable: false,
-        message: 'Are you sure you want to delete?',
-        header: 'Confirmation',
-        accept: () => handleRemoveResponse(idx)
+      draggable: false,
+      message: 'Are you sure you want to delete?',
+      header: 'Confirmation',
+      accept: () => handleRemoveResponse(rowData)
     });
   };
 
