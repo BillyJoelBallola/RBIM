@@ -17,7 +17,7 @@ import ActivityRoutes from './routes/ActivityRoutes.js'
 const app = express()
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:5173', 'https://rbim.vercel.app', '*']
+    origin: ['http://localhost:5173', 'https://rbim.vercel.app', 'https://rbim.netlify.app', '*']
 }))
 app.use(express.json())
 app.use(cookieParser())
