@@ -3,14 +3,15 @@ import RBIMWhiteLogo from '../../assets/RBIM-logo-white.png'
 import POPCOMWhiteLogo from '../../assets/popcom-logo-white.png'
 import { NavigationContext } from '../../context/NavigationContext'
 import { operationLinks, moreLinks } from '../../static/NavLinks'
-import { IoCloseSharp } from "react-icons/io5";
 import { NavLink, useNavigate } from 'react-router-dom'
+import { UserContext } from '../../context/UserContext'
+import { IoCloseSharp } from "react-icons/io5";
 import CustomDialog from './CustomDialog'
-import axios from 'axios'
 
 const MobileNavbar = () => {
   const navigate = useNavigate()
   const { toggleNav, isNavigateOpen } = useContext(NavigationContext)
+  const { setLoggedUser } = useContext(UserContext)
   const [visible, setVisible] = useState(false);
   const [dialogData, setDialogData] = useState({
     header: '',
@@ -33,8 +34,8 @@ const MobileNavbar = () => {
   }
 
   const logout = () => {
-    // axios.post('/api/logout');
     window.localStorage.removeItem('rbim_token')
+    setLoggedUser(null)
     navigate("/login")
   }
 

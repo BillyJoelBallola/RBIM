@@ -4,12 +4,13 @@ import RBIMWhiteLogo from '../../assets/RBIM-logo-white.png'
 import POPCOMWhiteLogo from '../../assets/popcom-logo-white.png'
 import { operationLinks, moreLinks } from '../../static/NavLinks'
 import { NavigationContext } from '../../context/NavigationContext'
+import { UserContext } from '../../context/UserContext'
 import CustomDialog from './CustomDialog'
-import axios from 'axios'
 
 const Navbar = () => {
   const navigate = useNavigate()
   const { isNavigateOpen } = useContext(NavigationContext);
+  const { setLoggedUser } = useContext(UserContext);
   const [visible, setVisible] = useState(false);
   const [dialogData, setDialogData] = useState({
     header: '',
@@ -32,8 +33,8 @@ const Navbar = () => {
   }
 
   const logout = () => {
-    // axios.post('/api/logout');
     window.localStorage.removeItem('rbim_token')
+    setLoggedUser(null)
     navigate("/login")
   }
 
