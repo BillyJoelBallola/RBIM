@@ -10,7 +10,7 @@ import CustomDialog from './CustomDialog'
 const Navbar = () => {
   const navigate = useNavigate()
   const { isNavigateOpen } = useContext(NavigationContext);
-  const { setLoggedUser } = useContext(UserContext);
+  const { setLoggedUser, setToken } = useContext(UserContext);
   const [visible, setVisible] = useState(false);
   const [dialogData, setDialogData] = useState({
     header: '',
@@ -34,6 +34,7 @@ const Navbar = () => {
 
   const logout = () => {
     window.localStorage.removeItem('rbim_token')
+    setToken(null)
     setLoggedUser(null)
     navigate("/login")
   }

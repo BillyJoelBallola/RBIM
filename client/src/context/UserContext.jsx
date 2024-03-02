@@ -9,9 +9,10 @@ export const UserContextProvider = ({ children }) => {
   const [token, setToken] = useState(null)
 
   useEffect(() => {
-    if(token === null)
-    setToken(window.localStorage.getItem('rbim_token'))
-  }, [null])
+    if(token === null || update === 'logged-in'){
+      setToken(window.localStorage.getItem('rbim_token'))
+    }
+  }, [token, update])
 
   useEffect(() => {
     const getLoggedUser = async () => {
@@ -29,7 +30,7 @@ export const UserContextProvider = ({ children }) => {
       }
     }
 
-    if(token){
+    if(token !== null){
       if(loggedUser === null || update !== null){
         getLoggedUser()
       }
@@ -37,7 +38,7 @@ export const UserContextProvider = ({ children }) => {
   }, [update, loggedUser, token]);
   
   return(
-    <UserContext.Provider value={{ loggedUser, setLoggedUser, setUpdate }}>
+    <UserContext.Provider value={{ loggedUser, setLoggedUser, setUpdate, setToken }}>
       {children}
     </UserContext.Provider>
   )

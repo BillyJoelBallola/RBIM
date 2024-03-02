@@ -35,6 +35,7 @@ const MobileNavbar = () => {
 
   const logout = () => {
     window.localStorage.removeItem('rbim_token')
+    setToken(null)
     setLoggedUser(null)
     navigate("/login")
   }
