@@ -38,7 +38,8 @@ label{
   @apply w-full
 }
 
-.navbar{
+.navbar,
+.footer{
   background: linear-gradient(175deg, #015804 42.96%, #007905 100.65%);
 }
 
@@ -54,13 +55,21 @@ label{
   position: relative;
 }
 
-.page-header{
+.client-container{
+  background-image: url("./assets/bg-effect.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+  position: relative;
+}
+
+/* .page-header{
   background-image: url("./assets/haft-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
-}
+} */
 
 .brown-stripe > div:nth-child(odd) {
   background: #775c43;

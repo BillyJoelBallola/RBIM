@@ -44,29 +44,28 @@ const Announcements = () => {
         classStyle={'w-[90%] md:w-[80%] lg:w-[60%]'}
         content={(
           <div>
-            <h2 className='font-semibold text-lg'>{selectedAnnouncement?.title}</h2>
-            <div className='text-gray-600 text-sm mb-6'>
+            <h2 className='font-semibold text-lg text-black'>{selectedAnnouncement?.title}</h2>
+            <div className='text-black text-sm mb-6'>
               <span>{selectedAnnouncement?.address_barangay} • {moment(selectedAnnouncement?.date).format("ll")}</span><br />
               <span className='text-xs'>Posted {moment(selectedAnnouncement?.date_posted).startOf('hour').fromNow()}</span>
             </div>
-            <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: selectedAnnouncement?.content }} />
+            <div className='text-sm tiptap text-black' dangerouslySetInnerHTML={{ __html: selectedAnnouncement?.content }} />
           </div>
         )}
       />
-      <PageHeader title={"Announcements"} />
-      <div className='side-margin py-12 grid gap-4'>
+      <div className='side-margin grid gap-4'>
         {
           id ? <ViewAnnouncement /> : 
-          <div className='grid gap-4'>
-            <p className='text-sm text-justify text-gray-600'>
-              Welcome to the <span className='text-[#008056] font-semibold'>Announcements</span> page! Here you will discover the most recent updates, news, and relevant announcements about events, programs, and initiatives in the Municipality of Magdalena. From upcoming festivals and community events to important municipal announcements and project updates, this page is your one-stop shop for staying informed and connected to the lifeblood of our thriving town. Check back periodically for the most latest news, and join us in enjoying the various tapestry of experiences that make Magdalena a really unique place to live and visit.
+          <div className='grid'>
+            <p className='text-sm text-justify text-black'>
+              Welcome to our <span className='text-[#008056] font-semibold'>Announcements</span> page! Discover the latest updates on events, programs, and initiatives in Magdalena. From festivals to municipal news, stay informed and connected. Check back for the latest updates and be part of our vibrant community!
             </p>
-            <Divider />
+            <div className='w-full h-[1.2px] bg-black my-4'/>
             <div className='flex gap-2'>
-            <button className={`border border-gray-500 rounded-md py-1 px-4 text-sm ${activeTab === 1 ? 'text-white bg-gray-500' : 'bg-transparent text-gray-500'}`} onClick={() => setActiveTab(1)}>ALL</button>
-              <button className={`border border-gray-500 rounded-md py-1 px-4 text-sm ${activeTab === 2 ? 'text-white bg-gray-500' : 'bg-transparent text-gray-500'}`} onClick={() => setActiveTab(2)}>RECENT</button>
+            <button className={`border border-black rounded-md py-1 px-4 text-sm ${activeTab === 1 ? 'text-white bg-black' : 'bg-transparent text-black'}`} onClick={() => setActiveTab(1)}>ALL</button>
+              <button className={`border border-black rounded-md py-1 px-4 text-sm ${activeTab === 2 ? 'text-white bg-black' : 'bg-transparent text-black'}`} onClick={() => setActiveTab(2)}>RECENT</button>
             </div>
-            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4'>
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
               {
                 activeTab === 1 ?
                 announcementData?.length > 0 

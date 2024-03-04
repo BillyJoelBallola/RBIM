@@ -1,7 +1,6 @@
 import { activityModel } from '../models/ActivityModel.js';
 import cloudinary from '../cloudinary.js';
 import Twilio from 'twilio';
-import fs from 'fs'
 
 export const uploadImage = async (req, res) => {
     try {
@@ -115,17 +114,6 @@ export const sendSMS = async (req, res) => {
         await Promise.all(promises);
 
         return res.json({ success: true, message: 'Messages sent successfully' });
-
-        // twilio.messages
-        //     .create({
-        //         body: message,
-        //         from: process.env.TWILIO_PHONE_NUMBER,
-        //         to: contacts
-        //     }).then(message => {
-        //         return res.json({ success: true, message: 'Message send successfully'});
-        //     }).catch(err => {
-        //         return res.json({ success: false, message: err});
-        //     })
     } catch (error) {
         return res.json({ success: false, message: 'Internal Server Error'});
     }

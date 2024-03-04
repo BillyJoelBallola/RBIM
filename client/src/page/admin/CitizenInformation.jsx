@@ -86,7 +86,9 @@ const CitizenInformation = () => {
       const { data } = await axios.get('/api/survey_forms')
       if(data.success){
         const response = data.data
-        const filteredSurveyForms = loggedUser?.role !== 'administrator' ? response.filter(data => data.address === loggedUser?.address_id) : response
+        const filteredSurveyForms = loggedUser?.role !== 'administrator' 
+          ? response.filter(data => (data.address === loggedUser?.address_id && data.status !== 2)) 
+          : response.filter(data => data.status !== 2)
         setSurveyForm(filteredSurveyForms)
       }
     }
@@ -95,7 +97,9 @@ const CitizenInformation = () => {
       const { data } = await axios.get('/api/individuals')
       if(data.success){
         const response = data.data
-        const filteredIndividuals = loggedUser?.role !== 'administrator' ? response.filter(data => data.address === loggedUser?.address_id) : response
+        const filteredIndividuals = loggedUser?.role !== 'administrator' 
+          ? response.filter(data => (data.address === loggedUser?.address_id && data.status !== 2)) 
+          : response.filter(data => data.status !== 2)
         setIndividuals(filteredIndividuals)
       }
     }

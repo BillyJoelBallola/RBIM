@@ -48,10 +48,21 @@ export const getAllUserByRole = async (req, res) => {
 export const addUser = async (req, res) => {
   try {
     const user = await req.body;
+    const allUsers = await userModel.getAllUsers();
     const existingUser = await authModel.getUserByUsername(user.username);
+    const thereIsSecretary = allUsers?.some(item => (Number(user?.address_id) === item.address_id && item.role === 'secretary' && item.status === 1))
+    const numberOfAdministrator = allUsers?.filter(item => (item.role === 'administrator' && item.status === 1))?.length
 
     if(existingUser){
       return res.json({ success: false, message: 'User already exist' });
+    }
+
+    if(thereIsSecretary){
+      return res.json({ success: false, message: 'Number of secretary is succeeded. Only one[1] secretary account per barangay' });
+    }
+
+    if(numberOfAdministrator === 2){
+      return res.json({ success: false, message: 'Number of administrator is succeeded. Only two[2] administrator account is allowed' });
     }
 
     const newUser = await userModel.addUser(user)

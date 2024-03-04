@@ -12,6 +12,7 @@ import { HiOutlineArrowNarrowLeft } from "react-icons/hi"
 import { barangay } from '../../static/Geography'
 import { FiSend } from "react-icons/fi";
 import { UserContext } from '../../context/UserContext'
+import moment from 'moment'
 
 const ActivityForm = () => {
     const id = useParams().id
@@ -162,6 +163,8 @@ const ActivityForm = () => {
     }
 
     const save = async () => {
+        const currentDate = new Date
+
         if(
             activityForm.title === '' ||
             activityForm.address === '' ||
@@ -174,9 +177,12 @@ const ActivityForm = () => {
         }else if(activityForm.title.length <= 10){
             setVisible(false)
             return showToast('error', 'Failed', 'Title must be 10 or more characters')
-        }else if(activityForm.content.length <= 20){
+        }else if(activityForm.content.length <= 20 || activityForm.content.length > 2600){
             setVisible(false)
-            return showToast('error', 'Failed', 'Content must be 20 or more characters')
+            return showToast('error', 'Failed', 'Content must be 20 - 2,600 characters')
+        }else if(new Date(activityForm.date) < currentDate){
+            setVisible(false)
+            return showToast('error', 'Failed', 'Selected date must be today or in the future')
         }else{
 
             const { data } = await axios.post("/api/activity", activityForm);
@@ -193,6 +199,8 @@ const ActivityForm = () => {
     }
 
     const saveChanges = async () => {
+        const currentDate = new Date
+        
         if(
             activityForm.title === '' ||
             activityForm.address === '' ||
@@ -207,6 +215,9 @@ const ActivityForm = () => {
         }else if(activityForm.content.length <= 20 || activityForm.content.length > 2600){
             setVisible(false)
             return showToast('error', 'Failed', 'Content must be 20 - 2,600 characters')
+        }else if(new Date(activityForm.date) < currentDate){
+            setVisible(false)
+            return showToast('error', 'Failed', 'Selected date must be today or in the future')
         }else{
 
             const { data } = await axios.put("/api/activity", {...activityForm, id: id});

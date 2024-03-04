@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Announcement from '../../components/client/Announcement'
 import EventProgram from '../../components/client/EventProgram'
-import { Link } from 'react-router-dom'
-import PageHeader from '../../components/client/PageHeader'
-import axios from 'axios'
 import CustomDialog from '../../components/client/CustomDialog'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 import moment from 'moment'
-import Divider from '../../components/Divider'
 
 const Home = () => {
   const [eventsAndProgramsData, setEventsAndProgramsData] = useState([])
@@ -18,7 +16,7 @@ const Home = () => {
     const fetchEventsAndPrograms = async () => {
       const { data } = await axios.get('/api/activities/events_and_programs')
       if(data.success){
-        const info = data?.data?.filter(item => new Date(item.date) > new Date())
+        const info = data?.data?.filter(item => new Date() <= new Date(item.date))
         setEventsAndProgramsData(info)
       }
     }
@@ -31,7 +29,7 @@ const Home = () => {
     const fetchEventsAndPrograms = async () => {
       const { data } = await axios.get('/api/activities/announcements')
       if(data.success){
-        const info = data?.data?.filter(item => new Date(item.date) > new Date())
+        const info = data?.data?.filter(item => new Date() <= new Date(item.date))
         setAnnouncementData(info)
       }
     }
@@ -61,46 +59,46 @@ const Home = () => {
           </div>
         )}
       />
-      <PageHeader title={"Municipal of Magdalena"}/>
-      <div className='side-margin py-12'>
-        <p className='text-sm text-gray-500 text-justify mb-4'>
-          Welcome to our website, your go-to destination for staying informed about all the exciting events, programs, and announcements happening in the Municipality of Magdalena. Whether you're a resident, visitor, or simply curious about what's happening in our vibrant community, you'll find everything you need right here. Our platform serves as a central hub for keeping you up-to-date with the latest happenings in Magdalena. Explore our comprehensive listings, stay connected, and never miss out on the pulse of our municipality.
+      <div className='side-margin'>
+        <p className='text-sm text-justify mb-4'>
+          Welcome to our <span className='text-[#008056] font-semibold'>community hub</span> for Magdalena's events, programs, and announcements. Stay informed and connected!
         </p>
-        <Divider />
-        <div className="flex flex-col md:flex-row gap-6 mt-4">
+        <div className="grid mt-4">
           <div className='w-full h-fit flex flex-col justify-between'>
-            <div className='font-bold text-lg mb-2'>  
-              <span className='text-gray-500'>EVENTS AND PROGRAMS</span>
+            <div className='font-bold text-xl'>  
+              <span>EVENTS AND PROGRAMS</span>
             </div>
-            <div className='grid gap-4'>
+            <div className='w-full h-[1.2px] bg-black my-4'/>
+            <div className='grid md:grid-cols-2 gap-4'>
               {
                 eventsAndProgramsData &&
                 eventsAndProgramsData.length > 0 ?
                 <EventProgram eventsAndPrograms={eventsAndProgramsData} display={3}/>
-                : <div>No events and programs found.</div>
+                : <div>No upcoming events and programs found.</div>
               }
-            </div>
-            {
-              eventsAndProgramsData &&
-              eventsAndProgramsData.length > 0 &&
-              <Link to={"/events-and-programs"} className='underline mt-2 text-right text-gray-500 text-sm'>view all</Link>
-            }
           </div>
-          <div className='md:basis-2/3 h-fit w-full flex flex-col'>
-            <div className='font-bold text-lg mb-2'>
-              <span className='text-gray-500'>ANNOUNCEMENTS</span>
+          {
+            eventsAndProgramsData &&
+            eventsAndProgramsData.length > 4 &&
+            <Link to={"/events-and-programs"} className='underline mt-2 text-right text-gray-500 text-sm'>view all</Link>
+          }
+        </div>
+          <div className='mt-8'>
+            <div className='font-bold text-xl'>  
+              <span>ANNOUNCEMENTS</span>
             </div>
-            <div className='grid gap-4'>
+            <div className='w-full h-[1.2px] bg-black my-4'/>
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4'>
               {
                 announcementData &&
-                announcementData.length > 0 ?
+                announcementData?.length > 0 ?
                 <Announcement announcements={announcementData} display={3} setSelectedAnnouncement={setSelectedAnnouncement} setVisible={setVisible}/>
-                : <div>No announcements found.</div>
+                : <div>No recent announcements found.</div>
               }
             </div>
             {
               announcementData && 
-              announcementData.length > 0 &&
+              announcementData?.length > 3 &&
               <Link to={"/announcements"} className='underline mt-2 text-right text-gray-500 text-sm'>view all</Link>
             }
           </div>

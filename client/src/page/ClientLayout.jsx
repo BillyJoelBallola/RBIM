@@ -11,7 +11,7 @@ const ClientLayout = () => {
     <>
       <Navbar />
       <Messenger />
-      <div className='bg-[#f1f1f1] overflow-hidden pt-[100px] pb-[10px] h-full'>
+      <div className='bg-white overflow-hidden pt-[95px] pb-[40px] client-container'>
         <Outlet />
       </div>  
       <Footer />

@@ -38,7 +38,16 @@ export const operationLinks = [
       </svg>,
     path: "/rbim/settings",
     label: "Settings",
-  }
+  },
+  {
+    icon: 
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.42856 10H19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M11.2857 6.14282L7.42856 9.99997L11.2857 13.8571" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M10 1H1V19H10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>,
+    label: "Logout",
+  },
 ]
 
 export const moreLinks = [

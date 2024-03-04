@@ -33,8 +33,8 @@ const Announcement = ({ announcements, display, setSelectedAnnouncement, setVisi
               }}
             >
               <h4 className='font-semibold'>{truncate(announcement.title, 50)}</h4>
-              <div className='text-sm text-gray-500 tiptap' dangerouslySetInnerHTML={{ __html: truncate(announcement.content, 100) }} />
-              <div className='flex items-center text-gray-400 gap-2 text-xs mt-1'>
+              <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: truncate(announcement.content, 100) }} />
+              <div className='flex items-center text-gray-500 gap-2 text-xs mt-1'>
                 <span>{type(announcement.type)} • {announcement.address_barangay} • Posted {moment(announcement.date_posted).startOf('hour').fromNow()}</span>
               </div>
             </button>

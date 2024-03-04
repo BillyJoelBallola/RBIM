@@ -72,7 +72,7 @@ const UserManagement = ({ title, description }) => {
     const fetchAllUsers = async () => {
       const { data } = await axios.get(API)
       if(data.success){
-        const filterUsers = data.data.filter(user => user.username !== loggedUser.username)
+        const filterUsers = data.data.filter(user => user.username !== loggedUser?.username && user.status === 1)
         setUsers(filterUsers || [])
       }else{
         return showToast('error', 'Failed', data.message)

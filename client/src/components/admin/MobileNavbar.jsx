@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import RBIMWhiteLogo from '../../assets/RBIM-logo-white.png'
 import POPCOMWhiteLogo from '../../assets/popcom-logo-white.png'
 import { NavigationContext } from '../../context/NavigationContext'
-import { operationLinks, moreLinks } from '../../static/NavLinks'
+import { operationLinks } from '../../static/NavLinks'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { UserContext } from '../../context/UserContext'
 import { IoCloseSharp } from "react-icons/io5";
@@ -54,37 +54,25 @@ const MobileNavbar = () => {
             operationLinks?.map((link, idx) => (
               <li key={idx}>
                 {
-                  link.path ?  
-                  <NavLink onClick={toggleNav} to={link.path} className="text-sm flex gap-2 items-center text-white duration-150 bg-transparent py-2 px-6 hover:bg-[#004303]">
+                  link.path ?
+                  <NavLink to={link.path} className="text-sm flex gap-2 items-center text-white duration-150 bg-transparent py-2 px-6 hover:bg-[#004303]">
                     {link.icon}
                     {link.label}
-                  </NavLink>
-                  :
-                  <button onClick={toggleNav} className="w-full text-sm flex gap-2 items-center text-white hover:bg-[#004303] duration-150 py-2 px-6">
-                    {link.icon}
-                    {link.label}
-                  </button>
+                  </NavLink> :
+                  <>
+                    <div className='mx-auto my-4 w-[85%] h-[1.5px] bg-white/10' />
+                    <button
+                      className="w-full text-sm flex gap-2 items-center text-white hover:bg-[#004303] duration-150 py-2 px-6"
+                      onClick={() => logout()}
+                    >
+                      {link.icon}
+                      {link.label}
+                    </button>
+                  </>
                 }
               </li>
             ))
           }
-          <div className='px-4 font-bold text-white mt-8 mb-4'>More</div>
-            {
-              moreLinks?.map((link, idx) => (
-                <li key={idx}>
-                  <button 
-                    onClick={link.label === 'Logout' ? () => logout() : () => {
-                      setVisible(current => !current)
-                      setDialogContent(idx);
-                      toggleNav()
-                    }} 
-                    className="w-full text-sm flex gap-2 items-center text-white hover:bg-[#004303] duration-150 py-2 px-6">
-                    {link.icon}
-                    {link.label}
-                  </button>
-                </li>
-              ))
-            }
         </ul>
         <div className='grid place-items-center py-4 absolute bottom-0 w-full'>
           <img src={POPCOMWhiteLogo} alt="rbim-logo" className='w-[150px] aspect-auto'/>

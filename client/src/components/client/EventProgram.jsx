@@ -25,22 +25,23 @@ const EventProgram = ({ eventsAndPrograms, display }) => {
       {
         eventsAndPrograms?.length > 0 ?
         eventsAndPrograms.slice(0, display).map((eventProg, idx) => (
-          <div className='p-4 bg-white border rounded-lg h-fit' key={idx}>
+          <div className='bg-white border rounded-lg h-fit overflow-hidden relative' key={idx}>
             <Link to={`/events-and-programs/${eventProg.id}`}>
-              <div className='h-[150px] md:h-[250px] bg-gray-300 mb-3 flex items-center justify-center rounded-lg overflow-hidden'>
+              <div className='h-[150px] md:h-[250px] bg-gray-300 mb-3 flex items-center justify-center'>
                 <div className='w-full aspect-ratio'>
                   <img 
                     alt="image" 
                     className='object-fit object-center' 
                     src={`http://res.cloudinary.com/dplelvfxi/image/upload/v1709045429/${eventProg?.image}`}
                   />
-                  <img className='object-fit object-center' src={eventProg?.image} alt="image" />
                 </div>
               </div>
-              <h4 className='font-semibold'>{truncate(eventProg.title, 50)}</h4>
-              <div className='text-sm text-gray-500 tiptap' dangerouslySetInnerHTML={{ __html: truncate(eventProg.content, 150) }} />
-              <div className='flex items-center text-gray-400 gap-2 text-xs mt-1'>
-                <span>{type(eventProg.type)} • {eventProg.address_barangay} • Posted {moment(eventProg.date_posted).startOf('hour').fromNow()}</span>
+              <div className='absolute left-0 right-0 bottom-0 bg-gradient-to-t from-black text-white p-2'>
+                <h4 className='font-semibold'>{truncate(eventProg.title, 30)}</h4>
+                <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: truncate(eventProg.content, 70) }} />
+                <div className='flex items-center gap-2 text-xs'>
+                  <span>{type(eventProg.type)} • {eventProg.address_barangay} • Posted {moment(eventProg.date_posted).startOf('hour').fromNow()}</span>
+                </div>
               </div>
             </Link>
           </div>
