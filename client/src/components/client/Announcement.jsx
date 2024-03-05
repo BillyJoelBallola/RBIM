@@ -24,7 +24,7 @@ const Announcement = ({ announcements, display, setSelectedAnnouncement, setVisi
       {
         announcements?.length > 0 ?
         announcements.slice(0, display).map((announcement, idx) => (
-          <div key={idx} className='py-2 bg-white px-4 border rounded-lg h-fit'>
+          <div key={idx} className='py-2 bg-white px-4 border border-gray-300 rounded-lg h-fit'>
             <button 
               className='text-left'
               onClick={() => {
