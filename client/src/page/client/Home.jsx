@@ -17,7 +17,7 @@ const Home = () => {
       const { data } = await axios.get('/api/activities/events_and_programs')
       if(data.success){
         const info = data?.data?.filter(item => new Date() <= new Date(item.date))
-        setEventsAndProgramsData(info)
+        setEventsAndProgramsData(info || [])
       }
     }
 
@@ -30,7 +30,7 @@ const Home = () => {
       const { data } = await axios.get('/api/activities/announcements')
       if(data.success){
         const info = data?.data?.filter(item => new Date() <= new Date(item.date))
-        setAnnouncementData(info)
+        setAnnouncementData(info || [])
       }
     }
 

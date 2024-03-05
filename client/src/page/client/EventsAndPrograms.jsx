@@ -17,14 +17,14 @@ const EventsAndPrograms = () => {
       const { data } = await axios.get('/api/activities/events_and_programs')
       if(data.success){
         const upcoming = data?.data?.filter(item => currentDate <= new Date(item.date))
-        setEventsAndProgramsData(data?.data)
-        setUpcomingEventsAndProgramsData(upcoming)
+        setEventsAndProgramsData(data?.data || [])
+        setUpcomingEventsAndProgramsData(upcoming || [])
       }
     }
 
     fetchEventsAndPrograms()
   }, [])
-
+  
   return (
     <>
       {
@@ -32,7 +32,7 @@ const EventsAndPrograms = () => {
         <div className='side-margin'>
           <ViewEventsAndProgram />
         </div> :
-        <div className={`side-margin ${eventsAndProgramsData?.length > 2 || upcomingEventsAndProgramsData?.length > 2 ? 'h-auto' : 'h-screen'}`}>
+        <div className={`side-margin ${eventsAndProgramsData?.length <= 2 || upcomingEventsAndProgramsData?.length <= 2 ? 'h-screen' : 'h-auto'}`}>
           <div className='grid'>
             <p className='text-sm text-justify text-black'>            
               Explore Magdalena's diverse <span className='text-[#008056] font-semibold'>events and programs</span>! From cultural festivals to educational workshops, there's something for everyone. Stay tuned for updates and join us in celebrating our vibrant community!  
@@ -47,14 +47,14 @@ const EventsAndPrograms = () => {
                 activeTab === 1 ?
                 eventsAndProgramsData?.length > 0 
                 ? <EventProgram eventsAndPrograms={eventsAndProgramsData} display={displayCount}/>
-                : <div className='pt-4'>No events and programs found.</div>
+                : <div>No events and programs found.</div>
                 : <></>
               }
               {
                 activeTab === 2 ?
                 upcomingEventsAndProgramsData?.length > 0 
                 ? <EventProgram eventsAndPrograms={upcomingEventsAndProgramsData} display={displayCount}/>
-                : <div className='pt-4'>No events and programs found.</div>
+                : <div>No events and programs found.</div>
                 : <></>
               }
             </div>

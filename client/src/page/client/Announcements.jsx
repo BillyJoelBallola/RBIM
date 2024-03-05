@@ -20,8 +20,8 @@ const Announcements = () => {
       const { data } = await axios.get('/api/activities/announcements')
       if(data.success){
         const recent = data?.data?.filter(item => new Date() < new Date(item.date))
-        setAnnouncementData(data.data)
-        setRecentAnnouncementData(recent)
+        setAnnouncementData(data.data || [])
+        setRecentAnnouncementData(recent || [])
       }
     }
 
@@ -73,7 +73,7 @@ const Announcements = () => {
                   setSelectedAnnouncement={setSelectedAnnouncement}
                   setVisible={setVisible}
                 />
-                : <div className='pt-4'>No announcement found.</div>
+                : <div>No announcement found.</div>
                 : <></>
               }
               {
@@ -85,7 +85,7 @@ const Announcements = () => {
                   setSelectedAnnouncement={setSelectedAnnouncement}
                   setVisible={setVisible}
                 />
-                : <div className='pt-4'>No recent announcement found.</div>
+                : <div>No recent announcement found.</div>
                 : <></>
               }
               {
