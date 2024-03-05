@@ -62,11 +62,16 @@ const PieMigrant = ({ data, selectedAddress, selectedYear, address }) => {
 
     return (
         <div className='w-full md:w-fit grid place-items-center p-4 border bg-gray-100 rounded-lg relative'>
-            <Tooltip target='.migrant' mouseTrack mouseTrackLeft={10}/>
-            <CgInfo 
-                className='migrant absolute right-1 top-1 text-xl text-gray-500' 
-                data-pr-tooltip={`As of ${selectedYear}, there are ${pieMigrantData[0] || 0} Non-migrants, ${pieMigrantData[1] || 0} Migrants, and ${pieMigrantData[2] || 0} Transients in ${typeof location === 'object' ? location[0].barangay  : location}`}
-            />
+            <Tooltip target='.migrant' mouseTrack mouseTrackLeft={10} className='tiptap text-xs'>
+                <p>In {selectedYear}, the population composition in {typeof location === 'object' ? location[0]?.barangay  : location} is as follows:</p>
+                <ul>
+                    <li>Migrants: {pieMigrantData[0] || 0} individuals, representing those who have relocated to Municipal from elsewhere.</li>
+                    <li>Non-migrants: {pieMigrantData[1] || 0} individuals, denoting residents who have remained in Municipal.</li>
+                    <li>Transients: {pieMigrantData[2] || 0} individuals, indicating those who are temporarily staying in Municipal.</li>
+                </ul>
+                <p>This breakdown provides insights into the diverse population dynamics within the communit</p>
+            </Tooltip>
+            <CgInfo className='migrant absolute right-1 top-1 text-xl text-gray-500' />
             <Chart type="pie" data={pieChartData} options={pieChartOptions} className="w-full max-w-[250px]" />
         </div>
     )
