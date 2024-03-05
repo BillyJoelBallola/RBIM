@@ -69,7 +69,7 @@ const CustomTable = ({ headers, data, actions, description = '', limit = 5}) => 
       <div className='flex items-center justify-between'>
         <p className='text-gray-400 mb-4'>{description}</p>
         <div className='flex gap-4 items-center mb-4 justify-end'>
-          <span className='text-sm text-gray-500'>{`${data.length < limit ? '' : totalPages === 0 ? '0' : currentPage/totalPages}`}</span>
+          <span className='text-sm text-gray-500'>{`${data?.length < limit ? '' : totalPages === 0 ? '0' : currentPage/totalPages}`}</span>
           <div className='flex gap-1'>  
             <button className='cursor-pointer p-2 rounded-full hover:bg-gray-200 text-gray-500 grid place-items-center' onClick={handlePrevPage} disabled={currentPage === 1}><MdArrowBackIosNew /></button>
             <button className='cursor-pointer p-2 rounded-full hover:bg-gray-200 text-gray-500 grid place-items-center' onClick={handleNextPage} disabled={currentPage === totalPages}><MdArrowForwardIos /></button>
