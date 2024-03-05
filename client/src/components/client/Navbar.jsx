@@ -58,7 +58,7 @@ const Navbar = () => {
         <button className='block md:hidden p-1 rounded-full hover:bg-[#004303] duration-150' onClick={toggleNav}>
           <IoMenu className='text-black text-2xl'/>
         </button>
-        <ul className={`whitespace-nowrap duration-150 absolute ${isNavigateOpen ? 'left-0' : 'left-[1000px]'} right-0 top-0 h-screen p-4 items-center md:left-0 md:p-0 md:h-auto md:relative bg-[#004303] md:bg-transparent flex flex-col md:flex-row gap-4 text-white text-sm`}>
+        <ul className={`whitespace-nowrap duration-150 absolute ${isNavigateOpen ? 'left-0' : 'left-[1000px]'} right-0 top-0 h-screen p-4 items-center md:left-0 md:p-0 md:h-auto md:relative bg-gradient-to-t from-[#015804] to-[#007905] md:from-transparent md:to-transparent flex flex-col md:flex-row gap-4 text-white text-sm`}>
           <div className='flex items-center justify-between mb-8 md:hidden w-full'>
             <Link to={"/"}>
               <img src={ClientLogo} className='w-[190px] aspect-auto' alt="rbim-logo" />
@@ -70,7 +70,11 @@ const Navbar = () => {
           {
             clientLinks?.map((link, idx) => (
               <li key={idx} className='text-white md:text-black font-semibold'>
-                <Link to={link.path} onClick={toggleNav}>{link.name}</Link>
+                {
+                  link.name !== 'Login' 
+                  ? <Link to={link.path} onClick={toggleNav}>{link.name}</Link>
+                  : <Link className='md:hover:bg-green-300 md:duration-150 md:py-1 md:px-3 md:bg-green-200 md:text-green-800 text-white rounded-lg' to={link.path} onClick={() => {}}>{link.name}</Link>
+                }
               </li>
           ))
           }

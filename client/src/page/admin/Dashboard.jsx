@@ -10,23 +10,29 @@ import LineMigrant from '../../components/admin/graphs/LineMigrant'
 import EventAndProgram from '../../components/admin/EventAndProgram'
 import Announcement from '../../components/admin/Announcement'
 
+const years = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033]
+
 const Dashboard = () => {
+  const currentDate = new Date()
   const { loggedUser } = useContext(UserContext)
+  const [filteredIndividuals, setFilteredIndividuals] = useState([])
   const [individuals, setIndividuals] = useState([])
   const [address, setAddress] = useState([])
   const [selectedAddress, setSelectedAddress] = useState(0)
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
   const [yearRange, setYearRange] = useState(5)
   const [activities, setActivities] = useState({
     eventsAndPrograms: [],
     announcements: []
   })
-  
+
   useEffect(() => {
     const fetchIndividualData = async () => {
       const { data } = await axios.get('/api/individuals')
       if(data.success){
-        const response = data?.data
-        setIndividuals(response)
+        const response = data?.data?.filter(item => new Date(item.date_encoded).getFullYear() === currentDate.getFullYear())
+        setFilteredIndividuals(response)
+        setIndividuals(data?.data)
       }
     }
 
@@ -82,20 +88,29 @@ const Dashboard = () => {
             <div className='shadow-sm rounded-lg p-5 grid gap-4 border'>
               <div className='flex items-center justify-between'>
                 <span className='text-xl font-bold'>Population Distribution</span>
-                <select value={selectedAddress} onChange={e => setSelectedAddress(e.target.value)}>
-                  <option value="0">Municipal</option>
-                  {
-                    address.length > 0 &&
-                    address.map(item => (
-                      <option value={item.id} key={item.id}>{item.barangay}</option>
-                    ))
-                  }
-                </select>
+                <div className='flex flex-wrap gap-2 items-center'>
+                  <select value={selectedYear} onChange={e => setSelectedYear(e.target.value)}>
+                    {
+                      years.map((item, idx) => (
+                        <option value={item} key={idx}>{item}</option>
+                      ))
+                    }
+                  </select>
+                  <select value={selectedAddress} onChange={e => setSelectedAddress(e.target.value)}>
+                    <option value="0">Municipal</option>
+                    {
+                      address.length > 0 &&
+                      address.map(item => (
+                        <option value={item.id} key={item.id}>{item.barangay}</option>
+                      ))
+                    }
+                  </select>
+                </div>
               </div>
               <div className='flex flex-wrap gap-8 justify-center'>
-                <PieMigrant data={individuals} selectedAddress={selectedAddress}/>
-                <PieEmployment data={individuals} selectedAddress={selectedAddress}/>
-                <PieSeniorCitizen data={individuals} selectedAddress={selectedAddress}/>
+                <PieMigrant data={filteredIndividuals} address={address} selectedAddress={selectedAddress} selectedYear={selectedYear}/>
+                <PieEmployment data={filteredIndividuals} address={address} selectedAddress={selectedAddress} selectedYear={selectedYear}/>
+                <PieSeniorCitizen data={filteredIndividuals} address={address} selectedAddress={selectedAddress} selectedYear={selectedYear}/>
               </div>
             </div>
             {/* lines */}

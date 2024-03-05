@@ -59,7 +59,7 @@ const Home = () => {
           </div>
         )}
       />
-      <div className='side-margin'>
+      <div className={`side-margin ${eventsAndProgramsData?.length <= 0 || announcementData?.length <= 0 ? 'h-screen' : 'h-auto'}`}>
         <p className='text-sm text-justify mb-4'>
           Welcome to our <span className='text-[#008056] font-semibold'>community hub</span> for Magdalena's events, programs, and announcements. Stay informed and connected!
         </p>

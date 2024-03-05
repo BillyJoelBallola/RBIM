@@ -38,9 +38,19 @@ label{
   @apply w-full
 }
 
-.navbar,
-.footer{
+.navbar{
   background: linear-gradient(175deg, #015804 42.96%, #007905 100.65%);
+}
+
+.footer{
+  background: url('./assets/bg-footer.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.footer-bg-color{
+  background: rgb(0,40,1);
+  background: linear-gradient(90deg, rgba(0,40,1,0.8) 0%, rgba(0,134,5,0.8) 50%, rgba(0,40,1,0.8) 100%);
 }
 
 .content {
@@ -55,19 +65,11 @@ label{
   position: relative;
 }
 
-.client-container{
+/* .client-container{
   background-image: url("./assets/bg-effect.png");
   background-size: cover;
   background-position: center;
   background-repeat: repeat;
-  position: relative;
-}
-
-/* .page-header{
-  background-image: url("./assets/haft-bg.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   position: relative;
 } */
 

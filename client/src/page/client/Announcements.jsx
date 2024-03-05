@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom"
-import PageHeader from '../../components/client/PageHeader'
 import Announcement from '../../components/client/Announcement'
 import ViewAnnouncement from '../../components/client/ViewAnnouncement'
 import CustomDialog from '../../components/client/CustomDialog'
 import moment from 'moment'
 import axios from 'axios'
-import Divider from '../../components/Divider'
 
 const Announcements = () => {
   const { id } = useParams();
@@ -53,7 +51,7 @@ const Announcements = () => {
           </div>
         )}
       />
-      <div className='side-margin grid gap-4'>
+      <div className={`side-margin ${announcementData?.length <= 3 || recentAnnouncementData?.length <= 3 ? 'h-screen' : 'h-auto'}`}>
         {
           id ? <ViewAnnouncement /> : 
           <div className='grid'>

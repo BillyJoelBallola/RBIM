@@ -71,7 +71,7 @@ const ViewEventsAndProgram = () => {
           {
             allEventsAndPrograms.length > 0 
             ? allEventsAndPrograms && allEventsAndPrograms.slice(0, 5).map(item => (
-              <Link to={`/events-and-programs/${item.id}`} className='bg-[#f1f1f1] p-2 rounded-lg hover:underline' key={item.id}>
+              <Link to={`/events-and-programs/${item.id}`} className='bg-white p-2 rounded-lg hover:underline' key={item.id}>
                 <span className='text-md font-semibold'>{truncate(item.title, 25)}</span>
                 <div className='text-xs text-justify' dangerouslySetInnerHTML={{ __html: truncate(item.content, 100) }} />
                 <div className='text-[11px] mt-1'>
