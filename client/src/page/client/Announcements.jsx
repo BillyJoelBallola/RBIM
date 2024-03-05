@@ -14,6 +14,7 @@ const Announcements = () => {
   const [visible, setVisible] = useState(false)
   const [displayCount, setDisplayCount] = useState(6)
   const [activeTab, setActiveTab] = useState(2)
+  const [heightClass, setHeightClass] = useState(2)
 
   useEffect(() => {
     const fetchEventsAndPrograms = async () => {
@@ -31,6 +32,14 @@ const Announcements = () => {
   const resetForm = () => {
     setSelectedAnnouncement(null)
   }
+
+  useEffect(() => {
+    if(activeTab === 1){
+      setHeightClass(announcementData?.length <= 3 ? 'h-screen' : 'h-auto') 
+    }else if(activeTab === 2){
+      setHeightClass(recentAnnouncementData?.length <= 3 ? 'h-screen' : 'h-auto') 
+    }
+  }, [activeTab])
 
   return (
     <>
@@ -51,7 +60,7 @@ const Announcements = () => {
           </div>
         )}
       />
-      <div className={`side-margin ${announcementData?.length <= 3 || recentAnnouncementData?.length <= 3 ? 'h-screen' : 'h-auto'}`}>
+      <div className={`side-margin ${heightClass}`}>
         {
           id ? <ViewAnnouncement /> : 
           <div className='grid'>

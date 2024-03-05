@@ -10,6 +10,7 @@ const EventsAndPrograms = () => {
   const [upcomingEventsAndProgramsData, setUpcomingEventsAndProgramsData] = useState([])
   const [displayCount, setDisplayCount] = useState(6)
   const [activeTab, setActiveTab] = useState(2)
+  const [heightClass, setHeightClass] = useState('')
 
   useEffect(() => {
     const currentDate = new Date()
@@ -24,7 +25,15 @@ const EventsAndPrograms = () => {
 
     fetchEventsAndPrograms()
   }, [])
-  
+
+  useEffect(() => {
+    if(activeTab === 1){
+      setHeightClass(eventsAndProgramsData?.length <= 2 ? 'h-screen' : 'h-auto') 
+    }else if(activeTab === 2){
+      setHeightClass(upcomingEventsAndProgramsData?.length <= 2 ? 'h-screen' : 'h-auto') 
+    }
+  }, [activeTab])
+
   return (
     <>
       {
@@ -32,7 +41,7 @@ const EventsAndPrograms = () => {
         <div className='side-margin'>
           <ViewEventsAndProgram />
         </div> :
-        <div className={`side-margin ${eventsAndProgramsData?.length <= 2 || upcomingEventsAndProgramsData?.length <= 2 ? 'h-screen' : 'h-auto'}`}>
+        <div className={`side-margin ${heightClass}`}>
           <div className='grid'>
             <p className='text-sm text-justify text-black'>            
               Explore Magdalena's diverse <span className='text-[#008056] font-semibold'>events and programs</span>! From cultural festivals to educational workshops, there's something for everyone. Stay tuned for updates and join us in celebrating our vibrant community!  
