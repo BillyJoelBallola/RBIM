@@ -36,7 +36,7 @@ const EventProgram = ({ eventsAndPrograms, display }) => {
                   />
                 </div>
               </div>
-              <div className='absolute left-0 right-0 bottom-0 bg-gradient-to-t from-black text-white p-2'>
+              <div className='absolute left-0 right-0 bottom-0 bg-gradient-to-t from-black hover:underline text-white p-2'>
                 <h4 className='font-semibold'>{truncate(eventProg.title, 30)}</h4>
                 <div className='text-sm tiptap' dangerouslySetInnerHTML={{ __html: truncate(eventProg.content, 70) }} />
                 <div className='flex items-center gap-2 text-xs'>

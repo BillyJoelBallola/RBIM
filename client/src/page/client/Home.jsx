@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Announcement from '../../components/client/Announcement'
 import EventProgram from '../../components/client/EventProgram'
 import CustomDialog from '../../components/client/CustomDialog'
+import HomeBanner from '../../assets/home-banner.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import moment from 'moment'
@@ -59,10 +60,16 @@ const Home = () => {
           </div>
         )}
       />
-      <div className={`side-margin ${eventsAndProgramsData?.length <= 0 || announcementData?.length <= 0 ? 'h-screen' : 'h-auto'}`}>
-        <p className='text-sm text-justify mb-4'>
-          Welcome to our <span className='text-[#008056] font-semibold'>community hub</span> for Magdalena's events, programs, and announcements. Stay informed and connected!
-        </p>
+      <div className='side-margin h-auto'>
+        <div className='relative mb-8'>
+          <div className='overflow-hidden rounded-2xl md:h-[300px]'>
+            <img src={HomeBanner} alt="banner" className='object-cover'/>
+          </div>
+          <div className='absolute text-center text-white grid md:gap-2 left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%]'>
+            <span className='text-lg md:text-3xl font-bold'>Discover • Engage • <span className='whitespace-nowrap'>Stay Informed</span></span>
+            <span className='text-xs md:text-[.9rem]'>Your source for Events, Programs, and Announcements</span>
+          </div>
+        </div>
         <div className="grid mt-4">
           <div className='w-full h-fit flex flex-col justify-between'>
             <div className='font-bold text-xl'>  

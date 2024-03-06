@@ -8,12 +8,17 @@ import axios from 'axios'
 
 const Announcements = () => {
   const { id } = useParams();
+  const currentDate = new Date()
+  const year = currentDate.getFullYear().toString()
+  const month = moment(currentDate).format('l')[0]
+  const formattedMonth = month.toString().length === 1 ? "0" + month.toString() : ''
   const [announcementData, setAnnouncementData] = useState([])
   const [recentAnnouncementData, setRecentAnnouncementData] = useState([])
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null)
   const [visible, setVisible] = useState(false)
   const [displayCount, setDisplayCount] = useState(6)
   const [activeTab, setActiveTab] = useState(2)
+  const [monthYear, setMonthYear] = useState(year + "-" + formattedMonth)
   const [heightClass, setHeightClass] = useState(2)
 
   useEffect(() => {
@@ -33,9 +38,11 @@ const Announcements = () => {
     setSelectedAnnouncement(null)
   }
 
+  const filteredAnnouncementData = announcementData?.filter(item => item.date.toString().substring(0, 7) === monthYear.toString())
+
   useEffect(() => {
     if(activeTab === 1){
-      setHeightClass(announcementData?.length <= 3 ? 'h-screen' : 'h-auto') 
+      setHeightClass(filteredAnnouncementData?.length <= 3 ? 'h-screen' : 'h-auto') 
     }else if(activeTab === 2){
       setHeightClass(recentAnnouncementData?.length <= 3 ? 'h-screen' : 'h-auto') 
     }
@@ -68,16 +75,24 @@ const Announcements = () => {
               Welcome to our <span className='text-[#008056] font-semibold'>Announcements</span> page! Discover the latest updates on events, programs, and initiatives in Magdalena. From festivals to municipal news, stay informed and connected. Check back for the latest updates and be part of our vibrant community!
             </p>
             <div className='w-full h-[1.2px] bg-black my-4'/>
-            <div className='flex gap-2'>
-            <button className={`border border-black rounded-md py-1 px-4 text-sm ${activeTab === 1 ? 'text-white bg-black' : 'bg-transparent text-black'}`} onClick={() => setActiveTab(1)}>ALL</button>
-              <button className={`border border-black rounded-md py-1 px-4 text-sm ${activeTab === 2 ? 'text-white bg-black' : 'bg-transparent text-black'}`} onClick={() => setActiveTab(2)}>RECENT</button>
+            <div className='flex items-center justify-between flex-wrap gap-2'>
+              <div className='flex gap-2'>
+                <button className={`border border-black rounded-md py-1 px-4 text-sm ${activeTab === 1 ? 'text-white bg-black' : 'bg-transparent text-black'}`} onClick={() => setActiveTab(1)}>ALL</button>
+                <button className={`border border-black rounded-md py-1 px-4 text-sm ${activeTab === 2 ? 'text-white bg-black' : 'bg-transparent text-black'}`} onClick={() => setActiveTab(2)}>RECENT</button>
+              </div>
+              <div className='flex gap-2'>
+                {
+                  activeTab === 1 &&
+                  <input type="month" value={monthYear} onChange={e => setMonthYear(e.target.value)}/>
+                }
+              </div>
             </div>
             <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
               {
                 activeTab === 1 ?
-                announcementData?.length > 0 
+                filteredAnnouncementData?.length > 0 
                 ? <Announcement 
-                  announcements={announcementData} 
+                  announcements={filteredAnnouncementData} 
                   display={displayCount} 
                   setSelectedAnnouncement={setSelectedAnnouncement}
                   setVisible={setVisible}

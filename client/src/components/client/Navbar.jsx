@@ -73,7 +73,7 @@ const Navbar = () => {
                 {
                   link.name !== 'Login' 
                   ? <Link to={link.path} onClick={toggleNav}>{link.name}</Link>
-                  : <Link className='md:hover:bg-green-300 md:duration-150 md:py-1 md:px-3 md:bg-green-200 md:text-green-800 text-white rounded-lg' to={link.path} onClick={() => {}}>{link.name}</Link>
+                  : <Link className='md:hover:bg-[#008605]/60 md:duration-150 md:py-1 md:px-3 md:bg-[#008605] text-white rounded-lg' to={link.path} onClick={() => {}}>{link.name}</Link>
                 }
               </li>
           ))
