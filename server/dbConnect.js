@@ -8,5 +8,13 @@ const config = {
 }
 
 const connection = mysql.createPool(config)
+// const config = {
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'rbim_system'
+// }
+
+// const connection = mysql.createConnection(config)
 
 export default connection

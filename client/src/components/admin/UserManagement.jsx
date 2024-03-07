@@ -6,8 +6,8 @@ import { Toast } from 'primereact/toast';
 import CustomTable from './CustomTable'
 import axios from 'axios'
 
-import { ConfirmDialog } from 'primereact/confirmdialog';
-import { confirmDialog } from 'primereact/confirmdialog'; 
+import { HiOutlineInformationCircle } from "react-icons/hi2";
+import { Tooltip } from 'primereact/tooltip';
 import { MdOpenInNew } from "react-icons/md";
 import { FaUserPen } from "react-icons/fa6";
 import Divider from '../Divider';
@@ -234,7 +234,6 @@ const UserManagement = ({ title, description }) => {
   return (
     <>
       <Toast ref={toast} />
-      <ConfirmDialog />
       <SettingsHeader title={title} description={description} />
       <CustomDialog 
         visible={validationVisible} 
@@ -264,7 +263,7 @@ const UserManagement = ({ title, description }) => {
                 userForm?.id &&
                 <div className='pb-4'>
                   <label htmlFor="">Status</label>
-                  <div className='flex gap-2 text-sm mt-2'>
+                  <div className='flex items-center gap-2 text-sm mt-2'>
                     <button
                       type='button' 
                       className={`${userForm.status === 1 ? 'bg-green-200 text-green-800' : 'bg-gray-200'} py-1 px-2 rounded-md`} 
@@ -275,6 +274,15 @@ const UserManagement = ({ title, description }) => {
                       className={`${userForm.status === 2 ? 'bg-red-200 text-red-800' : 'bg-gray-200'} py-1 px-2 rounded-md`} 
                       onClick={() => setUserForm(current => ({...current, status: 2}))}
                     >Inactive</button>
+                    <Tooltip target='.active_inactive' mouseTrack mouseTrackLeft={10} className='tiptap text-xs'>
+                      <p>If you want to set to inactive this user, you may want to consider the following:</p>
+                      <ul>
+                        <li>There might be active health workers managed under this account.</li>
+                        <li> Keep in mind that the secretary won't be able to perform administrative tasks once the account is inactive.</li>
+                      </ul>
+                      <p>It's recommended to reactivate the account or transfer management responsibilities to ensure smooth workflow and task management, possibly by creating a new secretary's account within the same barangay as the health workers. Thank you.</p>
+                    </Tooltip>
+                    <HiOutlineInformationCircle className='active_inactive text-lg' />
                   </div>
                 </div>
               }
