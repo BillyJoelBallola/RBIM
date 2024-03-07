@@ -66,8 +66,8 @@ const Home = () => {
             <img src={HomeBanner} alt="banner" className='object-cover'/>
           </div>
           <div className='absolute text-center text-white grid md:gap-2 left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%]'>
-            <span className='text-lg md:text-3xl font-bold'>Discover • Engage • <span className='whitespace-nowrap'>Stay Informed</span></span>
-            <span className='text-xs md:text-[.9rem]'>Your source for Events, Programs, and Announcements</span>
+            <span className='text-lg md:text-3xl leading-5 md:leading-9 font-bold'>Discover • Engage • <span className='whitespace-nowrap'>Stay Informed</span></span>
+            <span className='text-xs leading-3 md:text-[.9rem]'>Your source for Events, Programs, and Announcements</span>
           </div>
         </div>
         <div className="grid mt-4">

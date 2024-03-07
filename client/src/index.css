@@ -42,16 +42,22 @@ label{
   background: linear-gradient(175deg, #015804 42.96%, #007905 100.65%);
 }
 
-/* .footer{
-  background: url('./assets/bg-footer.png');
+.mobile-nav{
+  background: url('./assets/bg-pattern.png');
   background-size: cover;
   background-position: center;
-} */
+}
 
-.footer-bg-color{
-  /* background: rgb(0,40,1); */
-  background: #fff;
-  background: linear-gradient(90deg, rgba(0,40,1, 1) 0%, rgba(0,134,5,0.9) 50%, rgba(0,40,1, 1) 100%);
+@media (min-width: 720px) {
+  .mobile-nav{
+    background: #fff;
+  }
+}
+
+.footer{
+  background: url('./assets/bg-pattern.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .content {
