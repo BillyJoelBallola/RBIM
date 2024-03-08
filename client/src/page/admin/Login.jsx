@@ -1,12 +1,13 @@
 import React, { useContext, useRef, useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import RBIMBigLogo from "../../assets/RBIM-big-logo.png"
 import POPCOMLogoWhite from "../../assets/popcom-logo-white.png"
 import RBIMBlackLogo from "../../assets/RBIM-logo-black.png"
-import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../context/UserContext'
 import BgImage from "../../assets/bg-image.png"
-import { Toast } from 'primereact/toast';
+import { Toast } from 'primereact/toast'
 import axios from "axios"
+import InputPassword from './InputPassword'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -70,10 +71,15 @@ const Login = () => {
                 </div>
                 <div className='form-group'>
                   <label htmlFor="password">Password</label>
-                  <input type="password" name='password' id='password' placeholder='Password' onChange={handleInput}/>
+                  <InputPassword 
+                    name={'password'}
+                    id={'password'}
+                    value={loginForm.password}
+                    onChange={handleInput}
+                    placeholder={'Password'}
+                  />
                 </div>
-                {/* <a href="" className='text-sm text-gray-400 text-right'>Forgot Password?</a> */}
-                <button type='submit' className='mt-4 rounded-md bg-[#008605] text-white text-sm py-2 font-semibold'>LOGIN</button>
+                <button type='submit' className='hover:bg-[#008605]/70 duration-150 mt-4 rounded-md bg-[#008605] text-white text-sm py-2 font-semibold'>LOGIN</button>
               </form>
             </div>
           </div>

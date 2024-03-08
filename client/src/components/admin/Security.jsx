@@ -4,6 +4,7 @@ import SettingsHeader from './SettingsHeader'
 import { Toast } from 'primereact/toast'
 import { UserContext } from '../../context/UserContext'
 import axios from 'axios'
+import InputPassword from '../../page/admin/InputPassword'
 
 const Security = ({ title, description }) => {
   const toast = useRef(null)
@@ -88,15 +89,33 @@ const Security = ({ title, description }) => {
           <div className='grid sm:grid-cols-2 gap-4'>
             <div className="form-group">
               <label htmlFor="currentPassword">Current Password</label>
-              <input type="password" name='currentPassword' id="currentPassword" placeholder='Current Password' value={securityForm.currentPassword} onChange={handleInput} />
+              <InputPassword
+                id={'currentPassword'}
+                name={'currentPassword'}
+                value={securityForm.currentPassword}
+                onChange={handleInput}
+                placeholder={'Current Password'}
+              />
             </div>
             <div className="form-group">
               <label htmlFor="newPassword">New Password</label>
-              <input type="password" name='newPassword' id="newPassword" placeholder='New Password' value={securityForm.newPassword} onChange={handleInput} />
+              <InputPassword
+                id={'newPassword'}
+                name={'newPassword'}
+                value={securityForm.newPassword}
+                onChange={handleInput}
+                placeholder={'New Password'}
+              />
             </div>
             <div className="form-group">
               <label htmlFor="confirmPassword">Confirm Password</label>
-              <input type="password" name='confirmPassword' id="confirmPassword" placeholder='Confirm Password' value={securityForm.confirmPassword} onChange={handleInput} />
+              <InputPassword
+                id={'confirmPassword'}
+                name={'confirmPassword'}
+                value={securityForm.confirmPassword}
+                onChange={handleInput}
+                placeholder={'Confirm Password'}
+              />
             </div>
           </div>
           <button className='mt-6 w-min whitespace-nowrap rounded-md bg-[#008605] text-white text-sm py-2 px-6 font-semibold'>SAVE CHANGES</button>
