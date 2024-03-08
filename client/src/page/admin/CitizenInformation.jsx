@@ -16,8 +16,8 @@ import { MdOpenInNew } from "react-icons/md";
 
 const headers = [
   {
-    key: 'respondent_name',
-    label: "Respondent Name",
+    key: 'household_head',
+    label: "Household Head",
   },
   {
     key: 'address',
@@ -53,6 +53,7 @@ const CitizenInformation = () => {
   const [monthYear, setMonthYear] = useState(year + "-" + formattedMonth)
   const [individualQuery, setIndividualQuery] = useState('')
   const [visible, setVisible] = useState(false)
+  const [action, setAction] = useState(null)
   const [selectedData, setSelectedData] = useState(null)
   const [archiveVisible, setArchiveVisible] = useState(false)
   const [barangayFilter, setBarangayFilter] = useState('0');  
@@ -64,8 +65,9 @@ const CitizenInformation = () => {
     }, 
     { 
       label: <LuArchive className='text-lg'/>, 
-      onClick: () => {
+      onClick: ({rowData}) => {
         setArchiveVisible(true)
+        setSelectedData(rowData?.survey_form_id)
       }
     }
   ]
@@ -84,37 +86,41 @@ const CitizenInformation = () => {
   useEffect(() => {
     const fetchSurveyForms = async () => {
       const { data } = await axios.get('/api/survey_forms')
-      if(data.success){
-        const response = data.data
-        const filteredSurveyForms = loggedUser?.role !== 'administrator' 
-          ? response.filter(data => (data.address === loggedUser?.address_id && data.status !== 2)) 
-          : response.filter(data => data.status !== 2)
+      if (data?.success) {
+        const response = data?.data
+        const filteredSurveyForms = !loggedUser?.role?.includes('administrator')
+          ? response?.filter(data => (data.address === loggedUser?.address_id && data?.status !== 2))
+          : response?.filter(data => data.status !== 2)
         setSurveyForm(filteredSurveyForms)
       }
     }
-
+    
     const fetchIndividuals = async () => {
       const { data } = await axios.get('/api/individuals')
-      if(data.success){
-        const response = data.data
-        const filteredIndividuals = loggedUser?.role !== 'administrator' 
-          ? response.filter(data => (data.address === loggedUser?.address_id && data.status !== 2)) 
-          : response.filter(data => data.status !== 2)
+      if(data?.success){
+        const response = data?.data
+        const filteredIndividuals = !loggedUser?.role?.includes('administrator') 
+          ? response?.filter(data => (data.address === loggedUser?.address_id && data?.status !== 2)) 
+          : response?.filter(data => data?.status !== 2)
         setIndividuals(filteredIndividuals)
       }
     }
+    
+    if(loggedUser){
+      fetchIndividuals()
+      fetchSurveyForms()
+    }
 
-    fetchIndividuals()
-    fetchSurveyForms()
-  }, [loggedUser])
+    setAction(null)
+  }, [loggedUser, action])
 
   const updateStatus = async () => {
     if(selectedData){
-      const { data } = await axios.put('/api/update_status', { status: 2, id: selectedData.id })
+      const { data } = await axios.put('/api/update_status', { status: 2, id: selectedData })
       if(data.success){
         setArchiveVisible(false)
-        setSelectedData(null)
         setAction('delete')
+        setSelectedData(null)
         return showToast('success', 'Success', 'Survey form archive successfully')
       }else{
         setArchiveVisible(false)
@@ -126,17 +132,14 @@ const CitizenInformation = () => {
     }
   }
 
-  const filteredData = surveyForms.filter(item => {
-    const matchesName = item.respondent_name.toLowerCase().includes(query.toLowerCase());
-    const matchesMonthYear = item.date_encoded.toString().substring(0, 7) === monthYear.toString();
-    const matchesBarangay = barangayFilter.toString() === '0' || item.address.toString() === barangayFilter;
-    
-    return matchesName && matchesMonthYear && matchesBarangay;
-  })
-
   const footerContent = (
     <div className='flex justify-end'>
-        <button className='px-6 py-2 rounded-md bg-transparent' onClick={() => setArchiveVisible(false)}>No</button>
+        <button 
+          className='px-6 py-2 rounded-md bg-transparent' 
+          onClick={() => {
+            setSelectedData(null)
+            setArchiveVisible(false)
+          }}>No</button>
         <button 
             className='px-6 py-2 rounded-md bg-[#008605] text-white' 
             onClick={() => updateStatus()}
@@ -146,18 +149,26 @@ const CitizenInformation = () => {
     </div>
   );
 
+  const filteredData = surveyForms?.filter(item => {
+    const matchesName = item.respondent_name.toLowerCase().includes(query.toLowerCase());
+    const matchesMonthYear = item.date_encoded.toString().substring(0, 7) === monthYear.toString();
+    const matchesBarangay = barangayFilter.toString() === '0' || item.address.toString() === barangayFilter;
+    
+    return matchesName && matchesMonthYear && matchesBarangay;
+  })
+
   function filterArrayByQuery(array, query) {
     if (!query) {
       return [];
     }
 
-    const filteredData = array.filter(item => {
+    const indiData = array.filter(item => {
       const matchesMonthYear = item.date_encoded.toString().substring(0, 7) === monthYear.toString();
       const data = item?.Q1?.toLowerCase()?.includes(query?.toLowerCase());
       return data && matchesMonthYear
     }); 
 
-    return filteredData.length > 0 ? filteredData : [];
+    return indiData.length > 0 ? indiData : [];
   }
 
   const filterIndividualData = filterArrayByQuery(individuals, individualQuery)
@@ -191,6 +202,7 @@ const CitizenInformation = () => {
       />
       <CustomDialog
         header={'Archive'}
+        resetForm={() => setSelectedData(null)}
         visible={archiveVisible}
         setVisible={setArchiveVisible} 
         footer={footerContent}
