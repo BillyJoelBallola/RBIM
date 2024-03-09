@@ -7,6 +7,22 @@ const PieMigrant = ({ data, selectedAddress, selectedYear, address }) => {
     const [pieChartData, setPieChartData] = useState({});
     const [pieChartOptions, setPieChartOptions] = useState({});
     const [pieMigrantData, setPieMigrantData] = useState([])
+    const [tooltipPosition, setTooltipPosition] = useState('right')
+
+    useEffect(() => {
+        const updateTooltipPosition = () => {
+            const isSmallScreen = window.innerWidth <= 768
+            setTooltipPosition(isSmallScreen ? 'left' : 'right')
+        };
+
+        updateTooltipPosition()
+
+        window.addEventListener('resize', updateTooltipPosition)
+
+        return () => {
+            window.removeEventListener('resize', updateTooltipPosition);
+        };
+    }, []);
 
     useEffect(() => {
         if(data?.length > 0){
@@ -62,7 +78,7 @@ const PieMigrant = ({ data, selectedAddress, selectedYear, address }) => {
 
     return (
         <div className='w-full md:w-fit grid place-items-center p-4 border bg-gray-100 rounded-lg relative'>
-            <Tooltip target='.migrant' mouseTrack mouseTrackLeft={10} className='tiptap text-xs'>
+            <Tooltip target='.migrant' mouseTrack mouseTrackLeft={10} position={tooltipPosition} className='tiptap text-xs'>
                 <p>In {selectedYear}, the population composition in {typeof location === 'object' ? location[0]?.barangay  : location} is as follows:</p>
                 <ul>
                     <li>Migrants: {pieMigrantData[0] || 0} individuals, representing those who have relocated to Municipal from elsewhere.</li>

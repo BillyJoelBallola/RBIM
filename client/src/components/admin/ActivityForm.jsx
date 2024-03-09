@@ -397,7 +397,7 @@ const ActivityForm = () => {
                                 <option value="">-- choose participants --</option>
                                 <option value="1">Senior Citizen</option>
                                 <option value="2">Student</option>
-                                <option value="3">Disabled</option>
+                                <option value="3">Person with Disability</option>
                                 <option value="4">Solo Parent</option>
                             </select>
                         </div>

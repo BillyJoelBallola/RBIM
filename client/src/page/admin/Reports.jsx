@@ -203,7 +203,9 @@ const Reports = () => {
       <Toast ref={toast} />
       <Header pageName={"Reports"} />
       <div className='content block md:hidden'>
-        <span>This feature is not available for mobile view.</span>
+        <div className='flex items-center gap-1 p-3 mt-3 rounded-md bg-red-100 text-red-600'>
+          <span>This feature is not available for mobile view.</span>
+        </div>
       </div>
       <div className="content bg-white hidden md:block">
         <div className='flex gap-4 items-center justify-between flex-wrap'>

@@ -7,6 +7,22 @@ const PieEmployment = ({ data, selectedAddress, selectedYear, address }) => {
     const [pieChartData, setPieChartData] = useState({});
     const [pieChartOptions, setPieChartOptions] = useState({});
     const [pieEmploymentData, setPieEmploymentData] = useState([])
+    const [tooltipPosition, setTooltipPosition] = useState('right')
+
+    useEffect(() => {
+        const updateTooltipPosition = () => {
+            const isSmallScreen = window.innerWidth <= 768
+            setTooltipPosition(isSmallScreen ? 'left' : 'right')
+        };
+
+        updateTooltipPosition()
+
+        window.addEventListener('resize', updateTooltipPosition)
+
+        return () => {
+            window.removeEventListener('resize', updateTooltipPosition);
+        };
+    }, []);
 
     useEffect(() => {
         if (data?.length > 0) {
@@ -59,7 +75,7 @@ const PieEmployment = ({ data, selectedAddress, selectedYear, address }) => {
 
     return (
         <div className='w-full md:w-fit grid place-items-center border bg-gray-100 rounded-lg p-4 relative'>
-            <Tooltip target='.employment' mouseTrack mouseTrackLeft={10} className='tiptap text-xs'>
+            <Tooltip target='.employment' mouseTrack mouseTrackLeft={10} position={tooltipPosition} className='tiptap text-xs'>
                 <p>In {selectedYear}, the workforce in {typeof location === 'object' ? location[0]?.barangay  : location} consists of {pieEmploymentData[0] || 0} employed individuals and {pieEmploymentData[1] || 0} individuals who are currently unemployed.</p> 
                 <p>This represents the distribution of employment status among our residents as depicted in the pie graph.</p>
             </Tooltip>
