@@ -57,8 +57,10 @@ export const addUser = async (req, res) => {
       return res.json({ success: false, message: 'User already exist' });
     }
 
-    if(thereIsSecretary){
-      return res.json({ success: false, message: 'Number of secretary is succeeded. Only one[1] secretary account per barangay' });
+    if(user?.role?.includes('administrator')){
+      if(thereIsSecretary){
+        return res.json({ success: false, message: 'Number of secretary is succeeded. Only one[1] secretary account per barangay' });
+      }
     }
 
     if(numberOfAdministrator === 2){
