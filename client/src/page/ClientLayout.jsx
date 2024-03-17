@@ -10,7 +10,7 @@ const ClientLayout = () => {
   return (
     <>
       <Navbar />
-      <Messenger />
+      {/* <Messenger /> */}
       <div className='bg-white overflow-hidden pt-[95px] pb-[40px] client-container'>
         <Outlet />
       </div>  
