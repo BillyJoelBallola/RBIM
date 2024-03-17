@@ -13,7 +13,7 @@ export const loginWeb = async (req, res) => {
     }
 
     if(!user || user?.role === 'health_worker') {
-      return res.json({ success: false, message: 'User not found'});
+      return res.json({ success: false, message: 'Account not found'});
     }
 
     const isPasswordCorrect = bcrypt.compareSync(password.trim(), user.password);
@@ -42,7 +42,7 @@ export const loginMobile = async (req, res) => {
     }
 
     if(!user || user?.role !== 'health_worker') {
-      return res.json({ success: false, message: 'User not found'});
+      return res.json({ success: false, message: 'Account not found'});
     }
     
     const isPasswordCorrect = bcrypt.compareSync(password.trim(), user.password);

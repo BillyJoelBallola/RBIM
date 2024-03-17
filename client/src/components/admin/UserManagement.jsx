@@ -11,6 +11,7 @@ import { Tooltip } from 'primereact/tooltip';
 import { MdOpenInNew } from "react-icons/md";
 import { FaUserPen } from "react-icons/fa6";
 import Divider from '../Divider';
+import InputPassword from '../../page/admin/InputPassword';
 
 const UserManagement = ({ title, description }) => {
   const toast = useRef(null)
@@ -231,6 +232,10 @@ const UserManagement = ({ title, description }) => {
     }
   }
 
+  const handleInput = (e) => {
+    setPassword(e.target.value)
+  }
+
   return (
     <>
       <Toast ref={toast} />
@@ -244,7 +249,16 @@ const UserManagement = ({ title, description }) => {
           <form onSubmit={recoverPassword}>
             <div className="form-group w-full md:w-auto">
               <label htmlFor="">Input your password for authentication.</label>
-              <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+              <div className='form-group'>
+                  <label htmlFor="password">Password</label>
+                  <InputPassword
+                    name={'password'}
+                    id={'password'}
+                    value={password}
+                    onChange={handleInput}
+                    placeholder={'Password'}
+                  />
+                </div>
               <button className='bg-[#008605] rounded-md text-white py-2'>Submit</button>
             </div>
           </form>
